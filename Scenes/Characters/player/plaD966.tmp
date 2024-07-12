@@ -1,0 +1,231 @@
+[gd_scene load_steps=8 format=3 uid="uid://btnlv2vwv2vd8"]
+
+[ext_resource type="Script" path="res://Scripts/Label.gd" id="1_vm8iq"]
+[ext_resource type="Texture2D" uid="uid://dgdanfm0upifp" path="res://Assets/Sprites/Others/InGame/Facing.svg" id="2_ribfe"]
+[ext_resource type="Texture2D" uid="uid://bjfeom0n50oat" path="res://Assets/UI/InGame/FishingArrow.svg" id="3_50q3t"]
+[ext_resource type="Script" path="res://Scripts/FishingNode.gd" id="3_dyto1"]
+
+[sub_resource type="GDScript" id="GDScript_yv2bm"]
+script/source = "extends CharacterBody2D
+@export var debugging = false
+
+var camera
+
+# Other data
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 3
+var state = Enums.PlayerStates.IDLE
+
+# Movement
+var direction
+var shieldDirection = Vector2(0,0)
+var tilt
+
+const SPEED = 800.0
+var acceleration = 2000
+var max_speed = 400.0
+var last_direction = 1
+var jump_direction = 0
+
+# Jumping
+const JUMP_VELOCITY = -700.0
+var MAX_JUMP_TIME = 0.2
+var is_jumping = false
+
+var jump_timer = 0
+
+# Attacks with timer
+var isActive = true
+var isWalking = false
+var jumpCount = 2
+
+# Controls
+var jump_input
+var timer = 0.0
+var downed_timer = 0.0
+
+# fishing
+var fishing_position
+
+func _ready():
+	camera = $Camera2D
+	
+func _process(_delta):
+	jump_input = Input.is_action_pressed(\"jump\")
+	rotate_to_direction($Facing, 1)
+
+func _physics_process(delta):
+	inputMovement() # here i get the values of direction
+	touchingFloor(delta) # this function i will use it if the user is touching the floor or not
+	stateReseters() # reseters of data
+	fishing(delta)
+	
+	if isActive:
+		jumpLogic(delta)
+		movementLogic(delta)
+		
+	move_and_slide()
+
+func rotate_to_direction(element, mod):
+	if (velocity.length() == 0 and mod > 0 and debugging == false): 
+		element.visible = false
+	else:
+		var playerVelocity = get_velocity()
+		var playerDirection = playerVelocity.normalized() if playerVelocity.normalized().x > 0 or mod != -1 else -playerVelocity.normalized()
+		var _rotation_degrees = playerDirection.angle()
+		element.visible = true
+		element.rotation = _rotation_degrees
+
+func inputMovement():
+	var axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+
+	if (axisDirection.x < 0.1 and axisDirection.x > -0.1):
+		axisDirection.x = 0
+	if (axisDirection.y < 0.1 and axisDirection.y > -0.1):
+		axisDirection.y = 0
+	
+	if (axisDirection.x > 0.8):
+		axisDirection.x = 1
+	if (axisDirection.x < -0.8):
+		axisDirection.x = -1
+		
+	if !isWalking:
+		direction = axisDirection
+	else:
+		direction = axisDirection / 2.1
+	
+func touchingFloor(delta):
+	if is_on_floor():
+		jump_direction = last_direction
+		jumpCount = 2
+	else:
+		velocity.y += gravity * delta
+		state = Enums.PlayerStates.FALLING
+
+func stateReseters():
+	if isWalking and direction.x == 0:
+		isWalking = false
+
+	if jump_input:
+		if (state == Enums.PlayerStates.FALLING and jumpCount > 0) or is_on_floor():
+			jump_direction = last_direction
+			jumpCount -= 1
+			is_jumping = true
+			jump_timer = 0
+
+func movementLogic(delta):
+	if direction.x != 0:
+		last_direction = direction.x
+		if is_on_floor():
+			if (direction.x >= 0.1 or direction.x <= -0.1):
+				state = Enums.PlayerStates.WALKING
+			velocity.x = move_toward(velocity.x, direction.x * max_speed, (acceleration * delta) * 10)
+		else:
+			velocity.x = move_toward(velocity.x, direction.x * max_speed, (acceleration * delta) * 5)
+	elif direction.x == 0 and state != Enums.PlayerStates.JUMPING and is_on_floor():
+			state = Enums.PlayerStates.IDLE
+			velocity.x = move_toward(velocity.x, 0, 100)
+
+func jumpLogic(delta):
+	if !is_on_floor() and jumpCount > 1:
+		jumpCount = 1
+	if is_jumping:
+		jump_timer += delta
+		
+		if jump_input and jump_timer < MAX_JUMP_TIME:
+			state = Enums.PlayerStates.JUMPING
+			velocity.y = JUMP_VELOCITY
+		else:
+			state = Enums.PlayerStates.FALLING
+			is_jumping = false
+			jump_timer = 0
+
+# FISHING-------------------------------------------------------------------------------------------
+func fishing(delta):
+	if state == Enums.PlayerStates.FISHING:
+		camera.offset.x = lerp(camera.offset.x, 400.0, delta * 7.0)
+		position.x = fishing_position
+		if Input.is_action_just_released(\"B\"):
+			isActive = true
+	else:
+		camera.offset.x = lerp(camera.offset.x, 0.0, delta * 10.0)
+
+# This function will let the triggers know that the player is touching it, so avoid using it in other elements
+func interact(interaction, x):
+	if Input.is_action_just_pressed(\"A\"):
+		print(interaction)
+		if interaction == Enums.InteractionStates.FISHING:
+			state = Enums.PlayerStates.FISHING
+			isActive = false
+		fishing_position = x
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vfkqx"]
+resource_local_to_scene = true
+radius = 15.0
+height = 56.0
+
+[sub_resource type="GDScript" id="GDScript_ma68f"]
+script/source = "extends CollisionShape2D
+
+func _ready():
+	pass # Replace with function body.
+
+func _process(delta):
+	pass
+"
+
+[node name="Player" type="CharacterBody2D"]
+floor_snap_length = 0.0
+script = SubResource("GDScript_yv2bm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_vfkqx")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+script = SubResource("GDScript_ma68f")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -47.0
+offset_top = -62.0
+offset_right = 47.0
+offset_bottom = -36.0
+text = "Jumping"
+horizontal_alignment = 1
+script = ExtResource("1_vm8iq")
+
+[node name="Facing" type="Sprite2D" parent="."]
+scale = Vector2(0.185, 0.185)
+texture = ExtResource("2_ribfe")
+offset = Vector2(392.77, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -15.0
+offset_top = -29.0
+offset_right = 15.0
+offset_bottom = 29.0
+color = Color(1, 0.631373, 0.184314, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-2, 23)
+offset = Vector2(0, -170)
+zoom = Vector2(1.4, 1.4)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="FishingNode" type="Node2D" parent="."]
+script = ExtResource("3_dyto1")
+
+[node name="FishingArrow" type="Sprite2D" parent="FishingNode"]
+z_index = -1
+position = Vector2(55.22, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_50q3t")
+
+[node name="Label" type="Label" parent="FishingNode"]
+offset_left = -22.0
+offset_top = -142.0
+offset_right = 18.0
+offset_bottom = -119.0

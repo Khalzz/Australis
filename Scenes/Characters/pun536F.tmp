@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5kfrxlkhwr01"]
+
+[ext_resource type="Texture2D" uid="uid://cl4uewg1vijvp" path="res://Assets/Sprites/PunchBag/IDLE.png" id="1_rs52a"]
+[ext_resource type="Script" path="res://Scenes/Characters/punchbag.gd" id="1_wc2us"]
+[ext_resource type="Texture2D" uid="uid://bulq6lhfuhy3w" path="res://Assets/Sprites/PunchBag/Punched.png" id="2_yqeb1"]
+[ext_resource type="Script" path="res://Scenes/Characters/punchbag_animation.gd" id="4_3yxo0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_omp4l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rs52a")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yqeb1")
+}],
+"loop": true,
+"name": &"PUNCHED",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_id5q2"]
+radius = 20.5
+height = 80.0
+
+[node name="PUNCHBAG" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_wc2us")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_omp4l")
+animation = &"IDLE"
+script = ExtResource("4_3yxo0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.5, 1)
+shape = SubResource("CapsuleShape2D_id5q2")

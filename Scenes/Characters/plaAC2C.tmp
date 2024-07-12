@@ -1,0 +1,194 @@
+[gd_scene load_steps=15 format=3 uid="uid://btnlv2vwv2vd8"]
+
+[ext_resource type="Script" path="res://Scripts/Label.gd" id="1_sd273"]
+[ext_resource type="Texture2D" uid="uid://3qefdbbyleen" path="res://Assets/Sprites/Player/Movement/Falling.png" id="2_cm55h"]
+[ext_resource type="Texture2D" uid="uid://dix0ofkxr1lej" path="res://Assets/Sprites/Player/Movement/DashAttack.png" id="2_wuv3j"]
+[ext_resource type="Texture2D" uid="uid://dow8a7724n4uq" path="res://Assets/Sprites/Player/Movement/IDLE/IDLE.png" id="3_mgd7a"]
+[ext_resource type="Texture2D" uid="uid://q1o8uqcnl16m" path="res://Assets/Sprites/Player/Movement/IDLE/IDLE22.png" id="4_8hbs7"]
+[ext_resource type="Script" path="res://Scenes/Characters/PlayerAnimations.gd" id="4_dutyh"]
+[ext_resource type="Texture2D" uid="uid://d000sv0nbdakc" path="res://Assets/Sprites/Player/Movement/Jumping.png" id="5_4dbwr"]
+[ext_resource type="Texture2D" uid="uid://c4726ei1q111o" path="res://Assets/Sprites/Player/Movement/Jab/Jab1.png" id="5_il76s"]
+[ext_resource type="Texture2D" uid="uid://cc87vafrml6w4" path="res://Assets/Sprites/Player/Movement/Jab/Jab2.png" id="6_rlmha"]
+[ext_resource type="Texture2D" uid="uid://c3110wr7ydcao" path="res://Assets/Sprites/Player/Movement/Running.png" id="6_sjkpu"]
+[ext_resource type="Texture2D" uid="uid://dlx0amep8qxhj" path="res://Assets/Sprites/Player/Movement/Walking.png" id="7_o8jvi"]
+
+[sub_resource type="GDScript" id="GDScript_yv2bm"]
+script/source = "extends CharacterBody2D
+
+# Movement
+const SPEED = 800.0
+var acceleration = 2000
+var max_speed = 600.0
+
+# Jumping
+const JUMP_VELOCITY = -1200.0
+var MAX_JUMP_TIME = 0.2
+var is_jumping = false
+var jump_timer = 0
+
+enum States {IDLE, WALKING, RUNNING, JUMPING, FALLING, JAB, DASH_ATTACK}
+var state = States.IDLE
+
+var direction
+var last_direction = 1
+
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 5
+
+var isActive = true
+var dash_timer = 0.2
+var dash_distance = 1000.0
+
+func _physics_process(delta):
+	if isActive:
+		if not is_on_floor():
+			velocity.y += gravity * delta
+
+		if is_jumping:
+			jump_timer += delta
+			if Input.is_action_pressed(\"jump\") and jump_timer < MAX_JUMP_TIME:
+				state = States.JUMPING
+				velocity.y = JUMP_VELOCITY
+			else:
+				state = States.FALLING
+				is_jumping = false
+				jump_timer = 0
+
+		if Input.is_action_pressed(\"jump\") and is_on_floor():
+			is_jumping = true
+			jump_timer = 0
+			
+		direction = Input.get_axis(\"left\", \"right\")
+
+		if direction != 0 and state != States.DASH_ATTACK:
+			last_direction = direction
+			if is_on_floor():
+				if (direction >= 0.5 or direction <= -0.5):
+					state = States.RUNNING
+				else:
+					state = States.WALKING
+				velocity.x = move_toward(velocity.x, direction * max_speed, (acceleration * delta) * 10)
+			else:
+				velocity.x = move_toward(velocity.x, direction * max_speed, (acceleration * delta) * 10)
+		elif direction == 0 and state != States.JUMPING and is_on_floor():
+			state = States.IDLE
+			velocity.x = move_toward(velocity.x, 0, 100)
+
+		if state == States.IDLE or state == States.WALKING:
+			if Input.is_action_pressed(\"basic_attack\"):
+				state = States.JAB
+		elif state == States.RUNNING:
+			if Input.is_action_pressed(\"basic_attack\"):
+				isActive = false
+				state = States.DASH_ATTACK
+				dash_timer = 0.0
+				velocity.x = dash_distance * last_direction
+	else:
+		dash_timer += delta
+		if dash_timer >= 0.2:
+			state = States.IDLE
+			velocity.x = 0
+		if dash_timer >= 0.3:
+			isActive = true
+
+	move_and_slide()
+
+# Something i can do is a function of a movement with a timer
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rfsnk"]
+size = Vector2(52, 88)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkp1g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wuv3j")
+}],
+"loop": true,
+"name": &"DASH_ATTACK",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cm55h")
+}],
+"loop": true,
+"name": &"FALLING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mgd7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8hbs7")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_il76s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rlmha")
+}],
+"loop": true,
+"name": &"JAB",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_4dbwr")
+}],
+"loop": true,
+"name": &"JUMPING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_sjkpu")
+}],
+"loop": true,
+"name": &"RUNNING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_o8jvi")
+}],
+"loop": true,
+"name": &"WALKING",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = SubResource("GDScript_yv2bm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rfsnk")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -47.0
+offset_top = -71.0
+offset_right = 47.0
+offset_bottom = -45.0
+text = "Jumping"
+horizontal_alignment = 1
+script = ExtResource("1_sd273")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -80)
+zoom = Vector2(0.7, 0.7)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 3)
+scale = Vector2(0.235, 0.235)
+sprite_frames = SubResource("SpriteFrames_wkp1g")
+animation = &"DASH_ATTACK"
+script = ExtResource("4_dutyh")

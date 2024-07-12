@@ -1,0 +1,338 @@
+[gd_scene load_steps=29 format=3 uid="uid://btnlv2vwv2vd8"]
+
+[ext_resource type="Script" path="res://Scripts/Label.gd" id="1_sd273"]
+[ext_resource type="Texture2D" uid="uid://3qefdbbyleen" path="res://Assets/Sprites/Player/Movement/Falling.png" id="2_cm55h"]
+[ext_resource type="Texture2D" uid="uid://cuwll41rglpcq" path="res://Assets/Sprites/Player/Movement/Crouching.png" id="2_v5p4i"]
+[ext_resource type="Texture2D" uid="uid://dix0ofkxr1lej" path="res://Assets/Sprites/Player/Movement/DashAttack.png" id="2_wuv3j"]
+[ext_resource type="Texture2D" uid="uid://dow8a7724n4uq" path="res://Assets/Sprites/Player/Movement/IDLE/IDLE.png" id="3_mgd7a"]
+[ext_resource type="Texture2D" uid="uid://q1o8uqcnl16m" path="res://Assets/Sprites/Player/Movement/IDLE/IDLE22.png" id="4_8hbs7"]
+[ext_resource type="Texture2D" uid="uid://c7j0e5h81a6wk" path="res://Assets/Sprites/Player/Movement/DOWNTILT/DOWNTILT_0.png" id="4_774ou"]
+[ext_resource type="Script" path="res://Scenes/Characters/PlayerAnimations.gd" id="4_dutyh"]
+[ext_resource type="Texture2D" uid="uid://d000sv0nbdakc" path="res://Assets/Sprites/Player/Movement/Jumping.png" id="5_4dbwr"]
+[ext_resource type="Texture2D" uid="uid://3v1c1o6n6a7r" path="res://Assets/Sprites/Player/Movement/DOWNTILT/DOWNTILT_1.png" id="5_8pvbk"]
+[ext_resource type="Texture2D" uid="uid://c4726ei1q111o" path="res://Assets/Sprites/Player/Movement/Jab/Jab1.png" id="5_il76s"]
+[ext_resource type="Texture2D" uid="uid://chbrc2fon54h4" path="res://Assets/Sprites/Player/Movement/DOWN_AIR/DOWNAIR_0.png" id="6_cnuow"]
+[ext_resource type="Texture2D" uid="uid://cc87vafrml6w4" path="res://Assets/Sprites/Player/Movement/Jab/Jab2.png" id="6_rlmha"]
+[ext_resource type="Texture2D" uid="uid://c3110wr7ydcao" path="res://Assets/Sprites/Player/Movement/Running.png" id="6_sjkpu"]
+[ext_resource type="Texture2D" uid="uid://b4w5hydskwaas" path="res://Assets/Sprites/Player/Movement/DOWN_AIR/DOWNAIR_1.png" id="7_gyuxq"]
+[ext_resource type="Texture2D" uid="uid://dlx0amep8qxhj" path="res://Assets/Sprites/Player/Movement/Walking.png" id="7_o8jvi"]
+[ext_resource type="Texture2D" uid="uid://d30xlq6iwultj" path="res://Assets/Sprites/Player/Movement/NeutralAir.png" id="9_8r8in"]
+[ext_resource type="PackedScene" uid="uid://b6b0y5nbglke3" path="res://Scenes/Characters/hitboxes/Test/jab_hitbox.tscn" id="13_gc2vs"]
+[ext_resource type="PackedScene" uid="uid://cqvv4kuglti0i" path="res://Scenes/Characters/hitboxes/Test/dash_attack_hitbox.tscn" id="14_h4xt5"]
+[ext_resource type="Texture2D" uid="uid://d08rkvhsedokx" path="res://Assets/Sprites/Player/Movement/UPTILT/UPTILT_0.png" id="14_wusew"]
+[ext_resource type="PackedScene" uid="uid://brbtkvbimiilt" path="res://Scenes/Characters/hitboxes/Test/nair_hitbox.tscn" id="15_ia7bt"]
+[ext_resource type="Texture2D" uid="uid://dv5b3a4relhat" path="res://Assets/Sprites/Player/Movement/UPTILT/UPTILT_1.png" id="15_mtytx"]
+[ext_resource type="PackedScene" uid="uid://ujncgrjaa1a1" path="res://Scenes/Characters/hitboxes/Test/down_tilt_hitbox.tscn" id="19_enisu"]
+[ext_resource type="PackedScene" uid="uid://djt7i54iyr3g6" path="res://Scenes/Characters/hitboxes/Test/uptilt_hitbox.tscn" id="22_vcq5u"]
+[ext_resource type="PackedScene" uid="uid://bx768iceq72re" path="res://Scenes/Characters/hitboxes/Test/downair_hitbhox.tscn" id="25_p0biw"]
+
+[sub_resource type="GDScript" id="GDScript_yv2bm"]
+script/source = "extends CharacterBody2D
+
+# Other data
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 3
+enum States {IDLE, WALKING, RUNNING, JUMPING, FALLING, JAB, DASH_ATTACK, NEUTRAL_AIR, CROUCHING, DOWNTILT, UPTILT, DOWN_AIR, UP_AIR}
+var state = States.IDLE
+
+# Movement
+const SPEED = 800.0
+var acceleration = 2000
+var max_speed = 600.0
+var direction
+var last_direction = 1
+
+# Jumping
+const JUMP_VELOCITY = -700.0
+var MAX_JUMP_TIME = 0.2
+var is_jumping = false
+var jump_timer = 0
+
+# Dash Attack values
+var dash_timer = 0.2
+var dash_distance = 1000.0
+
+# Attacks with timer
+var isActive = true
+var isWalking = false
+var jumpCount = 1
+
+func _physics_process(delta):
+	if !isWalking:
+		direction = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+	else:
+		direction = Input.get_vector(\"left\", \"right\", \"down\", \"up\") / 2.1
+
+	if not is_on_floor():
+		velocity.y += gravity * delta
+		if direction.y < -0.8:
+			velocity.y = -JUMP_VELOCITY * 2
+
+	if isActive:
+		if is_jumping:
+			jump_timer += delta
+			if Input.is_action_pressed(\"jump\") and jump_timer < MAX_JUMP_TIME:
+				state = States.JUMPING
+				velocity.y = JUMP_VELOCITY
+			else:
+				state = States.FALLING
+				is_jumping = false
+				jump_timer = 0
+
+		if Input.is_action_pressed(\"jump\") and is_on_floor() or (Input.is_action_pressed(\"jump\") and state == States.FALLING and jumpCount > 0):
+			is_jumping = true
+			jump_timer = 0
+			
+		if isWalking and direction.x == 0:
+			isWalking = false
+
+		if direction.x != 0 and state != States.DASH_ATTACK:
+			last_direction = direction.x
+			if is_on_floor():
+				if (direction.x >= 0.5 or direction.x <= -0.5):
+					state = States.RUNNING
+				else:
+					state = States.WALKING
+				velocity.x = move_toward(velocity.x, direction.x * max_speed, (acceleration * delta) * 10)
+			else:
+				velocity.x = move_toward(velocity.x, direction.x * max_speed, (acceleration * delta) * 5)
+		elif direction.x == 0 and state != States.JUMPING and is_on_floor():
+			state = States.IDLE
+			velocity.x = move_toward(velocity.x, 0, 100)
+
+		if direction.y < -0.8 and direction.x < 0.2 and direction.x > -0.2 and is_on_floor():
+			state = States.CROUCHING
+			velocity.x = 0
+
+		if state == States.IDLE or state == States.WALKING or state == States.CROUCHING:
+			if Input.is_action_pressed(\"basic_attack\") and state != States.CROUCHING:
+				state = States.JAB
+			
+			if (direction.y < -0.1 and Input.is_action_pressed(\"basic_attack\")) or is_on_floor() and Input.is_action_pressed(\"down_tilt\"):
+				velocity.x = 0
+				state = States.DOWNTILT
+				
+			if (direction.y > 0.1 and Input.is_action_pressed(\"basic_attack\")) or is_on_floor() and Input.is_action_pressed(\"up_tilt\"):
+				velocity.x = 0
+				state = States.UPTILT
+		elif state == States.RUNNING:
+			if Input.is_action_pressed(\"basic_attack\"):
+				isActive = false
+				state = States.DASH_ATTACK
+				dash_timer = 0.0
+				velocity.x = dash_distance * last_direction
+		if state == States.FALLING and direction.x == 0:
+			if Input.is_action_pressed(\"basic_attack\") and direction.y > -0.1 and direction.y < 0.1:
+				isActive = false
+				state = States.NEUTRAL_AIR
+				dash_timer = 0.0
+				
+			if (direction.y < -0.1 and Input.is_action_pressed(\"basic_attack\")) or Input.is_action_pressed(\"down_tilt\"):
+				isActive = false
+				state = States.DOWN_AIR
+				dash_timer = 0.0
+			if (direction.y > 0.1 and Input.is_action_pressed(\"basic_attack\")) or Input.is_action_pressed(\"up_tilt\"):
+				state = States.UP_AIR
+	else:
+		dash_timer += delta	
+		if state == States.DASH_ATTACK:
+			resetDashAttack(dash_timer)
+		elif state == States.NEUTRAL_AIR:
+			resetNeutralAir(dash_timer)
+		elif state == States.DOWN_AIR:
+			resetDownAir(dash_timer)
+	move_and_slide()
+	
+func resetDashAttack(dash_timer):
+	if dash_timer >= 0.1:
+		state = States.IDLE
+		isWalking = true
+		isActive = true
+		
+func resetNeutralAir(dash_timer):
+	if dash_timer >= 0.5 or is_on_floor():
+		state = States.IDLE
+		isWalking = true
+		isActive = true
+
+func resetDownAir(dash_timer):
+	if dash_timer >= 0.5 or is_on_floor():
+		state = States.IDLE
+		isWalking = true
+		isActive = true
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u2po8"]
+height = 77.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkp1g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_v5p4i")
+}],
+"loop": true,
+"name": &"CROUCHING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wuv3j")
+}],
+"loop": true,
+"name": &"DASH_ATTACK",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_774ou")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8pvbk")
+}],
+"loop": true,
+"name": &"DOWNTILT",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_cnuow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_gyuxq")
+}],
+"loop": true,
+"name": &"DOWN_AIR",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cm55h")
+}],
+"loop": true,
+"name": &"FALLING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mgd7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8hbs7")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_il76s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rlmha")
+}],
+"loop": true,
+"name": &"JAB",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_4dbwr")
+}],
+"loop": true,
+"name": &"JUMPING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_8r8in")
+}],
+"loop": true,
+"name": &"NEUTRAL_AIR",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_sjkpu")
+}],
+"loop": true,
+"name": &"RUNNING",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_wusew")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_mtytx")
+}],
+"loop": true,
+"name": &"UPTILT",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_o8jvi")
+}],
+"loop": true,
+"name": &"WALKING",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = SubResource("GDScript_yv2bm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4.5)
+shape = SubResource("CapsuleShape2D_u2po8")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -47.0
+offset_top = -71.0
+offset_right = 47.0
+offset_bottom = -45.0
+text = "Jumping"
+horizontal_alignment = 1
+script = ExtResource("1_sd273")
+
+[node name="Camera2D" type="Camera2D" parent="Label"]
+position = Vector2(47, 71)
+offset = Vector2(0, -80)
+zoom = Vector2(0.7, 0.7)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 3)
+scale = Vector2(0.235, 0.235)
+sprite_frames = SubResource("SpriteFrames_wkp1g")
+animation = &"DOWN_AIR"
+frame = 1
+frame_progress = 0.999365
+script = ExtResource("4_dutyh")
+
+[node name="JAB_HITBOX" parent="." instance=ExtResource("13_gc2vs")]
+visible = false
+position = Vector2(0, -8)
+collision_layer = 1
+collision_mask = 3
+
+[node name="DASH_ATTACK_HITBOX" parent="." instance=ExtResource("14_h4xt5")]
+visible = false
+collision_mask = 3
+
+[node name="NAIR_HITBOX" parent="." instance=ExtResource("15_ia7bt")]
+visible = false
+
+[node name="DOWN_TILT_HITBOX" parent="." instance=ExtResource("19_enisu")]
+visible = false
+
+[node name="UPTILT_HITBOX" parent="." instance=ExtResource("22_vcq5u")]
+visible = false
+collision_mask = 3
+
+[node name="DOWNAIR_HITBHOX" parent="." instance=ExtResource("25_p0biw")]
+collision_mask = 3

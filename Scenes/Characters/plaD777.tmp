@@ -1,0 +1,1400 @@
+[gd_scene load_steps=51 format=3 uid="uid://btnlv2vwv2vd8"]
+
+[ext_resource type="Script" path="res://Scripts/Label.gd" id="1_sd273"]
+[ext_resource type="PackedScene" uid="uid://b6b0y5nbglke3" path="res://Scenes/Characters/hitboxes/Test/jab_hitbox.tscn" id="13_gc2vs"]
+[ext_resource type="PackedScene" uid="uid://cqvv4kuglti0i" path="res://Scenes/Characters/hitboxes/Test/dash_attack_hitbox.tscn" id="14_h4xt5"]
+[ext_resource type="Script" path="res://Scenes/Characters/Controller.gd" id="14_vt1v8"]
+[ext_resource type="Script" path="res://Scenes/Characters/PlayerTag.gd" id="15_0eqv6"]
+[ext_resource type="PackedScene" uid="uid://brbtkvbimiilt" path="res://Scenes/Characters/hitboxes/Test/nair_hitbox.tscn" id="15_ia7bt"]
+[ext_resource type="Texture2D" uid="uid://flaid0sovk76" path="res://Assets/Sprites/Others/InGame/Player1.svg" id="15_xg3ct"]
+[ext_resource type="Texture2D" uid="uid://dgdanfm0upifp" path="res://Assets/Sprites/Others/InGame/Facing.svg" id="17_jyh43"]
+[ext_resource type="PackedScene" uid="uid://ujncgrjaa1a1" path="res://Scenes/Characters/hitboxes/Test/down_tilt_hitbox.tscn" id="19_enisu"]
+[ext_resource type="PackedScene" uid="uid://djt7i54iyr3g6" path="res://Scenes/Characters/hitboxes/Test/uptilt_hitbox.tscn" id="22_vcq5u"]
+[ext_resource type="PackedScene" uid="uid://bx768iceq72re" path="res://Scenes/Characters/hitboxes/Test/downair_hitbhox.tscn" id="25_p0biw"]
+[ext_resource type="PackedScene" uid="uid://boglq21xh1aex" path="res://Scenes/Characters/hitboxes/Test/sidetilt_hitbox.tscn" id="27_ffsd5"]
+[ext_resource type="PackedScene" uid="uid://w2ediwfail4o" path="res://Scenes/Characters/hitboxes/Test/upair_hitbox.tscn" id="30_v0kk2"]
+[ext_resource type="PackedScene" uid="uid://crur1am2e0fkd" path="res://Scenes/Characters/hitboxes/Test/back_air_hitbox.tscn" id="33_ylel6"]
+[ext_resource type="Texture2D" uid="uid://lu3e3dednw74" path="res://Assets/Sprites/Player/SpriteSheet/AnimationSpriteSheet.png" id="34_c6k68"]
+[ext_resource type="PackedScene" uid="uid://u8yai1ebbfid" path="res://Scenes/Characters/hitboxes/Test/forward_air_hitbox.tscn" id="34_kvrdy"]
+[ext_resource type="Script" path="res://Scenes/Characters/AnimationPlayer.gd" id="35_na8g4"]
+
+[sub_resource type="GDScript" id="GDScript_yv2bm"]
+script/source = "extends CharacterBody2D
+
+@export var device_id = 0
+@export var its_analog = true
+@export var player_id = 0
+@export var debugging = false
+@export var camera = Camera2D
+
+@export var avoid_layer = 0
+@export var avoid_mask = 0
+
+# Other data
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 3
+enum States {IDLE, WALKING, RUNNING, JUMPING, FALLING, JAB, DASH_ATTACK, NEUTRAL_AIR, CROUCHING, DOWNTILT, UPTILT, SIDETILT, DOWN_AIR, UP_AIR, FORWARD_AIR, BACK_AIR, SHIELDING, SHIELDKNOCKBACKED, DOWNED, STANDING, ROLLING, AVOID, PUNCHED, LEDGE}
+
+var state = States.IDLE
+
+# Movement
+var direction
+var shieldDirection = Vector2(0,0)
+var tilt
+
+const SPEED = 800.0
+var acceleration = 2000
+var max_speed = 600.0
+var last_direction = 1
+var jump_direction = 0
+
+# Jumping
+const JUMP_VELOCITY = -700.0
+var MAX_JUMP_TIME = 0.2
+var is_jumping = false
+var jump_timer = 0
+
+# Dash Attack values
+var dash_timer = 0.2
+var dash_distance = 900.0
+
+# Attacks with timer
+var isActive = true
+var isWalking = false
+var jumpCount = 2
+var canJumpEsp = false
+var canAttack = true
+
+# Tilt attacks
+var canTilt = true
+var canTiltAir = true
+var canRoll = true
+
+# Controls
+var jump_input
+var shield_input
+var basic_attack_input
+var basic_attack_flag = true
+
+# Recieving Damage
+var life = 0
+var hud = null
+
+var attackable = true
+var bouncing = false
+var timer = 0.0
+var downed_timer = 0.0
+var shieldTimer = 0
+var punchedTime = 0.0
+var bounceDivisor = 1
+
+var starting_layer
+var starting_mask
+
+# LEDGE
+var ledge_timer = 0.0
+var porposefull_unledged = false
+var ledgeResetTimer = 0.0
+var resetLedge = false
+var flagLedging = false
+var ledge_direction = 0
+
+var can_fastfall = false
+var fastfall_window = false
+var fastfalling_timer = 0.0
+
+func _ready():
+	if player_id == 1:
+		$Sprite2D.modulate.r = 1
+		$Sprite2D.modulate.g = 0.7
+		$Sprite2D.modulate.b = 0.7
+	else:
+		$Sprite2D.modulate.r = 0.7
+		$Sprite2D.modulate.g = 0.7
+		$Sprite2D.modulate.b = 1
+	device_id = GlobalController.players[player_id - 1]
+	starting_layer = collision_layer
+	starting_mask = collision_mask
+	hud = get_node(\"../HUD\")
+	
+func _process(delta):
+	rotate_to_direction($Facing, 1)
+	hud.setLive(life, player_id)
+
+func _physics_process(delta):
+	inputMovement() # here i get the values of direction
+	inputControllers()
+	touchingFloor(delta) # this function i will use it if the user is touching the floor or not
+	stateReseters() # reseters of data
+	basicAttackTrueValue()
+	if isActive:
+		if state != States.DOWNED and state != States.STANDING and state != States.ROLLING and state != States.PUNCHED:
+			jumpLogic(delta)
+			movementLogic(delta)
+			crouchLogic()
+			floorAttacks()
+			airAttacks()
+			shieldLogic(delta)
+			shieldRoll()
+			ledgeLogic(delta)
+			if state != States.LEDGE:
+				fastfalling(delta)
+		else:
+			downedLogic()
+	else:
+		activeReset(delta)
+	bouncingLogic(delta)
+
+func basicAttackTrueValue():
+	if !basic_attack_flag and !basic_attack_input:
+		basic_attack_flag = true
+
+func fastfalling(delta):
+	if fastfall_window:
+		fastfalling_timer += delta
+		if fastfalling_timer < 0.15:
+			$FastFalling.texture = load(\"res://Assets/Sprites/Others/InGame/FastFalling.svg\")
+			if direction.y < -0.7: 
+				velocity.y = -JUMP_VELOCITY * 2
+		else:
+			$FastFalling.texture = load(\"\")
+			fastfall_window = false
+
+func rotate_to_direction(element, mod):
+	if (velocity.length() == 0 and mod > 0) or debugging == false: 
+		element.visible = false
+	else:
+		var playerVelocity = get_velocity()
+		var playerDirection = playerVelocity.normalized() if playerVelocity.normalized().x > 0 or mod != -1 else -playerVelocity.normalized()
+		var rotation_degrees = playerDirection.angle()
+		element.visible = true
+		element.rotation = rotation_degrees
+
+func bouncingLogic(delta):
+	if state == States.PUNCHED and !is_on_floor() and punchedTime > 2:
+		var collision_info = move_and_collide(velocity * delta)
+		if collision_info:
+			bounceDivisor += 1
+			velocity.x = velocity.x / bounceDivisor
+			velocity.y = velocity.y / bounceDivisor
+			velocity = velocity.bounce(collision_info.get_normal())
+	else:
+		move_and_slide()
+
+func resetDowned(delta):
+	if state == States.DOWNED:
+		downed_timer += delta
+		if downed_timer >= 3:
+			standPosition()
+
+func standPosition():
+	state = States.IDLE
+	bounceDivisor = 1
+
+func recieve_damage(multiplier, vector, damage):
+	if state == States.LEDGE:
+		flagLedging = false
+		porposefull_unledged = true
+		$Sprite2D.modulate.a = 1.0
+		resetLedge = true
+		ledgeResetTimer = 0.0
+		jumpCount = 1
+	bounceDivisor = 1
+	life += damage
+	var sum_to_damage = ((4.0 / 100.0) * life)
+	if damage < 8:
+		punchedTime = 0.5
+	else:
+		if sum_to_damage < 4:
+			punchedTime = 1 + sum_to_damage
+		else:
+			punchedTime = 4
+	if vector.x > 0.0:
+		$CollisionShape2D.scale.x = -1
+	else:
+		$CollisionShape2D.scale.x = 1
+	velocity.x = vector.x * life
+	velocity.y = vector.y * life
+
+	collision_layer = avoid_layer #
+	collision_mask = avoid_mask #
+	isActive = false #
+	state = States.PUNCHED #
+	dash_timer = 0.0 #
+	attackable = false
+	$Sprite2D.modulate.a = 0.8
+
+func inputControllers():
+	if device_id == 0:
+		jump_input = Input.is_action_pressed(\"jump\")
+		shield_input = Input.is_action_pressed(\"shield\")
+		basic_attack_input = Input.is_action_pressed(\"basic_attack\")
+	else:
+		jump_input = Input.is_joy_button_pressed(device_id, JOY_BUTTON_Y) or Input.is_joy_button_pressed(device_id, JOY_BUTTON_X)
+		shield_input = (Input.get_joy_axis(device_id, JOY_AXIS_TRIGGER_LEFT) > 0.8 or Input.get_joy_axis(device_id, JOY_AXIS_TRIGGER_RIGHT) > 0.8)
+		basic_attack_input = Input.is_joy_button_pressed(device_id, JOY_BUTTON_A) or (!is_on_floor() and Input.is_joy_button_pressed(device_id, JOY_BUTTON_RIGHT_SHOULDER))
+	
+func downedLogic():
+	velocity.x = 0
+	if direction.y > 0.8 or direction.y < -0.8:
+		dash_timer = 0.0
+		attackable = true
+		state = States.STANDING
+		isActive = false
+	if direction.x > 0.8 or direction.x < -0.8:
+		attackable = true
+		roll() # correct
+ 
+func inputMovement():
+	#shieldDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+	var axisDirection = Vector2(Input.get_joy_axis(device_id, JOY_AXIS_LEFT_X), -Input.get_joy_axis(device_id, JOY_AXIS_LEFT_Y))
+	if device_id == 0:
+		axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+	
+	if (axisDirection.x < 0.3 and axisDirection.x > -0.3):
+		axisDirection.x = 0
+	if (axisDirection.y < 0.3 and axisDirection.y > -0.3):
+		axisDirection.y = 0
+	
+	if (axisDirection.x > 0.8):
+		axisDirection.x = 1
+	if (axisDirection.x < -0.8):
+		axisDirection.x = -1
+	
+	shieldDirection = axisDirection
+	
+	if !isWalking:
+		direction = axisDirection
+	else:
+		direction = axisDirection / 2.1
+	tilt = Vector2(Input.get_joy_axis(device_id, JOY_AXIS_RIGHT_X), -Input.get_joy_axis(device_id, JOY_AXIS_RIGHT_Y))
+
+func shieldLogic(delta):
+	if shield_input and is_on_floor() and isActive:
+		if state != States.SHIELDING:
+			state = States.SHIELDING
+			velocity.x = 0
+		# $Sprite2D.modulate.a = 0.5
+
+func crouchLogic():
+	if direction.y < -0.6 and direction.x < 0.2 and direction.x > -0.2 and is_on_floor():
+		state = States.CROUCHING
+		velocity.x = 0
+
+func touchingFloor(delta):
+	if is_on_floor():
+		jump_direction = last_direction
+		jumpCount = 2
+	else:
+		if state == States.WALKING or state == States.RUNNING or state == States.IDLE and velocity.y != 0:
+			state = States.FALLING
+		velocity.y += gravity * delta
+
+func activeReset(delta):
+	dash_timer += delta
+	resetDashAttack(dash_timer)
+	resetNeutralAir(dash_timer)
+	resetDownAir(dash_timer)
+	resetSideTilt(dash_timer)
+	resetUpAir(dash_timer)
+	resetUpTilt(dash_timer)
+	resetForwardAir(dash_timer)
+	resetBackAir(dash_timer)
+	resetDownTilt(dash_timer)
+	resetJab(dash_timer)
+	resetStanding(dash_timer)
+	resetRolling(dash_timer)
+	resetAvoid(dash_timer)
+	resetPunched(dash_timer)
+	resetShieldKnockBack(dash_timer)
+
+func shieldRoll():
+	if state == States.SHIELDING and (shieldDirection.x > 0.8 or shieldDirection.x < -0.8) and (shieldDirection.y < 0.8 and shieldDirection.y > -0.8) and canRoll:
+		canRoll = false
+		print(direction.x)
+		roll()
+	if state == States.SHIELDING and (shieldDirection.y > 0.8 or shieldDirection.y < -0.8) and (shieldDirection.x < 0.8 and shieldDirection.x > -0.8) and canRoll:
+		canRoll = false
+		avoid()
+
+func jumpLogic(delta):
+	if !is_on_floor() and jumpCount > 1:
+		jumpCount = 1
+	
+	if is_jumping:
+		jump_timer += delta
+		
+		if state == States.LEDGE and isActive and jump_input:
+			velocity.y = JUMP_VELOCITY
+			
+			collision_layer = starting_layer
+			collision_mask = starting_mask
+		
+			flagLedging = false
+			porposefull_unledged = true
+			$Sprite2D.modulate.a = 1.0
+			resetLedge = true
+			ledgeResetTimer = 0.0
+			jumpCount = 0
+		
+		if jump_input and jump_timer < MAX_JUMP_TIME:
+			state = States.JUMPING
+			velocity.y = JUMP_VELOCITY
+			
+		else:
+			state = States.FALLING
+			is_jumping = false
+			jump_timer = 0
+		
+		# Fast falling
+		if velocity.y != JUMP_VELOCITY and !flagLedging:
+			if can_fastfall:
+				fastfalling_timer = 0.0
+				fastfall_window = true
+	
+
+func stateReseters():
+	if state != States.PUNCHED:
+		$Sprite2D.rotation = 0
+	
+	if (tilt.x > -0.6 and tilt.x < 0.6 and tilt.y > -0.6 and tilt.y < 0.6):
+		canTilt = true
+		
+	if !basic_attack_input and !canAttack:
+		canAttack = true
+
+	if !jump_input:
+		canJumpEsp = true
+
+	if isWalking and direction.x == 0:
+		isWalking = false
+		
+	if shieldDirection.x < 0.8 and shieldDirection.x > -0.8 and shieldDirection.y < 0.8 and shieldDirection.y > -0.8:
+		canRoll = true
+		
+	if direction.y < 0.3 and direction.y > -0.3 and direction.x < 0.3 and direction.x > -0.3 and !is_on_floor():
+		can_fastfall = true
+
+	if jump_input:
+		if (state == States.FALLING and jumpCount > 0 and canJumpEsp) or is_on_floor() or state == States.LEDGE:
+			jump_direction = last_direction
+			jumpCount -= 1
+			canJumpEsp = false
+			is_jumping = true
+			jump_timer = 0
+			if !(direction.y < 0.7 and direction.y > -0.7):
+				can_fastfall = false
+
+func movementLogic(delta):
+	if direction.x != 0 and state != States.DASH_ATTACK:
+		last_direction = direction.x
+		if is_on_floor():
+			if (direction.x >= 0.5 or direction.x <= -0.5):
+				state = States.RUNNING
+			else:
+				state = States.WALKING
+			velocity.x = move_toward(velocity.x, direction.x * max_speed, (acceleration * delta) * 10)
+		else:
+			velocity.x = move_toward(velocity.x, direction.x * max_speed, (acceleration * delta) * 5)
+	elif direction.x == 0 and state != States.JUMPING and !shield_input and is_on_floor():
+			state = States.IDLE
+			velocity.x = move_toward(velocity.x, 0, 100)
+
+func floorAttacks():
+	if (state == States.IDLE or state == States.WALKING or state == States.CROUCHING) and state != States.SHIELDING:
+		if state == States.IDLE: 
+			if basic_attack_input and state != States.CROUCHING:
+				isActive = false
+				state = States.JAB
+				dash_timer = 0.0
+		if (direction.x >= 0.2 or direction.x <= -0.2):
+			if basic_attack_input and basic_attack_flag:
+				basic_attack_flag = false
+				baseTiltAttack(States.SIDETILT, true)
+
+		if ((state == States.WALKING or state == States.IDLE or state == States.CROUCHING) and (tilt.x < -0.6 or tilt.x > 0.6) and canTilt) and state != States.SHIELDING:
+			if state == States.IDLE:
+				last_direction = tilt.x
+				baseTiltAttack(States.SIDETILT, true)
+
+		if ((state == States.CROUCHING and basic_attack_input) or is_on_floor() and tilt.y < -0.6) and canTilt:
+			velocity.x = 0
+			baseTiltAttack(States.DOWNTILT, false)
+
+		if (((direction.y > 0.5 and basic_attack_input) or is_on_floor() and tilt.y > 0.6) and canTilt):
+			baseTiltAttack(States.UPTILT, false)
+	elif (state == States.RUNNING and (basic_attack_input or (tilt.x < -0.6 or tilt.x > 0.6))) and state != States.SHIELDING:
+		dashAttack()
+
+func airAttacks():
+	if state == States.FALLING:
+		if basic_attack_input and direction.y > -0.1 and direction.y < 0.1 and direction.x == 0 and canAttack:
+			baseAirAttack(States.NEUTRAL_AIR)
+		if ((direction.y < -0.1 and basic_attack_input) or tilt.y < -0.6) and canTilt and canAttack:
+			baseAirAttack(States.DOWN_AIR)
+		if ((direction.y > 0.1 and basic_attack_input) or tilt.y > 0.6) and canTilt and canAttack:
+			baseAirAttack(States.UP_AIR)
+		isForwardAir()
+		isBackAir()
+
+func isForwardAir():
+	if canTilt and canAttack:
+		if jump_direction > 0 and ((direction.x > 0.1 and basic_attack_input) or tilt.x > 0.5):
+			baseAirAttack(States.FORWARD_AIR)
+		if jump_direction < 0 and ((direction.x < -0.1 and basic_attack_input) or tilt.x < -0.5):
+			baseAirAttack(States.FORWARD_AIR)
+
+func isBackAir():
+	if canTilt:
+		if jump_direction > 0 and ((direction.x < -0.1 and basic_attack_input) or tilt.x < -0.5):
+			baseAirAttack(States.BACK_AIR)
+		if jump_direction < 0 and ((direction.x > 0.1 and basic_attack_input) or tilt.x > 0.5):
+			baseAirAttack(States.BACK_AIR)
+
+func GrabLedge(direction_val, position_hitbox, hitboxList, delta):
+	if !porposefull_unledged:
+		ledge_timer += delta
+		var spec_direction
+		
+		if jump_direction > 0:
+			spec_direction = 1
+			ledge_direction = 1
+		else:
+			spec_direction = -1
+			ledge_direction = -1
+		
+		if spec_direction == direction_val:
+			collision_layer = avoid_layer
+			collision_mask = avoid_mask
+			position = position_hitbox
+			velocity = Vector2.ZERO
+			state = States.LEDGE
+			last_direction = direction_val
+		if state == States.LEDGE:
+			if flagLedging == false:
+				flagLedging = true
+				ledge_timer = 0.0
+			
+			if ledge_timer > 1:
+				collision_layer = starting_layer
+				collision_mask = starting_mask
+				$Sprite2D.modulate.a = 1.0
+			elif ledge_timer < 0.3:
+				$Sprite2D.modulate.a = 0.5
+				isActive = false
+			else:
+				isActive = true
+		jumpCount = 2
+
+func ledgeLogic(delta):
+	var condition_side
+	if ledge_direction > 0:
+		condition_side = direction.x < -0.5
+	else:
+		condition_side = direction.x > 0.5
+	ledgeResetTimer += delta
+	
+	if state == States.LEDGE:
+		can_fastfall = false
+		fastfalling_timer = 0.0
+		fastfall_window = false
+		$FastFalling.texture = load(\"\")
+		
+		if direction.y <= -0.5 or condition_side:
+			state = States.FALLING
+			
+			collision_layer = starting_layer
+			collision_mask = starting_mask
+		
+			flagLedging = false
+			porposefull_unledged = true
+			$Sprite2D.modulate.a = 1.0
+			resetLedge = true
+			ledgeResetTimer = 0.0
+
+
+	if ledgeResetTimer > 0.2 and resetLedge:
+		porposefull_unledged = false
+		resetLedge = false
+
+# Attacks / movements ------------------------------------------------------------------------------
+func avoid_generic(playerState, active, walking):
+	resetAvoid(false)
+	state = playerState
+	isActive = active
+	dash_timer = 0.0
+	isWalking = walking
+
+func set_avoid_collisions(collide):
+	if collide:
+		collision_layer = starting_layer
+		collision_mask = starting_mask
+	else:
+		collision_layer = avoid_layer
+		collision_mask = avoid_mask
+
+func baseAirAttack(playerState):
+	avoid_generic(playerState, false, false)
+	canTilt = false
+	canAttack = false
+
+func baseTiltAttack(playerState, go_forward):
+	avoid_generic(playerState, false, false)
+	velocity.x = 0
+	if go_forward:
+		velocity.x = 100 * last_direction
+	canTilt = false
+
+func avoid():
+	avoid_generic(States.AVOID, false, true)
+	$Sprite2D.modulate.a = 0.5
+
+func roll():
+	avoid_generic(States.ROLLING, false, true)
+	$Sprite2D.modulate.a = 0.5
+	if direction.x > 0.8:
+		last_direction = 1
+	elif direction.x < -0.8:
+		last_direction = -1
+		
+		
+	velocity.x = 0
+	velocity.x = 600 * last_direction
+
+func dashAttack():
+	isActive = false
+	state = States.DASH_ATTACK
+	dash_timer = 0.0
+	velocity.x = dash_distance * last_direction
+
+func shieldKnockBackLogic():
+	camera.max_zoom = 10
+
+func shieldKnockBack(knockDirection, knockValue):
+	state = States.SHIELDKNOCKBACKED
+	$CPUParticles2D3.emitting = true
+	if knockDirection > 0:
+		velocity.x = lerp(knockValue, 0, 0.5)
+		last_direction = -1
+	else:
+		velocity.x = lerp(-knockValue, 0, 0.2)
+		last_direction = 1
+	dash_timer = 0.0
+	isActive = false
+
+# RESETERS -----------------------------------------------------------------------------------------
+func resetShieldKnockBack(dash_timer):
+	if state == States.SHIELDKNOCKBACKED:
+		if dash_timer >= 0.2:
+			$CPUParticles2D3.emitting = false
+			#velocity.x = 0
+			state = States.IDLE
+			isActive = true
+			velocity.x = 0
+			Engine.set_time_scale(1.0)
+			camera.max_zoom = 1.0
+
+func resetDashAttack(dash_timer):
+	if state == States.DASH_ATTACK:
+		if dash_timer >= 0.1:
+			state = States.IDLE
+			isWalking = true
+			isActive = true
+
+func generic_reset(playerState, walking, active):
+	collision_layer = starting_layer
+	collision_mask = starting_mask
+	state = playerState
+	isWalking = true
+	isActive = true
+
+func resetNeutralAir(dash_timer):
+	if state == States.NEUTRAL_AIR:
+		if dash_timer >= 0.5 or is_on_floor():
+			generic_reset(States.FALLING, true, true)
+
+func resetDownAir(dash_timer):
+	if state == States.DOWN_AIR:
+		if dash_timer >= 0.4 or is_on_floor():
+			generic_reset(States.FALLING, true, true)
+
+func resetSideTilt(dash_timer):
+	if state == States.SIDETILT:
+		if dash_timer >= 0.2:
+			coolDownAttack(0.1, States.IDLE, true)
+
+func resetUpAir(dash_timer):
+	if state == States.UP_AIR:
+		if dash_timer >= 0.3 or is_on_floor():
+			generic_reset(States.FALLING, true, true)
+
+func resetForwardAir(dash_timer):
+	if state == States.FORWARD_AIR:
+		if dash_timer >= 0.3 or is_on_floor():
+			generic_reset(States.FALLING, true, true)
+
+func resetBackAir(dash_timer):
+	if state == States.BACK_AIR:
+		if dash_timer >= 0.3 or is_on_floor():
+			generic_reset(States.FALLING, true, true)
+
+func resetUpTilt(dash_timer):
+	if state == States.UPTILT:
+		if dash_timer >= 0.2:
+			state = States.IDLE
+			isWalking = true
+			isActive = true
+
+func resetDownTilt(dash_timer):
+	if state == States.DOWNTILT:
+		if dash_timer >= 0.2:
+			coolDownAttack(0.1, States.CROUCHING, false)
+
+func resetJab(dash_timer):
+	if state == States.JAB:
+		if dash_timer >= 0.2:
+			state = States.IDLE
+			isWalking = true
+			isActive = true
+		
+func resetStanding(dash_timer):
+	if state == States.STANDING:
+		if dash_timer >= 0.7:
+			collision_layer = starting_layer
+			collision_mask = starting_mask
+			isActive = true
+			state = States.IDLE
+		
+func resetRolling(dash_timer):
+	if state == States.ROLLING:
+		if dash_timer >= 0.2:
+			collision_layer = starting_layer
+			collision_mask = starting_mask
+			isActive = true
+			state = States.IDLE
+			$Sprite2D.modulate.a = 1.0
+			
+func resetAvoid(dash_timer):
+	if state == States.AVOID:
+		if dash_timer >= 0.3:
+			collision_layer = starting_layer
+			collision_mask = starting_mask
+			isActive = true
+			state = States.IDLE
+			$Sprite2D.modulate.a = 1.0
+			
+func resetPunched(dash_timer):
+	if state == States.PUNCHED:
+		rotate_to_direction($Sprite2D, -1)
+		bouncing = true
+		if dash_timer >= 0.2:
+			if punchedTime < 0.5:
+				collision_layer = starting_layer
+				collision_mask = starting_mask
+				$Sprite2D.modulate.a = 1.0
+				attackable = true
+			else:
+				collision_layer = starting_layer
+				collision_mask = starting_mask
+				attackable = true
+				
+			if punchedTime > 0.5 and velocity.length() < 20 or punchedTime > 0.5 and dash_timer >= punchedTime/2:
+				isActive = true
+				state = States.DOWNED
+			if (dash_timer >= punchedTime and dash_timer < 0.3) or is_on_floor():
+				standPosition()
+				isActive = true
+				state = States.IDLE
+				$Sprite2D.modulate.a = 1.0
+
+func coolDownAttack(time, newState, walkable):
+	state = newState
+	await get_tree().create_timer(time).timeout
+	if walkable:
+		isWalking = true
+	isActive = true
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0atph"]
+height = 84.0
+
+[sub_resource type="Animation" id="Animation_0sehn"]
+resource_name = "AVOID"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [40]
+}
+
+[sub_resource type="Animation" id="Animation_jay74"]
+resource_name = "BAIR"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [14]
+}
+
+[sub_resource type="Animation" id="Animation_fs6oy"]
+resource_name = "CROUCHING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20]
+}
+
+[sub_resource type="Animation" id="Animation_wf4kq"]
+resource_name = "DASH_ATTACK"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [22]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DASH_ATTACK_HITBOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_iwlg7"]
+resource_name = "DOWNED"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [32]
+}
+
+[sub_resource type="Animation" id="Animation_wgh02"]
+resource_name = "DOWNTILT"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DOWN_TILT_HITBOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_wlqvv"]
+resource_name = "DOWN_AIR"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DOWNAIR_HITBHOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_0bld2"]
+resource_name = "FAIR"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [12]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FORWARD_AIR_HITBOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ianko"]
+resource_name = "FALLING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [24]
+}
+
+[sub_resource type="Animation" id="Animation_t2o3i"]
+resource_name = "IDLE"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_chdis"]
+resource_name = "JAB"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6, 7]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("JAB_HITBOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.11),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_c8ppk"]
+resource_name = "JUMPING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [26]
+}
+
+[sub_resource type="Animation" id="Animation_ml15n"]
+resource_name = "LEDGE"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [44]
+}
+
+[sub_resource type="Animation" id="Animation_fr7s7"]
+resource_name = "LEDGE_NEW"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 0.170755),
+"update": 1,
+"values": [44, 45]
+}
+
+[sub_resource type="Animation" id="Animation_yme35"]
+resource_name = "NEUTRAL_AIR"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [28]
+}
+
+[sub_resource type="Animation" id="Animation_otrgn"]
+resource_name = "PUNCHED"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [43]
+}
+
+[sub_resource type="Animation" id="Animation_pf5cd"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_vtrkj"]
+resource_name = "ROLLING"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [38, 39]
+}
+
+[sub_resource type="Animation" id="Animation_oddxi"]
+resource_name = "RUNNING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [30]
+}
+
+[sub_resource type="Animation" id="Animation_r42ox"]
+resource_name = "SHIELDING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [34]
+}
+
+[sub_resource type="Animation" id="Animation_hu1rj"]
+resource_name = "SHIELDKNOCKBACK"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [35]
+}
+
+[sub_resource type="Animation" id="Animation_8yqvw"]
+resource_name = "SIDETILT"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [16]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SIDETILT_HITBOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_kh5au"]
+resource_name = "STANDING"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [36, 37]
+}
+
+[sub_resource type="Animation" id="Animation_4052c"]
+resource_name = "Test avoid"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [32, 4, 0]
+}
+
+[sub_resource type="Animation" id="Animation_m6fbm"]
+resource_name = "UPAIR"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UPAIR_HITBOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_np8oa"]
+resource_name = "UPTILT"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [10, 11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UPTILT_HITBOX:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_yhr26"]
+resource_name = "WALKING"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [18]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2gus0"]
+_data = {
+"AVOID": SubResource("Animation_0sehn"),
+"BAIR": SubResource("Animation_jay74"),
+"CROUCHING": SubResource("Animation_fs6oy"),
+"DASH_ATTACK": SubResource("Animation_wf4kq"),
+"DOWNED": SubResource("Animation_iwlg7"),
+"DOWNTILT": SubResource("Animation_wgh02"),
+"DOWN_AIR": SubResource("Animation_wlqvv"),
+"FAIR": SubResource("Animation_0bld2"),
+"FALLING": SubResource("Animation_ianko"),
+"IDLE": SubResource("Animation_t2o3i"),
+"JAB": SubResource("Animation_chdis"),
+"JUMPING": SubResource("Animation_c8ppk"),
+"LEDGE": SubResource("Animation_ml15n"),
+"LEDGE_NEW": SubResource("Animation_fr7s7"),
+"NEUTRAL_AIR": SubResource("Animation_yme35"),
+"PUNCHED": SubResource("Animation_otrgn"),
+"RESET": SubResource("Animation_pf5cd"),
+"ROLLING": SubResource("Animation_vtrkj"),
+"RUNNING": SubResource("Animation_oddxi"),
+"SHIELDING": SubResource("Animation_r42ox"),
+"SHIELDKNOCKBACK": SubResource("Animation_hu1rj"),
+"SIDETILT": SubResource("Animation_8yqvw"),
+"STANDING": SubResource("Animation_kh5au"),
+"Test avoid": SubResource("Animation_4052c"),
+"UPAIR": SubResource("Animation_m6fbm"),
+"UPTILT": SubResource("Animation_np8oa"),
+"WALKING": SubResource("Animation_yhr26")
+}
+
+[sub_resource type="Curve" id="Curve_0j01n"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(0.503311, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ghi00"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.804636, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_jr7mb"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(0.67451, 0.596078, 0.513726, 1, 0.839216, 0.8, 0.756863, 0.8, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 2
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+floor_snap_length = 0.0
+script = SubResource("GDScript_yv2bm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_0atph")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -47.0
+offset_top = -108.0
+offset_right = 47.0
+offset_bottom = -82.0
+text = "Jumping"
+horizontal_alignment = 1
+script = ExtResource("1_sd273")
+
+[node name="JAB_HITBOX" parent="." instance=ExtResource("13_gc2vs")]
+visible = false
+position = Vector2(0, -8)
+collision_layer = 1
+collision_mask = 3
+monitoring = false
+
+[node name="DASH_ATTACK_HITBOX" parent="." instance=ExtResource("14_h4xt5")]
+visible = false
+collision_mask = 3
+
+[node name="NAIR_HITBOX" parent="." instance=ExtResource("15_ia7bt")]
+visible = false
+
+[node name="DOWN_TILT_HITBOX" parent="." instance=ExtResource("19_enisu")]
+visible = false
+monitoring = false
+
+[node name="UPTILT_HITBOX" parent="." instance=ExtResource("22_vcq5u")]
+visible = false
+scale = Vector2(1.595, 1.2)
+collision_mask = 3
+monitoring = false
+
+[node name="DOWNAIR_HITBHOX" parent="." instance=ExtResource("25_p0biw")]
+collision_mask = 3
+monitoring = false
+
+[node name="SIDETILT_HITBOX" parent="." instance=ExtResource("27_ffsd5")]
+visible = false
+collision_mask = 3
+
+[node name="UPAIR_HITBOX" parent="." instance=ExtResource("30_v0kk2")]
+visible = false
+collision_mask = 3
+monitoring = false
+
+[node name="BACK_AIR_HITBOX" parent="." instance=ExtResource("33_ylel6")]
+visible = false
+collision_mask = 3
+
+[node name="FORWARD_AIR_HITBOX" parent="." instance=ExtResource("34_kvrdy")]
+visible = false
+collision_mask = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2gus0")
+}
+script = ExtResource("35_na8g4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 3)
+scale = Vector2(0.235, 0.235)
+texture = ExtResource("34_c6k68")
+hframes = 2
+vframes = 23
+frame = 35
+
+[node name="Controller" type="Node" parent="."]
+script = ExtResource("14_vt1v8")
+
+[node name="PlayerLabel" type="Sprite2D" parent="."]
+position = Vector2(0, -62)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("15_xg3ct")
+script = ExtResource("15_0eqv6")
+
+[node name="FastFalling" type="Sprite2D" parent="."]
+position = Vector2(14, -34)
+scale = Vector2(0.16, 0.16)
+
+[node name="Facing" type="Sprite2D" parent="."]
+scale = Vector2(0.185, 0.185)
+texture = ExtResource("17_jyh43")
+offset = Vector2(392.77, 0)
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="."]
+modulate = Color(0.67451, 0.6, 0.513726, 1)
+position = Vector2(0, 41)
+emitting = false
+amount = 500
+one_shot = true
+explosiveness = 0.26
+randomness = 1.0
+direction = Vector2(0, -1)
+spread = 97.5
+gravity = Vector2(0, -10.765)
+initial_velocity_min = 8.94
+initial_velocity_max = 27.58
+angular_velocity_max = 456.15
+angular_velocity_curve = SubResource("Curve_0j01n")
+scale_amount_min = 0.2
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_ghi00")
+color_ramp = SubResource("Gradient_jr7mb")

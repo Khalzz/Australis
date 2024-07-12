@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://c01b7svihusgt"]
+
+[ext_resource type="Texture2D" uid="uid://bpp2dqilvxbcg" path="res://Assets/UI/B Button/B Button(red letter).svg" id="1_1jc7o"]
+[ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
+[ext_resource type="Texture2D" uid="uid://c1vkm6lqpykgh" path="res://Assets/UI/A Button/A Button(green letter).svg" id="2_k2tdv"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_mqav7")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="FishingUi" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 95
+alignment = 1
+
+[node name="AButton(greenLetter)" type="Sprite2D" parent="UI/FishingUi"]
+position = Vector2(1565.29, 1016)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_k2tdv")
+
+[node name="Label" type="Label" parent="UI/FishingUi/AButton(greenLetter)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -51.0
+offset_top = -30.0
+offset_right = 81.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Launch Hook"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BButton(redLetter)" type="Sprite2D" parent="UI/FishingUi"]
+position = Vector2(1756, 1016)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_1jc7o")
+
+[node name="Label" type="Label" parent="UI/FishingUi/BButton(redLetter)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = -30.0
+offset_right = 77.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Stop Fishing"
+horizontal_alignment = 2
+vertical_alignment = 1

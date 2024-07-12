@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw53o5ijjsqt8"]
+
+[ext_resource type="Script" path="res://Scripts/Hook.gd" id="1_2vnkj"]
+[ext_resource type="Texture2D" uid="uid://tn43rj08c5wf" path="res://Assets/Sprites/Hook.svg" id="1_vrhcb"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uj0cm"]
+radius = 9.0
+height = 18.0
+
+[node name="Hook" type="RigidBody2D"]
+z_index = -1
+rotation = -1.01578
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_2vnkj")
+
+[node name="Hook" type="Sprite2D" parent="."]
+position = Vector2(0, 11)
+texture = ExtResource("1_vrhcb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_uj0cm")
