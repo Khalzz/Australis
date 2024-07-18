@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yrm1ny82anmp"
-path="res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"
+uid="uid://c4kvaadq5ivsf"
+path="res://.godot/imported/FishingRod.svg-cd97d24ba4dd4e9427412c74378faef7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/A Button/A Button(green background).svg"
-dest_files=["res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"]
+source_file="res://Assets/Sprites/FishingRod.svg"
+dest_files=["res://.godot/imported/FishingRod.svg-cd97d24ba4dd4e9427412c74378faef7.ctex"]
 
 [params]
 

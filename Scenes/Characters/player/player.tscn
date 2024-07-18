@@ -1,15 +1,16 @@
 [gd_scene load_steps=8 format=3 uid="uid://btnlv2vwv2vd8"]
 
 [ext_resource type="Script" path="res://Scripts/Label.gd" id="1_vm8iq"]
-[ext_resource type="Texture2D" uid="uid://dgdanfm0upifp" path="res://Assets/Sprites/Others/InGame/Facing.svg" id="2_ribfe"]
 [ext_resource type="Texture2D" uid="uid://bjfeom0n50oat" path="res://Assets/UI/InGame/FishingArrow.svg" id="3_50q3t"]
 [ext_resource type="Script" path="res://Scripts/FishingNode.gd" id="3_dyto1"]
+[ext_resource type="PackedScene" uid="uid://c01b7svihusgt" path="res://Scenes/UI/game_ui.tscn" id="5_qe2aq"]
 
 [sub_resource type="GDScript" id="GDScript_yv2bm"]
 script/source = "extends CharacterBody2D
 @export var debugging = false
 
 var camera
+var ui
 
 # Other data
 var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 3
@@ -42,24 +43,26 @@ var jumpCount = 2
 var jump_input
 var timer = 0.0
 var downed_timer = 0.0
+var axisDirection
 
 # fishing
 var fishing_position
+var hooked = false
 
 func _ready():
 	camera = $Camera2D
+	ui = $HUD
 	
 func _process(_delta):
 	jump_input = Input.is_action_pressed(\"jump\")
-	rotate_to_direction($Facing, 1)
 
 func _physics_process(delta):
-	inputMovement() # here i get the values of direction
 	touchingFloor(delta) # this function i will use it if the user is touching the floor or not
 	stateReseters() # reseters of data
 	fishing(delta)
 	
 	if isActive:
+		inputMovement() # here i get the values of direction
 		jumpLogic(delta)
 		movementLogic(delta)
 	
@@ -70,18 +73,8 @@ func camera_controll():
 	if state != Enums.PlayerStates.FISHING:
 		camera.global_position = position
 
-func rotate_to_direction(element, mod):
-	if (velocity.length() == 0 and mod > 0 and debugging == false): 
-		element.visible = false
-	else:
-		var playerVelocity = get_velocity()
-		var playerDirection = playerVelocity.normalized() if playerVelocity.normalized().x > 0 or mod != -1 else -playerVelocity.normalized()
-		var _rotation_degrees = playerDirection.angle()
-		element.visible = true
-		element.rotation = _rotation_degrees
-
 func inputMovement():
-	var axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+	axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
 
 	if (axisDirection.x < 0.1 and axisDirection.x > -0.1):
 		axisDirection.x = 0
@@ -155,10 +148,14 @@ func fishing(delta):
 		camera.offset.x = lerp(camera.offset.x, 0.0, delta * 10.0)
 
 # This function will let the triggers know that the player is touching it, so avoid using it in other elements
+# there is a bug that when i interact with a interactable while walking, the player moves a bit
 func interact(interaction, x):
-	if Input.is_action_just_pressed(\"A\"):
-		print(interaction)
+	if Input.is_action_just_pressed(\"A\") and isActive and is_on_floor():
+		hooked = false
+		ui.toggle_fishing_ui(true)
+		
 		if interaction == Enums.InteractionStates.FISHING:
+			velocity.x = 0
 			state = Enums.PlayerStates.FISHING
 			isActive = false
 		fishing_position = x
@@ -183,6 +180,8 @@ func _process(delta):
 floor_snap_length = 0.0
 script = SubResource("GDScript_yv2bm")
 
+[node name="HUD" parent="." instance=ExtResource("5_qe2aq")]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_vfkqx")
@@ -197,11 +196,6 @@ offset_bottom = -36.0
 text = "Jumping"
 horizontal_alignment = 1
 script = ExtResource("1_vm8iq")
-
-[node name="Facing" type="Sprite2D" parent="."]
-scale = Vector2(0.185, 0.185)
-texture = ExtResource("2_ribfe")
-offset = Vector2(392.77, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -228,10 +222,3 @@ z_index = -1
 position = Vector2(55.22, 0)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_50q3t")
-
-[node name="Label" type="Label" parent="FishingNode"]
-visible = false
-offset_left = -22.0
-offset_top = -142.0
-offset_right = 18.0
-offset_bottom = -119.0

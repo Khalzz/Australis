@@ -1,7 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://cw53o5ijjsqt8"]
+[gd_scene load_steps=9 format=3 uid="uid://cw53o5ijjsqt8"]
 
 [ext_resource type="Script" path="res://Scripts/Hook.gd" id="1_2vnkj"]
 [ext_resource type="Texture2D" uid="uid://tn43rj08c5wf" path="res://Assets/Sprites/Hook.svg" id="1_vrhcb"]
+[ext_resource type="Texture2D" uid="uid://6301m13t702n" path="res://Assets/UI/InGame/SelectableBar.svg" id="3_02ba7"]
+[ext_resource type="Texture2D" uid="uid://dhtdfu34ho6ac" path="res://Assets/UI/InGame/SelectableBarMarker.svg" id="4_888vp"]
+[ext_resource type="Script" path="res://Scripts/SelectableBar.gd" id="4_sp8ol"]
+[ext_resource type="Script" path="res://Scripts/SmashButton.gd" id="6_fijq6"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="7_jtsku"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uj0cm"]
 radius = 9.0
@@ -9,14 +14,96 @@ height = 18.0
 
 [node name="Hook" type="RigidBody2D"]
 z_index = -1
-rotation = -1.01578
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_2vnkj")
 
 [node name="Hook" type="Sprite2D" parent="."]
-position = Vector2(0, 11)
+position = Vector2(10, 4)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_vrhcb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_uj0cm")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, 9)
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+direction = Vector2(1000, 0)
+spread = 60.0
+gravity = Vector2(10, 300)
+initial_velocity_min = 10.1
+initial_velocity_max = 80.81
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+color = Color(0, 0.823529, 0.960784, 0.933333)
+
+[node name="SelectableBar" type="Sprite2D" parent="."]
+z_index = 20
+position = Vector2(0, -53)
+texture = ExtResource("3_02ba7")
+script = ExtResource("4_sp8ol")
+debugging = true
+
+[node name="SelectableBarMarker" type="Sprite2D" parent="SelectableBar"]
+position = Vector2(-75, 0)
+texture = ExtResource("4_888vp")
+
+[node name="Correct" type="Label" parent="SelectableBar"]
+offset_left = -78.0
+offset_top = -78.0
+offset_right = -38.0
+offset_bottom = -55.0
+text = "Correct: 0"
+
+[node name="Incorrect" type="Label" parent="SelectableBar"]
+offset_left = -78.0
+offset_top = -53.0
+offset_right = -38.0
+offset_bottom = -30.0
+text = "Incorrect: 0"
+
+[node name="SmashButton" type="Node2D" parent="."]
+z_index = 20
+position = Vector2(0, -57.05)
+script = ExtResource("6_fijq6")
+
+[node name="BackGround" type="ColorRect" parent="SmashButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -10.0
+offset_right = 75.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="FrontBar" type="ColorRect" parent="SmashButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -10.0
+offset_right = 75.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.694118, 0.560784, 0.835294, 1)
+
+[node name="Button" parent="." instance=ExtResource("7_jtsku")]
+offset_left = -83.0
+offset_top = -57.0
+offset_right = -83.0
+offset_bottom = -57.0

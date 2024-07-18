@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yrm1ny82anmp"
-path="res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"
+uid="uid://6301m13t702n"
+path="res://.godot/imported/SelectableBar.svg-741eb0207bbaaa560032ce41ea5ac37e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/A Button/A Button(green background).svg"
-dest_files=["res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"]
+source_file="res://Assets/UI/InGame/SelectableBar.svg"
+dest_files=["res://.godot/imported/SelectableBar.svg-741eb0207bbaaa560032ce41ea5ac37e.ctex"]
 
 [params]
 
@@ -32,6 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=10.0
+svg/scale=1.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false

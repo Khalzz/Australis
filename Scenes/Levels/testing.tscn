@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bam57je4i8w0b"]
+[gd_scene load_steps=12 format=3 uid="uid://bam57je4i8w0b"]
 
 [ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="1_epf7r"]
+[ext_resource type="Texture2D" uid="uid://cg4eb8jy4k16t" path="res://Assets/Sprites/FishingBay.svg" id="1_t81oj"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_4syf8"]
 [ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="3_8gf6a"]
-[ext_resource type="Texture2D" uid="uid://c1vkm6lqpykgh" path="res://Assets/UI/A Button/A Button(green letter).svg" id="4_srks2"]
-[ext_resource type="PackedScene" uid="uid://c01b7svihusgt" path="res://Scenes/UI/game_ui.tscn" id="5_jdtpp"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="4_eudjo"]
+[ext_resource type="Script" path="res://Scripts/Water.gd" id="6_cyx3l"]
+[ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="6_dsugx"]
+[ext_resource type="Texture2D" uid="uid://c4kvaadq5ivsf" path="res://Assets/Sprites/FishingRod.svg" id="7_35wc4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
 
@@ -14,23 +17,30 @@
 
 [node name="World" type="Node2D"]
 
+[node name="FishingBay" type="Sprite2D" parent="."]
+position = Vector2(-8, 307)
+scale = Vector2(0.115, 0.115)
+texture = ExtResource("1_t81oj")
+
 [node name="Floor" parent="." instance=ExtResource("1_epf7r")]
+modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(0, 139)
 scale = Vector2(30, 7.8)
 
 [node name="Player" parent="." instance=ExtResource("2_4syf8")]
-position = Vector2(-128, -152)
+position = Vector2(0, -152)
 debugging = true
 
 [node name="Interactable" type="Area2D" parent="."]
 position = Vector2(538, -71)
 script = ExtResource("3_8gf6a")
 
-[node name="AButton(greenLetter)" type="Sprite2D" parent="Interactable"]
-position = Vector2(49, -53)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_srks2")
+[node name="Button" parent="Interactable" instance=ExtResource("4_eudjo")]
+offset_left = 50.0
+offset_top = -52.0
+offset_right = 50.0
+offset_bottom = -52.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
 scale = Vector2(5, 5)
@@ -58,11 +68,9 @@ scale = Vector2(1, 51.48)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWall-r"]
 shape = SubResource("RectangleShape2D_gr5qe")
 
-[node name="HUD" parent="." instance=ExtResource("5_jdtpp")]
-
 [node name="Water" type="Area2D" parent="."]
-position = Vector2(10482, 1074)
-scale = Vector2(1000, 100)
+position = Vector2(1.99805, 1074)
+scale = Vector2(2032.72, 100)
 collision_layer = 2
 collision_mask = 2
 gravity_space_override = 1
@@ -70,6 +78,7 @@ gravity = -2192.81
 linear_damp_space_override = 1
 linear_damp = 7.171
 angular_damp = 8.071
+script = ExtResource("6_cyx3l")
 
 [node name="Front" type="ColorRect" parent="Water"]
 offset_left = -10.0
@@ -87,4 +96,18 @@ offset_bottom = 10.0
 color = Color(0.541176, 0.847059, 0.992157, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ficav")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Chair" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(491, -48)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("6_dsugx")
+
+[node name="FishingRod" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(595, -65)
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("7_35wc4")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yrm1ny82anmp"
-path="res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"
+uid="uid://ct7m1osqkhr7v"
+path="res://.godot/imported/B Button(pressed).svg-c629c59899e5d42d725158d5a793a98b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/A Button/A Button(green background).svg"
-dest_files=["res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"]
+source_file="res://Assets/UI/B Button/B Button(pressed).svg"
+dest_files=["res://.godot/imported/B Button(pressed).svg-c629c59899e5d42d725158d5a793a98b.ctex"]
 
 [params]
 

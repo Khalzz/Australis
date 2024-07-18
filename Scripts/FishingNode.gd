@@ -5,6 +5,7 @@ var hook_instance
 
 var player
 var camera
+var base_cam_offset
 
 # variable values
 var going_up = true
@@ -12,76 +13,87 @@ var power_up = true
 
 # flags
 var starting = true
-var setted_angle = false
-var hook_thrown = false
 
 var debug_label
+
+enum FishingStates { SettingAngle, SettingPower, HookMode }
+var state = FishingStates.SettingAngle
 
 func _ready():
 	player = $".."
 	debug_label = $Label
 	camera = $"../Camera2D"
+	base_cam_offset = camera.offset.x
 
 func _process(delta):
 	if Input.is_action_just_released("B"):
-		hook_thrown = false
+		reset_data(delta)
 	
 	if player.state == Enums.PlayerStates.FISHING:
-		if hook_thrown and hook_instance:
-			camera.global_position = hook_instance.global_transform.origin
-		else:
-			if !setted_angle:
+		match state:
+			FishingStates.SettingAngle:
+				player.ui.toggle_fishing_ui(true)
 				scale.x = lerp(scale.x, 1.0, delta * 7.0)
 				scale.y = lerp(scale.x, 1.0, delta * 7.0)
-			move_arrow(delta)
+				setting_angle(delta)
+			FishingStates.SettingPower:
+				setting_power(delta)
+			FishingStates.HookMode:
+				camera.global_position = hook_instance.global_transform.origin
+				$"../HUD/UI/FishingUi/AButton(greenLetter)".visible = false
 	else:
+		player.ui.toggle_fishing_ui(false)
 		reset_data(delta)
 
 func reset_data(delta):
+	state = FishingStates.SettingAngle
 	scale.x = lerp(scale.x, 0.0, delta * 20.0)
 	scale.y = lerp(scale.x, 0.0, delta * 20.0)
-	setted_angle = false
 	rotation = 0.0
 	going_up = true
 	power_up = false
-	hook_thrown = false
 
 func throw_hook():
+	state = FishingStates.HookMode
 	hook_instance = hook.instantiate()
 	get_parent().add_child(hook_instance)
-	var force = Vector2(0.0, 0.0) # Define the force vector
-	hook_instance.apply_impulse(Vector2(cos(rotation), sin(rotation)) * (200 + (2000 * scale.x)), force)
-	hook_thrown = true
+	var force_origin = Vector2(0.0, 0.0)
+	hook_instance.apply_impulse(Vector2(cos(rotation), sin(rotation)) * (200 + (2000 * scale.x)), force_origin)
 
 func move_arrow(delta):
-	if Input.is_action_just_pressed("A"):
-		setted_angle = true
-		scale.x = 0
-		
-	if setted_angle == true and Input.is_action_just_released("A"):
+	pass
+
+func setting_power(delta):
+	if Input.is_action_just_released("A"):
 		throw_hook()
-	
-	if !setted_angle:
-		if going_up:
-			if rotation <= deg_to_rad(-90):
-				going_up = false
-			else:
-				rotation -= 2.0 * delta
+	scale_animation(delta)
+
+func setting_angle(delta):
+	if Input.is_action_just_pressed("A"):
+		state = FishingStates.SettingPower
+		scale.x = 0
+	rotation_animation(delta)
+
+func rotation_animation(delta):
+	if going_up:
+		if rotation <= deg_to_rad(-80):
+			going_up = false
 		else:
-			if rotation >= deg_to_rad(0):
-				going_up = true
-			else:
-				rotation += 2.0 * delta
+			rotation -= 2.0 * delta
 	else:
-		debug_label.text = str(power_up)
-		
-		if power_up:
-			if scale.x < 1:
-				scale.x += 2.0 * delta
-			else:
-				power_up = false
-		else: 
-			if scale.x >= 0:
-				scale.x -= 2.0 * delta
-			else:
-				power_up = true
+		if rotation >= deg_to_rad(0):
+			going_up = true
+		else:
+			rotation += 2.0 * delta
+
+func scale_animation(delta):
+	if power_up:
+		if scale.x < 1:
+			scale.x += 2.0 * delta
+		else:
+			power_up = false
+	else: 
+		if scale.x >= 0:
+			scale.x -= 2.0 * delta
+		else:
+			power_up = true

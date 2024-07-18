@@ -1,0 +1,44 @@
+{
+	"items": [
+		{
+			"id": 0,
+			"img": "res://Assets/Sprites/Fishable/Merluza Antartica.svg",
+			"name": "Merluza Antartica",
+			"description": "también conocida como bacalao de la Antártida, es un pez grande que habita en las aguas frías del Océano Austral, alrededor de la Antártida. Puede alcanzar longitudes de más de 2 metros y pesar hasta 100 kg. Este pez es conocido por su carne blanca y su capacidad de producir proteínas anticongelantes que le permiten sobrevivir en temperaturas extremadamente bajas.",
+			"fishable": true,
+			"price": 100,
+			"specialty_level": 1,
+			"fished_message": "Has atrapado una Merluza Antartica."
+		},
+		{
+			"id": 1,
+			"img": "res://Assets/Sprites/Fishable/Bottle.svg",
+			"name": "Botella",
+			"description": "Una botella vacia de algun liquido el cual ha sido consumido, no aparenta tener mucho valor.",
+			"fishable": true,
+			"price": 10,
+			"specialty_level": 0,
+			"fished_message": "Haz encontrado una Botella."
+		},
+		{
+			"id": 2,
+			"img": "res://Assets/Sprites/Fishable/Bota.svg",
+			"name": "Bota",
+			"description": "Una bota usada y perdida, una bota nueva y encontrada no estaria en el oceano, no aparenta tener mucho valor.",
+			"fishable": true,
+			"price": 10,
+			"specialty_level": 0,
+			"fished_message": "Haz encontrado una Bota."
+		},
+		{
+			"id": 3,
+			"img": "res://Assets/Sprites/Fishable/WetCigarrette.svg",
+			"name": "Cigarro Mojado",
+			"description": "Un Cigarrillo que alguien lanzo al mar, sorprendentemente su papel se encuentra mojado mas no ha perdido masa, demostrando sus notables capacidades quimicamente toxicas (fumar es malo niños).",
+			"fishable": true,
+			"price": 10,
+			"specialty_level": 0,
+			"fished_message": "Iugh, eso es un Cigarro Mojado?."
+		}
+	],
+}

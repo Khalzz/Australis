@@ -1,0 +1,143 @@
+[gd_scene load_steps=6 format=3 uid="uid://c01b7svihusgt"]
+
+[ext_resource type="Texture2D" uid="uid://bpp2dqilvxbcg" path="res://Assets/UI/B Button/B Button(red letter).svg" id="1_1jc7o"]
+[ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
+[ext_resource type="Texture2D" uid="uid://c1vkm6lqpykgh" path="res://Assets/UI/A Button/A Button(green letter).svg" id="2_k2tdv"]
+[ext_resource type="Texture2D" uid="uid://cy0b4qevbqeus" path="res://Assets/Sprites/Fishable/Merluza Antartica.svg" id="4_0hrh8"]
+[ext_resource type="Script" path="res://Scenes/UI/Item.gd" id="4_gdgmi"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_mqav7")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="FishingUi" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 95
+alignment = 1
+
+[node name="AButton(greenLetter)" type="Sprite2D" parent="UI/FishingUi"]
+position = Vector2(1565.29, 1016)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_k2tdv")
+
+[node name="Label" type="Label" parent="UI/FishingUi/AButton(greenLetter)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -51.0
+offset_top = -30.0
+offset_right = 81.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Launch Hook"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BButton(redLetter)" type="Sprite2D" parent="UI/FishingUi"]
+position = Vector2(1756, 1016)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_1jc7o")
+
+[node name="Label" type="Label" parent="UI/FishingUi/BButton(redLetter)"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = -30.0
+offset_right = 77.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Stop Fishing"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Fished" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Fished"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewItem" type="Control" parent="Fished/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BackGround" type="ColorRect" parent="Fished/VBoxContainer/NewItem"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.0
+offset_top = -216.0
+offset_right = 274.0
+offset_bottom = 407.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.218868
+color = Color(0.160784, 0.25098, 0.25098, 1)
+
+[node name="FrontGround" type="ColorRect" parent="Fished/VBoxContainer/NewItem"]
+z_index = 50
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -332.0
+offset_right = 368.0
+offset_bottom = 291.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0946979
+color = Color(0.211765, 0.321569, 0.321569, 1)
+
+[node name="Item" type="Control" parent="Fished/VBoxContainer/NewItem"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_gdgmi")
+
+[node name="Item_img" type="Sprite2D" parent="Fished/VBoxContainer/NewItem/Item"]
+z_index = 100
+scale = Vector2(2, 2)
+texture = ExtResource("4_0hrh8")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yrm1ny82anmp"
-path="res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"
+uid="uid://c537oy166ws7i"
+path="res://.godot/imported/Chair.svg-768f9a1091964af437e6185b4badab53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/A Button/A Button(green background).svg"
-dest_files=["res://.godot/imported/A Button(green background).svg-9a71375e5b58eee3bf6c623309d2a24e.ctex"]
+source_file="res://Assets/Sprites/Chair.svg"
+dest_files=["res://.godot/imported/Chair.svg-768f9a1091964af437e6185b4badab53.ctex"]
 
 [params]
 
