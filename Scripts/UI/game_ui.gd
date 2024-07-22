@@ -28,6 +28,7 @@ func activateNewItem(delta):
 	$NewItem.scale.x = lerp($NewItem.scale.x, 1.0, delta * 15.0)
 	$NewItem.scale.y = lerp($NewItem.scale.y, 1.0, delta * 15.0)
 	$NewItem/UiMessage.start = true
+	
 func deactivateNewItem(delta):
 	$NewItem.scale.x = lerp($NewItem.scale.x, 0.0, delta * 20.0)
 	$NewItem.scale.y = lerp($NewItem.scale.y, 0.0, delta * 20.0)
@@ -39,3 +40,5 @@ func toggle_fishing_ui(active):
 	$"UI/FishingUi/AButton(greenLetter)".visible = active
 	$"UI/FishingUi/BButton(redLetter)".visible = active
 	
+func toggle_inventary(active):
+	$Inventario.visible = active

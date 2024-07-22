@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=15 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://Scripts/NewItem.gd" id="4_wxunm"]
 [ext_resource type="Script" path="res://Scripts/UiMessage.gd" id="4_yw2j3"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="8_xnr2x"]
-[ext_resource type="Script" path="res://Scenes/UI/ItemDescription.gd" id="10_4ugsh"]
 [ext_resource type="Script" path="res://Scripts/UI/Inventory.gd" id="10_owd25"]
 [ext_resource type="PackedScene" uid="uid://gya7o6joswu6" path="res://Scenes/Prefabs/UI/inventary_slot_node.tscn" id="11_iu0t8"]
 
@@ -49,12 +48,6 @@ tracks/1/keys = {
 _data = {
 "NewItem": SubResource("Animation_wgov2")
 }
-
-[sub_resource type="LabelSettings" id="LabelSettings_liqup"]
-font_size = 35
-
-[sub_resource type="LabelSettings" id="LabelSettings_2hags"]
-font_size = 25
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_mqav7")
@@ -261,94 +254,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.67451)
 
-[node name="ItemDescription" type="Control" parent="Inventario"]
-z_index = 20
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("10_4ugsh")
-
-[node name="ColorRect" type="ColorRect" parent="Inventario/ItemDescription"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -586.5
-offset_top = -400.0
-offset_right = 586.5
-offset_bottom = 400.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 0.127903
-pivot_offset = Vector2(606.5, 411)
-color = Color(0.458824, 0.380392, 0.333333, 1)
-
-[node name="Background" type="ColorRect" parent="Inventario/ItemDescription"]
-z_index = 10
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -586.5
-offset_top = -400.0
-offset_right = 586.5
-offset_bottom = 400.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.596078, 0.505882, 0.454902, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Inventario/ItemDescription/Background"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -489.5
-offset_top = -375.0
-offset_right = 489.5
-offset_bottom = 375.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="ItemImg" type="TextureRect" parent="Inventario/ItemDescription/Background/VBoxContainer"]
-custom_minimum_size = Vector2(578.72, 300)
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 2
-texture = ExtResource("4_0hrh8")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Inventario/ItemDescription/Background/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="ItemName" type="Label" parent="Inventario/ItemDescription/Background/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Merluza Antartica"
-label_settings = SubResource("LabelSettings_liqup")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ItemDescription" type="Label" parent="Inventario/ItemDescription/Background/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "también conocida como bacalao de la Antártida, es un pez grande que habita en las aguas frías del Océano Austral, alrededor de la Antártida. Puede alcanzar longitudes de más de 2 metros y pesar hasta 100 kg. Este pez es conocido por su carne blanca y su capacidad de producir proteínas anticongelantes que le permiten sobrevivir en temperaturas extremadamente bajas."
-label_settings = SubResource("LabelSettings_2hags")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
 [node name="Inventory" type="GridContainer" parent="Inventario"]
 layout_mode = 1
 anchors_preset = 8
@@ -369,14 +274,12 @@ script = ExtResource("10_owd25")
 
 [node name="0" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
-item_id = 0
 
 [node name="1" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
 
 [node name="2" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
-item_id = 2
 
 [node name="3" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
@@ -386,7 +289,6 @@ layout_mode = 2
 
 [node name="5" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
-item_id = 1
 
 [node name="6" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2

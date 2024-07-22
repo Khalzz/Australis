@@ -6,6 +6,7 @@ var acceleration = 600  # Adjust the acceleration value as needed
 var max_speed = 600.0  # Adjust the maximum speed as needed
 
 
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * 5
 

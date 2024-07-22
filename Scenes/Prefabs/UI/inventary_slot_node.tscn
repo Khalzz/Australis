@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://gya7o6joswu6"]
+
+[ext_resource type="Script" path="res://Scripts/UI/InventarySlotNode.gd" id="1_573f6"]
+[ext_resource type="Texture2D" uid="uid://np63e1eykdg8" path="res://Assets/UI/ItemManagement/Inventary/itemSlotBackgroundUnactive.svg" id="2_k47sb"]
+[ext_resource type="Texture2D" uid="uid://cy0b4qevbqeus" path="res://Assets/Sprites/Fishable/Merluza Antartica.svg" id="3_fvgmn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5okys"]
+font_size = 25
+
+[node name="InventarySlotNode" type="Control"]
+custom_minimum_size = Vector2(170, 170)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_573f6")
+
+[node name="Background" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(170, 170)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_k47sb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Img" type="TextureRect" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.698132
+pivot_offset = Vector2(72, 85)
+mouse_filter = 2
+texture = ExtResource("3_fvgmn")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -68.2456
+offset_top = -61.2281
+offset_right = -11.2456
+offset_bottom = -10.2281
+grow_horizontal = 0
+grow_vertical = 0
+text = "64"
+label_settings = SubResource("LabelSettings_5okys")
+horizontal_alignment = 1
+vertical_alignment = 1

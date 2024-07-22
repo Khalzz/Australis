@@ -15,8 +15,6 @@ var smash_button
 
 var distance = 0
 
-
-
 func _ready():
 	particles = $CPUParticles2D
 	selectable_bar = $SelectableBar
@@ -33,6 +31,8 @@ func _process(delta):
 	timer += delta
 	$"..".hooked = still
 	
+	print(grab_time)
+	
 	if still:
 		if position.x < 0:
 			$"..".state = Enums.PlayerStates.IDLE
@@ -48,16 +48,11 @@ func _process(delta):
 	if !bar_mode and !smash_mode:
 		if still and timer >= rand_time:
 			if Input.is_action_just_released("A"):
-				if randi() % 2 == 0:
-					bar_mode = true 
-					smash_mode = false
-				else:
-					bar_mode = false
-					smash_mode = true
-					$SmashButton/FrontBar.size.x = 50
+				get_random_minigame()
 			grab_time += delta
 			particles.emitting = true
 		if grab_time >= 3:
+			print("resetted")
 			reset_data()
 		deactivate_minigames()
 	elif bar_mode:
@@ -83,3 +78,12 @@ func show_bar_mode():
 	$Button.visible = true
 	selectable_bar.visible = true
 	smash_button.visible = false
+	
+func get_random_minigame():
+	if randi() % 2 == 0:
+		bar_mode = true 
+		smash_mode = false
+	else:
+		bar_mode = false
+		smash_mode = true
+		$SmashButton/FrontBar.size.x = 50

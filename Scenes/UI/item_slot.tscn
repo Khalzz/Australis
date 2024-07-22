@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://casi34d26hdpw"]
+
+[ext_resource type="Texture2D" uid="uid://cy0b4qevbqeus" path="res://Assets/Sprites/Fishable/Merluza Antartica.svg" id="1_ml8u3"]
+[ext_resource type="Script" path="res://Scripts/UI/InventarySlot.gd" id="1_mwx67"]
+[ext_resource type="Texture2D" uid="uid://np63e1eykdg8" path="res://Assets/UI/ItemManagement/Inventary/itemSlotBackgroundUnactive.svg" id="2_rcujf"]
+[ext_resource type="Texture2D" uid="uid://dysqcn2xp7ijl" path="res://Assets/UI/ItemManagement/Inventary/itemSlotBackgroundActive.svg" id="3_cubj1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vtf0w"]
+font_size = 25
+
+[node name="ItemSlot" type="Control"]
+custom_minimum_size = Vector2(170, 170)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 170.0
+offset_bottom = 170.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("1_mwx67")
+
+[node name="BaseButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_rcujf")
+texture_hover = ExtResource("3_cubj1")
+texture_focused = ExtResource("3_cubj1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Img" type="TextureRect" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -47.2781
+offset_right = 85.0
+offset_bottom = 47.2781
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.785397
+pivot_offset = Vector2(85, 46.8994)
+mouse_filter = 2
+texture = ExtResource("1_ml8u3")
+expand_mode = 5
+
+[node name="Count" type="Label" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -68.2456
+offset_top = -61.2281
+offset_right = -11.2456
+offset_bottom = -10.2281
+grow_horizontal = 0
+grow_vertical = 0
+text = "64"
+label_settings = SubResource("LabelSettings_vtf0w")
+horizontal_alignment = 1
+vertical_alignment = 1

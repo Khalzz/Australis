@@ -16,7 +16,7 @@
 			"name": "Botella",
 			"description": "Una botella vacia de algun liquido el cual ha sido consumido, no aparenta tener mucho valor.",
 			"fishable": true,
-			"price": 10,
+			"price": 5,
 			"specialty_level": 0,
 			"fished_message": "Haz encontrado una Botella."
 		},
@@ -36,9 +36,19 @@
 			"name": "Cigarro Mojado",
 			"description": "Un Cigarrillo que alguien lanzo al mar, sorprendentemente su papel se encuentra mojado mas no ha perdido masa, demostrando sus notables capacidades quimicamente toxicas (fumar es malo niños).",
 			"fishable": true,
-			"price": 10,
+			"price": 1,
 			"specialty_level": 0,
 			"fished_message": "Iugh, eso es un Cigarro Mojado?."
+		},
+		{
+			"id": 4,
+			"img": "res://Assets/Sprites/Fishable/AnillaLatas.svg",
+			"name": "Anilla para latas",
+			"description": "Un trozo de plastico con 6 agujeros el cual en un tiempo anterior se utilizo para mantener juntos paquetes de bebidas enlatadas, lastimozamente son de las principales encargadas de atacar la fauna del oceano.",
+			"fishable": true,
+			"price": 2,
+			"specialty_level": 0,
+			"fished_message": "Haz encontrado una Anilla para Latas."
 		}
 	],
 }

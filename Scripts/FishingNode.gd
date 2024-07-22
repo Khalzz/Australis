@@ -14,14 +14,11 @@ var power_up = true
 # flags
 var starting = true
 
-var debug_label
-
 enum FishingStates { SettingAngle, SettingPower, HookMode }
 var state = FishingStates.SettingAngle
 
 func _ready():
 	player = $".."
-	debug_label = $Label
 	camera = $"../Camera2D"
 	base_cam_offset = camera.offset.x
 

@@ -42,11 +42,11 @@ func _process(delta):
 		$Incorrect.visible = false
 	
 	if error_count == 3:
-		get_parent().bar_mode = false
+		get_parent().get_random_minigame()
 		correct_count = 0
 		error_count = 0
 	if correct_count == 3:
-		get_parent().bar_mode = false
+		get_parent().get_random_minigame()
 		correct_count = 0
 		error_count = 0
 		var force_origin = Vector2(0.0, 0.0)

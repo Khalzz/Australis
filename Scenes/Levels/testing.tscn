@@ -96,7 +96,6 @@ offset_bottom = 10.0
 color = Color(0.541176, 0.847059, 0.992157, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_ficav")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
