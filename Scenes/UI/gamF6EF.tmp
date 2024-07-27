@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=18 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -12,10 +12,6 @@
 [ext_resource type="Script" path="res://Scenes/UI/ItemDescription.gd" id="10_4ugsh"]
 [ext_resource type="Script" path="res://Scripts/UI/Inventory.gd" id="10_owd25"]
 [ext_resource type="PackedScene" uid="uid://gya7o6joswu6" path="res://Scenes/Prefabs/UI/inventary_slot_node.tscn" id="11_iu0t8"]
-[ext_resource type="Script" path="res://Scripts/UI/UiControllerGuide.gd" id="13_ck72d"]
-[ext_resource type="Texture2D" uid="uid://c8m77niowl4s3" path="res://Assets/UI/Y Button/Y pressed.svg" id="13_ew1mb"]
-[ext_resource type="Texture2D" uid="uid://hn7l0qqyhr66" path="res://Assets/UI/Y Button/Y.svg" id="14_qqg0b"]
-[ext_resource type="Script" path="res://Scripts/UI/AlertLabel.gd" id="15_4y5g0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqq5d"]
 font_size = 18
@@ -74,7 +70,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="FishingUi" type="HBoxContainer" parent="UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -156,7 +151,6 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(20, 0)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -407,187 +401,3 @@ layout_mode = 2
 
 [node name="11" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
-
-[node name="UiControllerGuide" type="HBoxContainer" parent="Inventario"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -480.0
-offset_top = -100.0
-grow_horizontal = 0
-grow_vertical = 0
-alignment = 2
-script = ExtResource("13_ck72d")
-
-[node name="SetPosition" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Button" parent="Inventario/UiControllerGuide/SetPosition" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_right = 50.0
-grow_horizontal = 1
-
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/SetPosition"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
-text = "Set Position"
-vertical_alignment = 1
-
-[node name="Select" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Button" parent="Inventario/UiControllerGuide/Select" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_right = 50.0
-grow_horizontal = 1
-
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/Select"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
-text = "Select"
-vertical_alignment = 1
-
-[node name="MoveItem" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Button" parent="Inventario/UiControllerGuide/MoveItem" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_right = 50.0
-grow_horizontal = 1
-pressed = ExtResource("13_ew1mb")
-unpressed = ExtResource("14_qqg0b")
-action = "Y"
-
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/MoveItem"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
-text = "Move Item"
-vertical_alignment = 1
-
-[node name="Cancel" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Button" parent="Inventario/UiControllerGuide/Cancel" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_right = 50.0
-grow_horizontal = 1
-pressed = ExtResource("3_0ic2g")
-unpressed = ExtResource("4_q1bps")
-action = "B"
-
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/Cancel"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
-text = "Cancel"
-vertical_alignment = 1
-
-[node name="Back" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Button" parent="Inventario/UiControllerGuide/Back" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_right = 50.0
-grow_horizontal = 1
-pressed = ExtResource("3_0ic2g")
-unpressed = ExtResource("4_q1bps")
-action = "B"
-
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/Back"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
-text = "Back"
-vertical_alignment = 1
-
-[node name="Label" type="Label" parent="Inventario"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -258.0
-offset_right = 180.0
-offset_bottom = -235.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Esta funcionalidad aun no esta implementada"
-script = ExtResource("15_4y5g0")
-
-[node name="Fadable" type="ColorRect" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)

@@ -4,14 +4,21 @@ extends Control
 @export var item_name = "Merluza Antartica"
 @export var item_description = "Lorem ipsum dolor sit ameur consecteur"
 
+var active = false
 var data_setted = false
+
+func _process(delta):
+	if active:
+		show_item_description(delta)
+	else:
+		hide_item_description(delta)
 
 func hide_item_description(delta):
 	$ColorRect.position.y = lerp($ColorRect.position.y, 6000.0, delta * 2.0)
 	$Background.position.y = lerp($Background.position.y, 6000.0, delta)
+	data_setted = false
 	
-	if $Background.position.y > 5000:
-		data_setted = false
+	if $Background.position.y > 1500:
 		visible = false
 
 # Here all the logic from this element will be setted
@@ -21,13 +28,7 @@ func show_item_description(delta):
 	
 	if !data_setted:
 		visible = true
-		print($"../Inventory".selected_item.item_id)
-		
-		$Background/VBoxContainer/ItemImg.texture = load(Items.fishable_list[$"../Inventory".selected_item.item_id]["img"])
-		$Background/VBoxContainer/VBoxContainer/ItemName.text = Items.fishable_list[$"../Inventory".selected_item.item_id]["name"]
-		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = Items.fishable_list[$"../Inventory".selected_item.item_id]["description"]
+		$Background/VBoxContainer/ItemImg.texture = load(Items.fishable_list[$"../Inventory".selected_item]["img"])
+		$Background/VBoxContainer/VBoxContainer/ItemName.text = Items.fishable_list[$"../Inventory".selected_item]["name"]
+		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = Items.fishable_list[$"../Inventory".selected_item]["description"]
 		data_setted = true
-	
-	if Input.is_action_just_pressed("B"):
-		$"../Inventory".back_to_inventory()
-		

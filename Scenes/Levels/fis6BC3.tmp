@@ -1,0 +1,160 @@
+[gd_scene load_steps=14 format=3 uid="uid://bam57je4i8w0b"]
+
+[ext_resource type="Texture2D" uid="uid://cg4eb8jy4k16t" path="res://Assets/Sprites/FishingBay.svg" id="1_jgefp"]
+[ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="2_gqcwt"]
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="3_dp0ke"]
+[ext_resource type="Script" path="res://Scripts/Water.gd" id="4_6pvyn"]
+[ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="5_86i74"]
+[ext_resource type="Texture2D" uid="uid://c4kvaadq5ivsf" path="res://Assets/Sprites/FishingRod.svg" id="6_4ddhg"]
+[ext_resource type="Texture2D" uid="uid://dacychjh8sku3" path="res://Assets/Sprites/FishingLand.svg" id="7_f7x2n"]
+[ext_resource type="Texture2D" uid="uid://br867g7fxtmnu" path="res://Assets/Sprites/World/WoodArrowBase.svg" id="8_4vpwo"]
+[ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="9_ufphp"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="10_dxubv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ficav"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
+size = Vector2(31.4, 20)
+
+[node name="World" type="Node2D"]
+
+[node name="FishingBay" type="Sprite2D" parent="."]
+position = Vector2(-8, 307)
+scale = Vector2(0.115, 0.115)
+texture = ExtResource("1_jgefp")
+
+[node name="Floor" parent="." instance=ExtResource("2_gqcwt")]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(-586, 139)
+scale = Vector2(59.36, 7.8)
+
+[node name="Player" parent="." instance=ExtResource("3_dp0ke")]
+position = Vector2(0, -152)
+debugging = true
+
+[node name="InvisibleWall-l" type="StaticBody2D" parent="."]
+position = Vector2(-1002, -496)
+scale = Vector2(1, 51.48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWall-l"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="InvisibleWall-r" type="StaticBody2D" parent="."]
+position = Vector2(600, -496)
+scale = Vector2(1, 51.48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWall-r"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="Water" type="Area2D" parent="."]
+position = Vector2(1.99805, 1074)
+scale = Vector2(2032.72, 100)
+collision_layer = 2
+collision_mask = 2
+gravity_space_override = 1
+gravity = -2192.81
+linear_damp_space_override = 1
+linear_damp = 7.171
+angular_damp = 8.071
+script = ExtResource("4_6pvyn")
+
+[node name="Front" type="ColorRect" parent="Water"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0, 0.384314, 0.803922, 0.643137)
+
+[node name="Background" type="ColorRect" parent="Water"]
+z_index = -2
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.541176, 0.847059, 0.992157, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+shape = SubResource("RectangleShape2D_ficav")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Chair" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(491, -48)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("5_86i74")
+
+[node name="FishingRod" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(595, -65)
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("6_4ddhg")
+
+[node name="FishingLand" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-1284, 406)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("7_f7x2n")
+
+[node name="FishingLandBackground" type="Sprite2D" parent="."]
+modulate = Color(0.47451, 0.47451, 0.47451, 1)
+z_index = -1
+position = Vector2(-966, 433)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("7_f7x2n")
+
+[node name="WoodArrowBase" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(-905, -53)
+scale = Vector2(-0.2, 0.2)
+texture = ExtResource("8_4vpwo")
+
+[node name="StaticInteractuables" type="Node" parent="."]
+
+[node name="Fishing" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(538, -71)
+script = ExtResource("9_ufphp")
+
+[node name="Button" parent="StaticInteractuables/Fishing" instance=ExtResource("10_dxubv")]
+offset_left = 50.0
+offset_top = -52.0
+offset_right = 50.0
+offset_bottom = -52.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/Fishing"]
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_xqnm1")
+
+[node name="Label" type="Label" parent="StaticInteractuables/Fishing"]
+offset_left = -42.0
+offset_top = -100.0
+offset_right = 41.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
+
+[node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-889, -71)
+script = ExtResource("9_ufphp")
+interaction = 2
+
+[node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("10_dxubv")]
+offset_left = 50.0
+offset_top = -52.0
+offset_right = 50.0
+offset_bottom = -52.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoingHome"]
+position = Vector2(-16.5, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_xqnm1")
+
+[node name="Label" type="Label" parent="StaticInteractuables/GoingHome"]
+offset_left = -42.0
+offset_top = -100.0
+offset_right = 41.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true

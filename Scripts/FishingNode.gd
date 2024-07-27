@@ -5,7 +5,6 @@ var hook_instance
 
 var player
 var camera
-var base_cam_offset
 
 # variable values
 var going_up = true
@@ -19,8 +18,6 @@ var state = FishingStates.SettingAngle
 
 func _ready():
 	player = $".."
-	camera = $"../Camera2D"
-	base_cam_offset = camera.offset.x
 
 func _process(delta):
 	if Input.is_action_just_released("B"):
@@ -36,7 +33,7 @@ func _process(delta):
 			FishingStates.SettingPower:
 				setting_power(delta)
 			FishingStates.HookMode:
-				camera.global_position = hook_instance.global_transform.origin
+				player.camera.global_position = hook_instance.global_transform.origin
 				$"../HUD/UI/FishingUi/AButton(greenLetter)".visible = false
 	else:
 		player.ui.toggle_fishing_ui(false)

@@ -8,9 +8,8 @@
 [sub_resource type="GDScript" id="GDScript_yv2bm"]
 script/source = "extends CharacterBody2D
 @export var debugging = false
-@export var camera_following = true # by default the camera will follow the player
 
-@export var camera: Camera2D
+var camera
 var ui
 
 # Other data
@@ -52,29 +51,16 @@ var hooked = false
 
 var paused = false
 
-var fading = true
-var fading_in = false
-
+var fading = false
 
 func _ready():
+	camera = $Camera2D
 	ui = $HUD
 	
 func _process(delta):
-	if camera_following:
-		camera.follow(position, false, null)
-	
 	if fading:
-		if fading_in:
-			#camera.offset.y = lerp(camera.offset.y, 0.0, delta * 5.0)
-			camera.zoom.x = lerp(camera.zoom.x, 10.0, delta)
-			camera.zoom.y = lerp(camera.zoom.y, 10.0, delta)
-			ui.fadable.color.a = lerp(ui.fadable.color.a, 1.0, delta * 5.0)
-		else:
-			#camera.offset.y = lerp(camera.offset.y, -170.0, delta)
-			camera.zoom.x = lerp(camera.zoom.x, 1.4, delta * 2.0)
-			camera.zoom.y = lerp(camera.zoom.y, 1.4, delta * 2.0)
-			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta / 2.0)
-		
+		camera.offset.y = lerp(camera.offset.y, 1000.0, delta)
+	
 	jump_input = Input.is_action_pressed(\"jump\")
 	
 	if Input.is_action_just_pressed(\"pause\") and state != Enums.PlayerStates.FISHING and !ui.new_item_active:
@@ -96,9 +82,12 @@ func _physics_process(delta):
 		jumpLogic(delta)
 		movementLogic(delta)
 	
+	camera_controll()
 	move_and_slide()
 
-
+func camera_controll():
+	if state != Enums.PlayerStates.FISHING:
+		camera.global_position = position
 
 func inputMovement():
 	axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
@@ -187,11 +176,9 @@ func interact(interaction, x):
 				state = Enums.PlayerStates.FISHING
 				isActive = false
 				fishing_position = x
-			Enums.InteractionStates.ENTERING_HOME:
-				fading = true
-				fading_in = true
-				await get_tree().create_timer(1).timeout
-				get_tree().change_scene_to_file(\"res://Scenes/Levels/home.tscn\")
+			Enums.InteractionStates.TRAVELING_HOME:
+				fading_false
+				print(\"traveling to some place\")
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vfkqx"]
@@ -212,6 +199,7 @@ func _process(delta):
 [node name="Player" type="CharacterBody2D"]
 floor_snap_length = 0.0
 script = SubResource("GDScript_yv2bm")
+debugging = null
 
 [node name="HUD" parent="." instance=ExtResource("5_qe2aq")]
 
@@ -238,6 +226,14 @@ offset_top = -29.0
 offset_right = 15.0
 offset_bottom = 29.0
 color = Color(1, 0.631373, 0.184314, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-2, 23)
+offset = Vector2(0, -170)
+zoom = Vector2(1.4, 1.4)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
 
 [node name="FishingNode" type="Node2D" parent="."]
 script = ExtResource("3_dyto1")

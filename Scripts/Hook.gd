@@ -20,6 +20,7 @@ func _ready():
 	selectable_bar = $SelectableBar
 	smash_button = $SmashButton
 	reset_data()
+	deactivate_minigames()
 
 func reset_data():
 	particles.emitting = false
@@ -31,13 +32,12 @@ func _process(delta):
 	timer += delta
 	$"..".hooked = still
 	
-	print(grab_time)
-	
 	if still:
 		if position.x < 0:
 			$"..".state = Enums.PlayerStates.IDLE
 			$"..".ui.new_item_active = true
-			$"..".ui.item_id = randi_range(0, Items.fishable_list.size() - 1)
+			var new_item = randi_range(0, Items.fishable_list.size() - 1)
+			$"..".ui.item_id = new_item
 			die()
 	else:
 		distance = position.x
@@ -52,7 +52,6 @@ func _process(delta):
 			grab_time += delta
 			particles.emitting = true
 		if grab_time >= 3:
-			print("resetted")
 			reset_data()
 		deactivate_minigames()
 	elif bar_mode:

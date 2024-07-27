@@ -1,0 +1,195 @@
+[gd_scene load_steps=12 format=3 uid="uid://ndxog7fkfule"]
+
+[ext_resource type="Texture2D" uid="uid://csn08kqxj3iks" path="res://Assets/Sprites/World/WoodFloor.svg" id="2_kljye"]
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="3_n5yte"]
+[ext_resource type="Texture2D" uid="uid://bf3m17lil5nbu" path="res://Assets/Sprites/World/Bed.svg" id="6_vbl0t"]
+[ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="7_2nxc3"]
+[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="8_th5ap"]
+[ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="9_jd43e"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="10_1ramb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
+size = Vector2(31.4, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbr2k"]
+size = Vector2(393, 292)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwrsc"]
+size = Vector2(764, 292)
+
+[node name="World" type="Node2D"]
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("3_n5yte")]
+position = Vector2(-174, -53)
+debugging = true
+camera_following = false
+camera = NodePath("../MainCamera")
+
+[node name="MainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("follow_object")]
+position = Vector2(-175, -79)
+zoom = Vector2(10, 10)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("8_th5ap")
+follow_object = NodePath("../Player")
+
+[node name="StaticInteractuables" type="Node" parent="."]
+
+[node name="Sleep" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(519, -73)
+script = ExtResource("9_jd43e")
+interaction = 2
+
+[node name="Button" parent="StaticInteractuables/Sleep" instance=ExtResource("10_1ramb")]
+offset_left = 50.0
+offset_top = -52.0
+offset_right = 50.0
+offset_bottom = -52.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/Sleep"]
+position = Vector2(-16.5, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_xqnm1")
+
+[node name="Label" type="Label" parent="StaticInteractuables/Sleep"]
+offset_left = -42.0
+offset_top = -100.0
+offset_right = 41.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
+
+[node name="Backrgound" type="ColorRect" parent="."]
+z_index = -50
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1500.0
+offset_top = -1000.0
+offset_right = 1500.0
+offset_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Bed" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(507, -45)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("6_vbl0t")
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="InvisibleWall-r" type="StaticBody2D" parent="Walls"]
+position = Vector2(600, -159)
+scale = Vector2(1, 16.165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/InvisibleWall-r"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="Floor2" type="Sprite2D" parent="Walls/InvisibleWall-r"]
+z_index = 50
+position = Vector2(-1.51992e-05, 1.34991e-05)
+scale = Vector2(0.00188858, 0.0588236)
+texture = ExtResource("2_kljye")
+
+[node name="Roof" type="StaticBody2D" parent="Walls"]
+position = Vector2(-4.54747e-13, -321)
+rotation = 1.5708
+scale = Vector2(1, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Roof"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="Floor2" type="Sprite2D" parent="Walls/Roof"]
+z_index = 50
+position = Vector2(-1.51992e-05, 1.34991e-05)
+scale = Vector2(0.00188858, 0.0588236)
+texture = ExtResource("2_kljye")
+
+[node name="InvisibleWall-r2" type="StaticBody2D" parent="Walls"]
+position = Vector2(185, -251)
+scale = Vector2(1, 7.115)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/InvisibleWall-r2"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="Floor2" type="Sprite2D" parent="Walls/InvisibleWall-r2"]
+z_index = 50
+position = Vector2(-1.51992e-05, 1.34991e-05)
+scale = Vector2(0.00188858, 0.0588236)
+texture = ExtResource("2_kljye")
+
+[node name="InvisibleWall-l" type="StaticBody2D" parent="Walls"]
+position = Vector2(-600, -159)
+scale = Vector2(1, 16.165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/InvisibleWall-l"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="Floor2" type="Sprite2D" parent="Walls/InvisibleWall-l"]
+z_index = 50
+position = Vector2(-1.51992e-05, 1.34991e-05)
+scale = Vector2(0.00188858, 0.0588236)
+texture = ExtResource("2_kljye")
+
+[node name="Roof2" type="StaticBody2D" parent="Walls"]
+position = Vector2(-1.0842e-19, -6)
+rotation = 1.5708
+scale = Vector2(1, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Roof2"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="Floor2" type="Sprite2D" parent="Walls/Roof2"]
+z_index = 50
+position = Vector2(-1.51992e-05, 1.34991e-05)
+scale = Vector2(0.00188858, 0.0588236)
+texture = ExtResource("2_kljye")
+
+[node name="CameraTriggers" type="Node" parent="."]
+
+[node name="BedroomCamera" type="Area2D" parent="CameraTriggers"]
+position = Vector2(393, -159)
+script = ExtResource("7_2nxc3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTriggers/BedroomCamera"]
+position = Vector2(-1.5, -6)
+shape = SubResource("RectangleShape2D_dbr2k")
+
+[node name="Camera" type="Camera2D" parent="CameraTriggers/BedroomCamera"]
+enabled = false
+zoom = Vector2(2.9, 2.9)
+
+[node name="LivingCamera" type="Area2D" parent="CameraTriggers"]
+position = Vector2(-205, -159)
+script = ExtResource("7_2nxc3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTriggers/LivingCamera"]
+position = Vector2(-3, -6)
+shape = SubResource("RectangleShape2D_uwrsc")
+
+[node name="Camera" type="Camera2D" parent="CameraTriggers/LivingCamera"]
+offset = Vector2(0, -81.9)
+enabled = false
+zoom = Vector2(2.015, 2.015)
+
+[node name="Door" type="ColorRect" parent="."]
+z_index = -50
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -214.0
+offset_top = -147.0
+offset_right = -143.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.517647, 0.517647, 0.517647, 1)

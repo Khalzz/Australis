@@ -249,7 +249,6 @@ libraries = {
 }
 
 [node name="Inventario" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -521,7 +520,7 @@ offset_right = 50.0
 grow_horizontal = 1
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
-action = "B"
+action = "Y"
 
 [node name="Label" type="Label" parent="Inventario/UiControllerGuide/Cancel"]
 layout_mode = 1
@@ -582,12 +581,3 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Esta funcionalidad aun no esta implementada"
 script = ExtResource("15_4y5g0")
-
-[node name="Fadable" type="ColorRect" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)

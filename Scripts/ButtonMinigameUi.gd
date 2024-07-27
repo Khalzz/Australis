@@ -2,7 +2,7 @@ extends Control
 
 @export var pressed: CompressedTexture2D
 @export var unpressed: CompressedTexture2D
-@export var action = "A" # the name of the action we have in the input manager
+@export var action = "A"
 
 func _ready():
 	$Pressed.texture = pressed

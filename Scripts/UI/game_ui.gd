@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 var player
+var inventory
+var fadable
 
 var item_id = 0
 var new_item_active = false
@@ -8,15 +10,22 @@ var new_item_active = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = $".."
+	inventory = $Inventario/Inventory
+	fadable = $Fadable
+	fadable.visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	if new_item_active: 
 		activateNewItem(delta)
 		if Input.is_action_just_released("A"):
 			if $NewItem/UiMessage.done:
-				player.isActive = true
 				new_item_active = false
+				if $Inventario/Inventory.add_item(item_id):
+					player.isActive = true
+				else:
+					player.toggle_inventory()
 			else:
 				$NewItem/UiMessage.string_show = $NewItem/UiMessage.message
 				$NewItem/UiMessage.done = true

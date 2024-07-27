@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://gya7o6joswu6"]
+[gd_scene load_steps=7 format=3 uid="uid://gya7o6joswu6"]
 
 [ext_resource type="Script" path="res://Scripts/UI/InventarySlotNode.gd" id="1_573f6"]
 [ext_resource type="Texture2D" uid="uid://np63e1eykdg8" path="res://Assets/UI/ItemManagement/Inventary/itemSlotBackgroundUnactive.svg" id="2_k47sb"]
 [ext_resource type="Texture2D" uid="uid://cy0b4qevbqeus" path="res://Assets/Sprites/Fishable/Merluza Antartica.svg" id="3_fvgmn"]
+[ext_resource type="Script" path="res://Scripts/UI/InnerButton.gd" id="4_6mdco"]
+[ext_resource type="Texture2D" uid="uid://d2dl2xh405dx4" path="res://Assets/UI/LongButton/LongButton.svg" id="4_84c0n"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5okys"]
 font_size = 25
@@ -14,6 +16,7 @@ anchors_preset = 0
 script = ExtResource("1_573f6")
 
 [node name="Background" type="TextureRect" parent="."]
+z_index = 5
 custom_minimum_size = Vector2(170, 170)
 layout_mode = 1
 anchors_preset = 15
@@ -26,7 +29,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Img" type="TextureRect" parent="."]
-z_index = 1
+z_index = 5
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,3 +62,132 @@ text = "64"
 label_settings = SubResource("LabelSettings_5okys")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 85.0
+offset_top = -64.0
+offset_right = 255.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Usar" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+script = ExtResource("4_6mdco")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Usar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -20.0
+offset_right = 75.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_84c0n")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/Usar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Usar"
+
+[node name="Examinar" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+script = ExtResource("4_6mdco")
+id_inner_button = 1
+text = "Examinar"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Examinar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -20.0
+offset_right = 75.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_84c0n")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/Examinar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Usar"
+
+[node name="Descartar" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+script = ExtResource("4_6mdco")
+id_inner_button = 2
+text = "Descartar"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Descartar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -20.0
+offset_right = 75.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_84c0n")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/Descartar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Usar"

@@ -1,7 +1,5 @@
-extends Node
+extends Label
 
-enum InteractionStates {FISHING, TALKING, ENTERING_HOME, TRAVELING_FISHING}
-enum PlayerStates {IDLE, WALKING, RUNNING, JUMPING, FALLING, FISHING}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,4 +8,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if visible:
+		modulate.a = lerp(modulate.a, 0.0, delta * 2.0)
+	
+	if modulate.a == 0.0:
+		visible = false

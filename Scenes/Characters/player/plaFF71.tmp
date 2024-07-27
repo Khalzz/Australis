@@ -8,9 +8,8 @@
 [sub_resource type="GDScript" id="GDScript_yv2bm"]
 script/source = "extends CharacterBody2D
 @export var debugging = false
-@export var camera_following = true # by default the camera will follow the player
 
-@export var camera: Camera2D
+var camera
 var ui
 
 # Other data
@@ -55,14 +54,13 @@ var paused = false
 var fading = true
 var fading_in = false
 
+var room_camera = false
 
 func _ready():
+	camera = $Camera2D
 	ui = $HUD
 	
 func _process(delta):
-	if camera_following:
-		camera.follow(position, false, null)
-	
 	if fading:
 		if fading_in:
 			#camera.offset.y = lerp(camera.offset.y, 0.0, delta * 5.0)
@@ -73,7 +71,7 @@ func _process(delta):
 			#camera.offset.y = lerp(camera.offset.y, -170.0, delta)
 			camera.zoom.x = lerp(camera.zoom.x, 1.4, delta * 2.0)
 			camera.zoom.y = lerp(camera.zoom.y, 1.4, delta * 2.0)
-			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta / 2.0)
+			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta)
 		
 	jump_input = Input.is_action_pressed(\"jump\")
 	
@@ -238,6 +236,14 @@ offset_top = -29.0
 offset_right = 15.0
 offset_bottom = 29.0
 color = Color(1, 0.631373, 0.184314, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-2, 23)
+offset = Vector2(0, -170)
+zoom = Vector2(10, 10)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
 
 [node name="FishingNode" type="Node2D" parent="."]
 script = ExtResource("3_dyto1")
