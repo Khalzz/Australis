@@ -1,15 +1,20 @@
-[gd_scene load_steps=12 format=3 uid="uid://ndxog7fkfule"]
+[gd_scene load_steps=15 format=3 uid="uid://ndxog7fkfule"]
 
 [ext_resource type="Texture2D" uid="uid://csn08kqxj3iks" path="res://Assets/Sprites/World/WoodFloor.svg" id="2_kljye"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="3_n5yte"]
 [ext_resource type="Texture2D" uid="uid://bf3m17lil5nbu" path="res://Assets/Sprites/World/Bed.svg" id="6_vbl0t"]
 [ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="7_2nxc3"]
+[ext_resource type="Texture2D" uid="uid://bk6kh4mgdnexq" path="res://Assets/Sprites/World/Desk.svg" id="8_pk6ki"]
 [ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="8_th5ap"]
+[ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="9_bq56r"]
 [ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="9_jd43e"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="10_1ramb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
-size = Vector2(31.4, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vep7f"]
+size = Vector2(14.6, 27.8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eh003"]
+size = Vector2(24.6, 21.2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
 
@@ -27,37 +32,62 @@ debugging = true
 camera_following = false
 camera = NodePath("../MainCamera")
 
-[node name="MainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("follow_object")]
+[node name="MainCamera" type="Camera2D" parent="."]
 position = Vector2(-175, -79)
 zoom = Vector2(10, 10)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
 script = ExtResource("8_th5ap")
-follow_object = NodePath("../Player")
 
 [node name="StaticInteractuables" type="Node" parent="."]
 
-[node name="Sleep" type="Area2D" parent="StaticInteractuables"]
-position = Vector2(519, -73)
+[node name="ExitingHome" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-174, -75)
 script = ExtResource("9_jd43e")
 interaction = 2
+move_to = "res://Scenes/Levels/main.tscn"
 
-[node name="Button" parent="StaticInteractuables/Sleep" instance=ExtResource("10_1ramb")]
-offset_left = 50.0
-offset_top = -52.0
-offset_right = 50.0
-offset_bottom = -52.0
+[node name="Button" parent="StaticInteractuables/ExitingHome" instance=ExtResource("10_1ramb")]
+offset_left = 11.0
+offset_top = -90.0
+offset_right = 61.0
+offset_bottom = -40.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/Sleep"]
-position = Vector2(-16.5, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/ExitingHome"]
+position = Vector2(-4.49998, -3.5)
 scale = Vector2(5, 5)
-shape = SubResource("RectangleShape2D_xqnm1")
+shape = SubResource("RectangleShape2D_vep7f")
 
-[node name="Label" type="Label" parent="StaticInteractuables/Sleep"]
-offset_left = -42.0
+[node name="Label" type="Label" parent="StaticInteractuables/ExitingHome"]
+offset_left = -45.0
 offset_top = -100.0
-offset_right = 41.0
+offset_right = 38.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
+
+[node name="OpeningDiary" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-547, -75)
+script = ExtResource("9_jd43e")
+interaction = 4
+move_to = "res://Scenes/Levels/main.tscn"
+
+[node name="Button" parent="StaticInteractuables/OpeningDiary" instance=ExtResource("10_1ramb")]
+offset_left = 55.0
+offset_top = -63.0
+offset_right = 105.0
+offset_bottom = -13.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/OpeningDiary"]
+position = Vector2(20.5, 13)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_eh003")
+
+[node name="Label" type="Label" parent="StaticInteractuables/OpeningDiary"]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 38.0
 offset_bottom = -77.0
 text = "Actionable"
 metadata/_edit_use_anchors_ = true
@@ -76,6 +106,21 @@ offset_bottom = 1000.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="BackrgoundHouse" type="ColorRect" parent="."]
+z_index = -40
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -606.0
+offset_top = -326.0
+offset_right = 602.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.145098, 0.0392157, 0.113725, 1)
 
 [node name="Bed" type="Sprite2D" parent="."]
 z_index = -10
@@ -180,7 +225,7 @@ enabled = false
 zoom = Vector2(2.015, 2.015)
 
 [node name="Door" type="ColorRect" parent="."]
-z_index = -50
+z_index = -20
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -193,3 +238,13 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.517647, 0.517647, 0.517647, 1)
+
+[node name="Desk" type="Sprite2D" parent="."]
+position = Vector2(-549, -42)
+scale = Vector2(0.035, 0.035)
+texture = ExtResource("8_pk6ki")
+
+[node name="Chair" type="Sprite2D" parent="."]
+position = Vector2(-506, -46)
+scale = Vector2(-0.04, 0.04)
+texture = ExtResource("9_bq56r")

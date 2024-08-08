@@ -1,8 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=32 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
-[ext_resource type="Texture2D" uid="uid://yrm1ny82anmp" path="res://Assets/UI/A Button/A Button(green background).svg" id="3_tuo3h"]
 [ext_resource type="Texture2D" uid="uid://cy0b4qevbqeus" path="res://Assets/Sprites/Fishable/Merluza Antartica.svg" id="4_0hrh8"]
 [ext_resource type="Texture2D" uid="uid://cgkmvaijt8ftk" path="res://Assets/UI/ItemManagement/Fished/FishedBackground.svg" id="4_ps7sq"]
 [ext_resource type="Texture2D" uid="uid://bpp2dqilvxbcg" path="res://Assets/UI/B Button/B Button(red letter).svg" id="4_q1bps"]
@@ -16,6 +15,17 @@
 [ext_resource type="Texture2D" uid="uid://c8m77niowl4s3" path="res://Assets/UI/Y Button/Y pressed.svg" id="13_ew1mb"]
 [ext_resource type="Texture2D" uid="uid://hn7l0qqyhr66" path="res://Assets/UI/Y Button/Y.svg" id="14_qqg0b"]
 [ext_resource type="Script" path="res://Scripts/UI/AlertLabel.gd" id="15_4y5g0"]
+[ext_resource type="Script" path="res://Scripts/UI/Investigation/InvestigationSelectItem.gd" id="16_8ltwc"]
+[ext_resource type="Script" path="res://Scripts/UI/Inventory/SelectingItem.gd" id="16_beagi"]
+[ext_resource type="Script" path="res://Scripts/UI/Investigation/Investigate.gd" id="16_qi4ke"]
+[ext_resource type="Script" path="res://Scripts/UI/fpsCounter.gd" id="17_mxtq5"]
+[ext_resource type="Script" path="res://Scripts/UI/Inventory/ItemSubMenu.gd" id="17_u2cth"]
+[ext_resource type="Script" path="res://Scripts/UI/Inventory/ItemDescription.gd" id="18_1rark"]
+[ext_resource type="Script" path="res://Scripts/UI/Investigation/Diary.gd" id="19_e4jy5"]
+[ext_resource type="Script" path="res://Scripts/UI/Inventory/ReplacingExisting.gd" id="19_hrtbk"]
+[ext_resource type="Script" path="res://Scripts/UI/Investigation/DiaryPage.gd" id="20_cqad7"]
+[ext_resource type="Texture2D" uid="uid://qu8h7dpwtigl" path="res://Assets/UI/ItemManagement/Investigation/DiaryPages/Merlusa antartica.png" id="21_4bubk"]
+[ext_resource type="Texture2D" uid="uid://cywrqryxbjirb" path="res://Assets/UI/ItemManagement/Investigation/DiaryPages/Draco Antartico.png" id="21_vkbsa"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqq5d"]
 font_size = 18
@@ -74,7 +84,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="FishingUi" type="HBoxContainer" parent="UI"]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -100,7 +109,6 @@ anchor_right = 0.0
 offset_left = 0.0
 offset_right = 50.0
 grow_horizontal = 1
-unpressed = ExtResource("3_tuo3h")
 
 [node name="Label" type="Label" parent="UI/FishingUi/AButton(greenLetter)"]
 layout_mode = 1
@@ -156,7 +164,6 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(20, 0)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -256,6 +263,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("10_owd25")
 
 [node name="Background" type="ColorRect" parent="Inventario"]
 layout_mode = 1
@@ -370,7 +378,6 @@ grow_vertical = 2
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 6
-script = ExtResource("10_owd25")
 
 [node name="0" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
@@ -409,6 +416,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="UiControllerGuide" type="HBoxContainer" parent="Inventario"]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -580,14 +588,205 @@ offset_right = 180.0
 offset_bottom = -235.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Esta funcionalidad aun no esta implementada"
+text = "Esta funcionalidad aun no esta completamente implementada"
+script = ExtResource("15_4y5g0")
+
+[node name="InventoryStateMachine" type="Node" parent="Inventario"]
+
+[node name="SelectingItem" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide", "hud")]
+script = ExtResource("16_beagi")
+inventory = NodePath("../..")
+inventory_menu = NodePath("../../Inventory")
+ui_controller_guide = NodePath("../../UiControllerGuide")
+hud = NodePath("../../..")
+
+[node name="ItemSubMenu" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
+script = ExtResource("17_u2cth")
+inventory = NodePath("../..")
+inventory_menu = NodePath("../../Inventory")
+ui_controller_guide = NodePath("../../UiControllerGuide")
+
+[node name="ItemDescription" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
+script = ExtResource("18_1rark")
+inventory = NodePath("../..")
+inventory_menu = NodePath("../../Inventory")
+ui_controller_guide = NodePath("../../UiControllerGuide")
+
+[node name="ReplacingExisting" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
+script = ExtResource("19_hrtbk")
+inventory = NodePath("../..")
+inventory_menu = NodePath("../../Inventory")
+ui_controller_guide = NodePath("../../UiControllerGuide")
+
+[node name="Investigate" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_qi4ke")
+
+[node name="Background" type="ColorRect" parent="Investigate"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.67451)
+
+[node name="SelectItem" type="HBoxContainer" parent="Investigate"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_8ltwc")
+
+[node name="InvestigatingItem" type="HBoxContainer" parent="Investigate"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 2408.0
+grow_vertical = 2
+alignment = 1
+script = ExtResource("19_e4jy5")
+
+[node name="Page_0" type="Control" parent="Investigate/InvestigatingItem"]
+custom_minimum_size = Vector2(800, 900)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("20_cqad7")
+
+[node name="InnerPage" type="Control" parent="Investigate/InvestigatingItem/Page_0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(400, 455)
+
+[node name="Background" type="ColorRect" parent="Investigate/InvestigatingItem/Page_0/InnerPage"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -450.0
+offset_right = 300.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.976471, 0.94902, 0.870588, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Investigate/InvestigatingItem/Page_0/InnerPage"]
+z_index = 15
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -446.0
+offset_right = 293.0
+offset_bottom = 443.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_4bubk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Page_1" type="Control" parent="Investigate/InvestigatingItem"]
+custom_minimum_size = Vector2(800, 900)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("20_cqad7")
+item_id = 5
+
+[node name="InnerPage" type="Control" parent="Investigate/InvestigatingItem/Page_1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(400, 455)
+
+[node name="Background" type="ColorRect" parent="Investigate/InvestigatingItem/Page_1/InnerPage"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -450.0
+offset_right = 300.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.976471, 0.94902, 0.870588, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Investigate/InvestigatingItem/Page_1/InnerPage"]
+z_index = 15
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -446.0
+offset_right = 293.0
+offset_bottom = 443.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_vkbsa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Investigate"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -258.0
+offset_right = 180.0
+offset_bottom = -235.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "No hay objetos para investigar"
 script = ExtResource("15_4y5g0")
 
 [node name="Fadable" type="ColorRect" parent="."]
 visible = false
+z_index = 50
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="StateMachine" type="Node" parent="."]
+
+[node name="FPS_Counter" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("17_mxtq5")

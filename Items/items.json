@@ -9,7 +9,10 @@
 			"price": 100,
 			"specialty_level": 1,
 			"fished_message": "Has atrapado una Merluza Antartica.",
-			"stackable_to": 10
+			"stackable_to": 10,
+			"investigable": true,
+			"investigated_text": "Has aprendido sobre la Merluza Antartica",
+			"investigable_texture": "res://Assets/UI/ItemManagement/Investigation/DiaryPages/Merlusa antartica.png"
 		},
 		{
 			"id": 1,
@@ -20,7 +23,8 @@
 			"price": 5,
 			"specialty_level": 0,
 			"fished_message": "Haz encontrado una Botella.",
-			"stackable_to": 1
+			"stackable_to": 1,
+			"investigable": false,
 		},
 		{
 			"id": 2,
@@ -31,7 +35,8 @@
 			"price": 10,
 			"specialty_level": 0,
 			"fished_message": "Haz encontrado una Bota.",
-			"stackable_to": 1
+			"stackable_to": 1,
+			"investigable": false,
 		},
 		{
 			"id": 3,
@@ -42,7 +47,8 @@
 			"price": 1,
 			"specialty_level": 0,
 			"fished_message": "Iugh, eso es un Cigarro Mojado?.",
-			"stackable_to": 1
+			"stackable_to": 1,
+			"investigable": false,
 		},
 		{
 			"id": 4,
@@ -53,7 +59,22 @@
 			"price": 2,
 			"specialty_level": 0,
 			"fished_message": "Haz encontrado una Anilla para Latas.",
-			"stackable_to": 1
-		}
+			"stackable_to": 1,
+			"investigable": false,
+		},
+		{
+			"id": 5,
+			"img": "res://Assets/Sprites/Fishable/Draco Antartico.svg",
+			"name": "Draco Antartico",
+			"description": "Un pez comun de la zona, notable por su aparente transparencia, esta generada por su falta de globulos rojos.",
+			"fishable": true,
+			"price": 150,
+			"specialty_level": 2,
+			"fished_message": "Has atrapado un Draco Antartico.",
+			"stackable_to": 10,
+			"investigable": true,
+			"investigated_text": "Has aprendido sobre el Draco Antartico",
+			"investigable_texture": "res://Assets/UI/ItemManagement/Investigation/DiaryPages/Draco Antartico.png"
+		},
 	],
 }

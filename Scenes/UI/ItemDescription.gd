@@ -26,9 +26,22 @@ func show_item_description(delta):
 	$ColorRect.position.y = lerp($ColorRect.position.y, 140.0, delta * 15.0)
 	$Background.position.y = lerp($Background.position.y, 140.0, delta * 7.0)
 	
+	
 	if !data_setted:
 		visible = true
-		$Background/VBoxContainer/ItemImg.texture = load(Items.fishable_list[$"../Inventory".selected_item]["img"])
-		$Background/VBoxContainer/VBoxContainer/ItemName.text = Items.fishable_list[$"../Inventory".selected_item]["name"]
-		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = Items.fishable_list[$"../Inventory".selected_item]["description"]
+		$Background/VBoxContainer/ItemImg.texture = load(Items.fishable_list[$"..".selected_item]["img"])
+		
+		if Items.fishable_list[$"..".selected_item]["investigable"]:
+			show_information($"..".inventory_management.investigated_items.has(float($"..".selected_item)))
+		else:
+			show_information(true)
 		data_setted = true
+		
+func show_information(investigated):
+	if investigated:
+		$Background/VBoxContainer/VBoxContainer/ItemName.text = Items.fishable_list[$"..".selected_item]["name"]
+		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = Items.fishable_list[$"..".selected_item]["description"]
+	else:
+		$Background/VBoxContainer/VBoxContainer/ItemName.text = "???"
+		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = "Debes investigar este objeto para aprender que tiene de especial."
+	

@@ -38,7 +38,7 @@ position = Vector2(0, -152)
 debugging = true
 camera = NodePath("../MainCamera")
 
-[node name="MainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("follow_object")]
+[node name="MainCamera" type="Camera2D" parent="."]
 position = Vector2(-2, 23)
 offset = Vector2(0, -170)
 zoom = Vector2(10, 10)
@@ -46,7 +46,6 @@ process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
 script = ExtResource("12_cpy17")
-follow_object = NodePath("../Player")
 
 [node name="InvisibleWall-l" type="StaticBody2D" parent="."]
 position = Vector2(-3119, -496)
@@ -136,18 +135,18 @@ text = "Actionable"
 metadata/_edit_use_anchors_ = true
 
 [node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
-position = Vector2(-2064, -67)
+position = Vector2(-2080, -147)
 script = ExtResource("8_rerl2")
 interaction = 2
+move_to = "res://Scenes/Levels/home.tscn"
 
 [node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("9_xoqkw")]
-offset_left = 1.0
-offset_top = -233.0
-offset_right = 51.0
-offset_bottom = -183.0
+offset_left = 16.0
+offset_top = -152.0
+offset_right = 66.0
+offset_bottom = -102.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoingHome"]
-position = Vector2(-16.5, -79.5)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_xqnm1")
 

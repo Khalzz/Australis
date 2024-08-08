@@ -13,3 +13,7 @@ func _process(delta):
 	
 	if modulate.a == 0.0:
 		visible = false
+
+func activate():
+	visible = true
+	modulate.a = 1.0

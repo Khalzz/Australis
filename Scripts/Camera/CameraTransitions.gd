@@ -1,5 +1,6 @@
 extends Area2D
 
+var change_cam_pos = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,5 +18,8 @@ func _process(delta):
 			element.camera.zoom.y = lerp(element.camera.zoom.y, $Camera.zoom.y, delta)
 			# element.camera.global_position.x = lerp(element.camera.global_position.x, global_position.x, delta * 2.0)
 			# element.camera.global_position.y = lerp(element.camera.global_position.y, global_position.y, delta * 2.0)
-			$"../../MainCamera".follow(position, true, delta * 5.0)
+			if $"../../MainCamera".looking_at_place:
+				$"../../MainCamera".follow(position, true, delta * 5.0)
+				
+			
 			

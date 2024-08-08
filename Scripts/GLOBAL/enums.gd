@@ -1,6 +1,6 @@
 extends Node
 
-enum InteractionStates {FISHING, TALKING, ENTERING_HOME, TRAVELING_FISHING}
+enum InteractionStates {FISHING, TALKING, MOVING_TO_PLACE, TRAVELING_FISHING, CHECKING_DIARY}
 enum PlayerStates {IDLE, WALKING, RUNNING, JUMPING, FALLING, FISHING}
 
 # Called when the node enters the scene tree for the first time.

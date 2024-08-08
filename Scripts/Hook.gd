@@ -1,5 +1,9 @@
 extends RigidBody2D
 
+# this variable is a reference to the element that will appear once the fishing minigame is completed
+#if this value >= 0, the value setted will be the item id that will everytime appear
+@export var fixed_item: int = -1
+
 var still = false
 var particles
 var timer
@@ -36,8 +40,12 @@ func _process(delta):
 		if position.x < 0:
 			$"..".state = Enums.PlayerStates.IDLE
 			$"..".ui.new_item_active = true
-			var new_item = randi_range(0, Items.fishable_list.size() - 1)
-			$"..".ui.item_id = new_item
+			if fixed_item >= 0:
+				var new_item = fixed_item
+				$"..".ui.item_id = new_item
+			else:
+				var new_item = randi_range(0, Items.fishable_list.size() - 1)
+				$"..".ui.item_id = new_item
 			die()
 	else:
 		distance = position.x

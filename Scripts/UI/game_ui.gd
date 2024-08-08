@@ -2,47 +2,50 @@ extends CanvasLayer
 
 var player
 var inventory
+var investigate
 var fadable
 
 var item_id = 0
 var new_item_active = false
+var new_investigated_active = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player = $".."
-	inventory = $Inventario/Inventory
+	inventory = $Inventario
+	investigate = $Investigate
 	fadable = $Fadable
 	fadable.visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
-	if new_item_active: 
-		activateNewItem(delta)
-		if Input.is_action_just_released("A"):
-			if $NewItem/UiMessage.done:
-				new_item_active = false
-				if $Inventario/Inventory.add_item(item_id):
-					player.isActive = true
-				else:
-					player.toggle_inventory()
-			else:
-				$NewItem/UiMessage.string_show = $NewItem/UiMessage.message
-				$NewItem/UiMessage.done = true
+	if new_investigated_active:
+		toggleNewInvestigatedItem(delta, new_investigated_active and !new_item_active)
 	else:
-		deactivateNewItem(delta)
+		toggleActivateNewItem(delta, !new_investigated_active and new_item_active)
 
-func activateNewItem(delta):
-	$NewItem.set_base(Items.fishable_list[item_id]["img"], Items.fishable_list[item_id]["fished_message"])
-	$NewItem.scale.x = lerp($NewItem.scale.x, 1.0, delta * 15.0)
-	$NewItem.scale.y = lerp($NewItem.scale.y, 1.0, delta * 15.0)
-	$NewItem/UiMessage.start = true
-	
-func deactivateNewItem(delta):
-	$NewItem.scale.x = lerp($NewItem.scale.x, 0.0, delta * 20.0)
-	$NewItem.scale.y = lerp($NewItem.scale.y, 0.0, delta * 20.0)
-	$NewItem/UiMessage.start = false
-	$NewItem/UiMessage.reset()
+func toggleActivateNewItem(delta, state):
+	if state:
+		$NewItem.set_base(item_id)
+		$NewItem.scale.x = lerp($NewItem.scale.x, 1.0, delta * 15.0)
+		$NewItem.scale.y = lerp($NewItem.scale.y, 1.0, delta * 15.0)
+		$NewItem/UiMessage.start = true
+	else:
+		$NewItem.scale.x = lerp($NewItem.scale.x, 0.0, delta * 20.0)
+		$NewItem.scale.y = lerp($NewItem.scale.y, 0.0, delta * 20.0)
+		$NewItem/UiMessage.start = false
+		$NewItem/UiMessage.reset()
+
+func toggleNewInvestigatedItem(delta, state):
+	if state:
+		$NewItem.scale.x = lerp($NewItem.scale.x, 1.0, delta * 15.0)
+		$NewItem.scale.y = lerp($NewItem.scale.y, 1.0, delta * 15.0)
+		$NewItem/UiMessage.start = true
+	else:
+		$NewItem.scale.x = lerp($NewItem.scale.x, 0.0, delta * 20.0)
+		$NewItem.scale.y = lerp($NewItem.scale.y, 0.0, delta * 20.0)
+		$NewItem/UiMessage.start = false
+		$NewItem/UiMessage.reset()
 
 func toggle_fishing_ui(active):
 	$UI.visible = active

@@ -50,7 +50,8 @@ var axisDirection
 var fishing_position
 var hooked = false
 
-var paused = false
+var paused = false 
+var interacting = false
 
 var fading = true
 var fading_in = false
@@ -176,9 +177,8 @@ func fishing(delta):
 
 # This function will let the triggers know that the player is touching it, so avoid using it in other elements
 # there is a bug that when i interact with a interactable while walking, the player moves a bit
-func interact(interaction, x):
+func interact(interaction, obj_position, move_to):
 	if Input.is_action_just_pressed(\"A\") and isActive and is_on_floor():
-		
 		match interaction:
 			Enums.InteractionStates.FISHING:
 				hooked = false
@@ -186,12 +186,22 @@ func interact(interaction, x):
 				velocity.x = 0
 				state = Enums.PlayerStates.FISHING
 				isActive = false
-				fishing_position = x
-			Enums.InteractionStates.ENTERING_HOME:
+				fishing_position = obj_position.x
+			Enums.InteractionStates.MOVING_TO_PLACE:
+				camera.looking_at_place = false
+				camera_following = false
+				camera.follow(obj_position, false, null)
 				fading = true
 				fading_in = true
 				await get_tree().create_timer(1).timeout
-				get_tree().change_scene_to_file(\"res://Scenes/Levels/home.tscn\")
+				
+				if move_to != \"\":
+					get_tree().change_scene_to_file(move_to)
+			Enums.InteractionStates.CHECKING_DIARY:
+				print(isActive)
+				paused = true
+				ui.investigate.toggle_investigate(true)
+				ui.investigate.load_uninvestigated(true)
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vfkqx"]

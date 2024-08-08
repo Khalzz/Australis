@@ -1,11 +1,10 @@
 extends Camera2D
 
-@export var follow_object: CharacterBody2D
+var looking_at_place = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func follow(object, lerping, delta):
