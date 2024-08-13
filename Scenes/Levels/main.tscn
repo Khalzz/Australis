@@ -18,14 +18,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ficav"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
-size = Vector2(45.8, 51.8)
+size = Vector2(45.8, 52)
 
 [node name="World" type="Node2D"]
-
-[node name="FishingBay" type="Sprite2D" parent="."]
-position = Vector2(-8, 307)
-scale = Vector2(0.115, 0.115)
-texture = ExtResource("1_dkxcw")
 
 [node name="Floor" parent="." instance=ExtResource("2_jlsiq")]
 modulate = Color(1, 1, 1, 0)
@@ -34,12 +29,12 @@ position = Vector2(-1125, 139)
 scale = Vector2(99.68, 7.8)
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("3_leiqk")]
-position = Vector2(0, -152)
+position = Vector2(-2079, -181)
 debugging = true
 camera = NodePath("../MainCamera")
 
 [node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(-2, 23)
+position = Vector2(-2077, 23)
 offset = Vector2(0, -170)
 zoom = Vector2(10, 10)
 process_callback = 0
@@ -92,24 +87,6 @@ color = Color(0.541176, 0.847059, 0.992157, 1)
 shape = SubResource("RectangleShape2D_ficav")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Chair" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(491, -48)
-scale = Vector2(0.04, 0.04)
-texture = ExtResource("5_sbrt3")
-
-[node name="FishingRod" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(595, -65)
-scale = Vector2(0.07, 0.07)
-texture = ExtResource("6_83ljy")
-
-[node name="WoodArrowBase" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(-905, -53)
-scale = Vector2(-0.2, 0.2)
-texture = ExtResource("7_ga1bg")
-
 [node name="StaticInteractuables" type="Node" parent="."]
 
 [node name="Fishing" type="Area2D" parent="StaticInteractuables"]
@@ -135,18 +112,19 @@ text = "Actionable"
 metadata/_edit_use_anchors_ = true
 
 [node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
-position = Vector2(-2080, -147)
+position = Vector2(-2080, -195)
 script = ExtResource("8_rerl2")
 interaction = 2
 move_to = "res://Scenes/Levels/home.tscn"
 
 [node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("9_xoqkw")]
 offset_left = 16.0
-offset_top = -152.0
+offset_top = -107.0
 offset_right = 66.0
-offset_bottom = -102.0
+offset_bottom = -57.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoingHome"]
+position = Vector2(0, 47)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_xqnm1")
 
@@ -174,19 +152,45 @@ scale_amount_min = 2.0
 scale_amount_max = 2.0
 color = Color(1, 1, 1, 0.933333)
 
-[node name="Land" type="Sprite2D" parent="."]
+[node name="WorldAssets" type="Node" parent="."]
+
+[node name="FishingBay" type="Sprite2D" parent="WorldAssets"]
+position = Vector2(-8, 307)
+scale = Vector2(0.115, 0.115)
+texture = ExtResource("1_dkxcw")
+
+[node name="Chair" type="Sprite2D" parent="WorldAssets"]
+z_index = -5
+position = Vector2(491, -48)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("5_sbrt3")
+
+[node name="FishingRod" type="Sprite2D" parent="WorldAssets"]
+z_index = -5
+position = Vector2(595, -65)
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("6_83ljy")
+
+[node name="WoodArrowBase" type="Sprite2D" parent="WorldAssets"]
+z_index = -5
+position = Vector2(-905, -53)
+rotation = -3.14159
+scale = Vector2(0.2, -0.2)
+texture = ExtResource("7_ga1bg")
+
+[node name="Land" type="Sprite2D" parent="WorldAssets"]
 position = Vector2(-1893.9, 265)
 scale = Vector2(0.200452, 0.1)
 texture = ExtResource("10_vgl41")
 
-[node name="LandBackground" type="Sprite2D" parent="."]
+[node name="LandBackground" type="Sprite2D" parent="WorldAssets"]
 modulate = Color(0.713726, 0.713726, 0.713726, 1)
 z_index = -1
 position = Vector2(-1805.4, 290)
 scale = Vector2(0.20625, 0.1)
 texture = ExtResource("10_vgl41")
 
-[node name="House" type="Sprite2D" parent="."]
+[node name="House" type="Sprite2D" parent="WorldAssets"]
 z_index = -1
 position = Vector2(-1994, -236)
 scale = Vector2(0.08, 0.08)

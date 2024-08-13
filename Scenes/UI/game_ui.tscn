@@ -164,6 +164,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(20, 0)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -416,7 +417,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="UiControllerGuide" type="HBoxContainer" parent="Inventario"]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -594,6 +594,7 @@ script = ExtResource("15_4y5g0")
 [node name="InventoryStateMachine" type="Node" parent="Inventario"]
 
 [node name="SelectingItem" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide", "hud")]
+visible = false
 script = ExtResource("16_beagi")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")
@@ -601,18 +602,21 @@ ui_controller_guide = NodePath("../../UiControllerGuide")
 hud = NodePath("../../..")
 
 [node name="ItemSubMenu" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
+visible = false
 script = ExtResource("17_u2cth")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")
 ui_controller_guide = NodePath("../../UiControllerGuide")
 
 [node name="ItemDescription" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
+visible = false
 script = ExtResource("18_1rark")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")
 ui_controller_guide = NodePath("../../UiControllerGuide")
 
 [node name="ReplacingExisting" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
+visible = false
 script = ExtResource("19_hrtbk")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")

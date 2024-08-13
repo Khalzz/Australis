@@ -5,17 +5,23 @@ extends Node2D
 @export var ui_controller_guide: BoxContainer
 @export var hud: CanvasLayer
 
+var can_pause = false
+
 func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	if visible:
+	if !can_pause and Input.is_action_just_released("pause"):
+		can_pause = true
+	
+	if visible and inventory.visible:
 		$"../../ItemDescription".hide_item_description(delta)
 
 		inventory.move_selected()
 
-		if Input.is_action_just_pressed("pause") and hud.player.paused:
+		if Input.is_action_just_pressed("pause") and hud.player.paused and can_pause:
 			inventory.reset_data()
+			hud.player.toggle_inventory()
 
 		if Input.is_action_just_pressed("A") and inventory.item_to_move == null:
 			if inventory.selected == inventory.selected_setted:
@@ -32,7 +38,6 @@ func _process(delta):
 			if Input.is_action_just_pressed("B"):
 				inventory_menu.get_children()[inventory.item_to_move].toggle_replace(false)
 				inventory.item_to_move = null
-			# { Inventory, ItemSubMenu, ReplacingItem }
 			ui_controller_guide.state = ui_controller_guide.GuideState.ReplacingItem
 		else:
 			ui_controller_guide.state = ui_controller_guide.GuideState.Inventory
@@ -70,10 +75,8 @@ func _process(delta):
 					inventory_menu.get_children()[i].inner_select = 0
 				else: 
 					if inventory_menu.get_children()[i].item_id >= 0:
-						
 						inventory_menu.get_children()[i].active_inner_menu = true
 						inventory_menu.get_children()[i].inner_select = 0
-						
 						inventory_menu.get_children()[i].z_index = 10
 						inventory.state = inventory.InventoryStates.ItemSubMenu
 					else:
@@ -87,3 +90,5 @@ func _process(delta):
 					inventory_menu.get_children()[i].z_index = 20
 				else:
 					inventory_menu.get_children()[i].z_index = 10
+	else:
+		can_pause = false

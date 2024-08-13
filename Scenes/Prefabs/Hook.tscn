@@ -17,7 +17,7 @@ z_index = -1
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_2vnkj")
-fixed_item = 1
+fixed_items = [0, 5]
 
 [node name="Hook" type="Sprite2D" parent="."]
 position = Vector2(10, 4)

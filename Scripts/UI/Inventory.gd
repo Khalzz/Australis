@@ -45,7 +45,9 @@ func _process(delta):
 			InventoryStates.ReplacingExisting:
 				hide_inventory_states()
 				$InventoryStateMachine/ReplacingExisting.visible = true
-				
+	else:
+		hide_inventory_states()
+	
 func hide_inventory_states():
 	for state in $InventoryStateMachine.get_children():
 		state.visible = false

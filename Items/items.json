@@ -11,7 +11,7 @@
 			"fished_message": "Has atrapado una Merluza Antartica.",
 			"stackable_to": 10,
 			"investigable": true,
-			"investigated_text": "Has aprendido sobre la Merluza Antartica",
+			"investigated_message": "Has aprendido sobre la Merluza Antartica",
 			"investigable_texture": "res://Assets/UI/ItemManagement/Investigation/DiaryPages/Merlusa antartica.png"
 		},
 		{
@@ -73,8 +73,20 @@
 			"fished_message": "Has atrapado un Draco Antartico.",
 			"stackable_to": 10,
 			"investigable": true,
-			"investigated_text": "Has aprendido sobre el Draco Antartico",
+			"investigated_message": "Has aprendido sobre el Draco Antartico",
 			"investigable_texture": "res://Assets/UI/ItemManagement/Investigation/DiaryPages/Draco Antartico.png"
+		},
+		{
+			"id": 6,
+			"img": "res://Assets/Sprites/Items/Rope.svg",
+			"name": "Cuerda",
+			"description": "Un conjunto de fibras flexibles que crean una segura herramienta para amarrar objetos e incluso para facilitar la escalada.",
+			"fishable": false,
+			"price": 500,
+			"specialty_level": 2,
+				"fished_message": "Has conseguido cuerda.",
+			"stackable_to": 5,
+			"investigable": false,
 		},
 	],
 }

@@ -66,11 +66,12 @@ func _process(delta):
 	
 	if fading:
 		if fading_in:
+			#camera.offset.y = lerp(camera.offset.y, 0.0, delta * 5.0)
 			camera.zoom.x = lerp(camera.zoom.x, 10.0, delta)
 			camera.zoom.y = lerp(camera.zoom.y, 10.0, delta)
 			ui.fadable.color.a = lerp(ui.fadable.color.a, 1.0, delta * 5.0)
-			camera.offset.y = lerp(camera.offset.y, 0.0, delta * 2.0)
 		else:
+			#camera.offset.y = lerp(camera.offset.y, -170.0, delta)
 			camera.zoom.x = lerp(camera.zoom.x, 1.4, delta * 2.0)
 			camera.zoom.y = lerp(camera.zoom.y, 1.4, delta * 2.0)
 			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta / 2.0)

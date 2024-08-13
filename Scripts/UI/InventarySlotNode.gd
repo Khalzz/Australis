@@ -29,7 +29,7 @@ func _process(delta):
 		$Count.text = str(count)
 	
 	if item_id >= 0:
-		$Img.texture = load(Items.fishable_list[item_id]["img"])
+		$Img.texture = load(Items.item_list[item_id]["img"])
 	else:
 		$Img.texture = null
 	
@@ -57,3 +57,13 @@ func toggle_replace(value):
 	else:
 		replacing = false
 		$Img.modulate.a = 255
+		
+func load_inner_button(delta):
+	if $VBoxContainer/Descartar/BaseSize.size.x < 150:
+		$VBoxContainer/Descartar/BaseSize.size.x += 200 * delta
+		return false
+	else:
+		return true
+			
+func set_inner_button(value):
+	$VBoxContainer/Descartar/BaseSize.size.x = value

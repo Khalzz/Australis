@@ -13,7 +13,11 @@ func _ready():
 func _process(delta):
 	if visible:
 		ui_controller_guide.state = ui_controller_guide.GuideState.ItemDescription
-		if Input.is_action_just_pressed("B"):
+		
+		
+		
+		if Input.is_action_just_pressed("B") or Input.is_action_just_pressed("pause"):
+			inventory.state = inventory.InventoryStates.SelectingItem
 			$"../../ItemDescription".active = false
 		if !$"../../ItemDescription".visible:
 			inventory.state = inventory.InventoryStates.ItemSubMenu

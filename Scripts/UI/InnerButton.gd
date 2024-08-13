@@ -11,6 +11,6 @@ func _ready():
 
 func _process(delta):
 	if $"../..".inner_select == id_inner_button:
-		$TextureRect.texture = load(active_texture)
+		$BaseSize/TextureRect.texture = load(active_texture)
 	else:
-		$TextureRect.texture = load(base_texture)
+		$BaseSize/TextureRect.texture = load(base_texture)

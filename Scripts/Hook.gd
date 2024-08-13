@@ -1,8 +1,13 @@
 extends RigidBody2D
 
-# this variable is a reference to the element that will appear once the fishing minigame is completed
-#if this value >= 0, the value setted will be the item id that will everytime appear
-@export var fixed_item: int = -1
+"""
+this variable is a reference to the elements that will be showable in the game, 
+if the size of the list is 0 
+	it will show all the items
+else 
+	it will only show what is in it
+"""
+@export var fixed_items = []
 
 var still = false
 var particles
@@ -35,13 +40,14 @@ func reset_data():
 func _process(delta):
 	timer += delta
 	$"..".hooked = still
-	
+
 	if still:
 		if position.x < 0:
 			$"..".state = Enums.PlayerStates.IDLE
 			$"..".ui.new_item_active = true
-			if fixed_item >= 0:
-				var new_item = fixed_item
+			if fixed_items.size() > 0:
+				print(fixed_items.size())
+				var new_item = fixed_items[randi_range(0, fixed_items.size() - 1)]
 				$"..".ui.item_id = new_item
 			else:
 				var new_item = randi_range(0, Items.fishable_list.size() - 1)
@@ -49,10 +55,10 @@ func _process(delta):
 			die()
 	else:
 		distance = position.x
-	
+
 	if Input.is_action_just_released("B"):
 		queue_free()
-	
+
 	if !bar_mode and !smash_mode:
 		if still and timer >= rand_time:
 			if Input.is_action_just_released("A"):
@@ -80,12 +86,12 @@ func show_smash_mode():
 	$Button.visible = true
 	selectable_bar.visible = false
 	smash_button.visible = true
-	
+
 func show_bar_mode():
 	$Button.visible = true
 	selectable_bar.visible = true
 	smash_button.visible = false
-	
+
 func get_random_minigame():
 	if randi() % 2 == 0:
 		bar_mode = true 

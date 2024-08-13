@@ -29,9 +29,9 @@ func show_item_description(delta):
 	
 	if !data_setted:
 		visible = true
-		$Background/VBoxContainer/ItemImg.texture = load(Items.fishable_list[$"..".selected_item]["img"])
+		$Background/VBoxContainer/ItemImg.texture = load(Items.item_list[$"..".selected_item]["img"])
 		
-		if Items.fishable_list[$"..".selected_item]["investigable"]:
+		if Items.item_list[$"..".selected_item]["investigable"]:
 			show_information($"..".inventory_management.investigated_items.has(float($"..".selected_item)))
 		else:
 			show_information(true)
@@ -39,8 +39,8 @@ func show_item_description(delta):
 		
 func show_information(investigated):
 	if investigated:
-		$Background/VBoxContainer/VBoxContainer/ItemName.text = Items.fishable_list[$"..".selected_item]["name"]
-		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = Items.fishable_list[$"..".selected_item]["description"]
+		$Background/VBoxContainer/VBoxContainer/ItemName.text = Items.item_list[$"..".selected_item]["name"]
+		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = Items.item_list[$"..".selected_item]["description"]
 	else:
 		$Background/VBoxContainer/VBoxContainer/ItemName.text = "???"
 		$Background/VBoxContainer/VBoxContainer/ItemDescription.text = "Debes investigar este objeto para aprender que tiene de especial."
