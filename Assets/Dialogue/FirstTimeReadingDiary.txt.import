@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b4k1ptykank0u"
+
+[deps]
+
+files=["res://Assets/Dialogue/FirstTimeReadingDiary.message.translation"]
+
+source_file="res://Assets/Dialogue/FirstTimeReadingDiary.csv"
+dest_files=["res://Assets/Dialogue/FirstTimeReadingDiary.message.translation"]
+
+[params]
+
+compress=true
+delimiter=0

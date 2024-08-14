@@ -27,7 +27,6 @@ func _process(delta):
 				if $"..".new_investigated_active:
 					$"..".new_investigated_active = false
 					$"..".player.toggle_inventory()
-			
 			else:
 				$UiMessage.string_show = $UiMessage.message
 				$UiMessage.done = true

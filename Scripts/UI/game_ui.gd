@@ -4,6 +4,7 @@ var player
 var inventory
 var investigate
 var fadable
+var dialog
 
 var item_id = 0
 var new_item_active = false
@@ -16,6 +17,7 @@ func _ready():
 	investigate = $Investigate
 	fadable = $Fadable
 	fadable.visible = true
+	dialog = $Dialog
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -51,6 +53,6 @@ func toggle_fishing_ui(active):
 	$UI.visible = active
 	$"UI/FishingUi/AButton(greenLetter)".visible = active
 	$"UI/FishingUi/BButton(redLetter)".visible = active
-	
+
 func toggle_inventary(active):
 	$Inventario.visible = active

@@ -197,10 +197,12 @@ func interact(interaction, obj_position, move_to):
 				if move_to != \"\":
 					get_tree().change_scene_to_file(move_to)
 			Enums.InteractionStates.CHECKING_DIARY:
-				print(isActive)
 				paused = true
-				ui.investigate.toggle_investigate(true)
-				ui.investigate.load_uninvestigated(true)
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/FirstTimeReadingDiary.txt\", checkDiary)
+
+func checkDiary():
+	ui.investigate.toggle_investigate(true)
+	ui.investigate.load_uninvestigated(true)
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vfkqx"]

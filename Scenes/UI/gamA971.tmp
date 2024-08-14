@@ -819,20 +819,20 @@ color = Color(0, 0, 0, 0.67451)
 
 [node name="Talking1" type="TextureRect" parent="Dialog"]
 layout_mode = 0
-offset_left = -872.0
-offset_top = 200.0
-offset_right = -226.0
-offset_bottom = 983.0
+offset_left = 176.0
+offset_top = 339.0
+offset_right = 640.0
+offset_bottom = 899.0
 texture = ExtResource("28_py44i")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Talking2" type="TextureRect" parent="Dialog"]
 layout_mode = 0
-offset_left = 2222.0
-offset_top = 200.0
-offset_right = 2868.0
-offset_bottom = 983.0
+offset_left = 1281.0
+offset_top = 353.0
+offset_right = 1745.0
+offset_bottom = 913.0
 texture = ExtResource("28_py44i")
 expand_mode = 1
 stretch_mode = 5
@@ -855,7 +855,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_yw2j3")
 message = "Encontraste una Merluza Antartica."
-time_for_letter = 0.01
+time_for_letter = 0.09
 
 [node name="Button" parent="Dialog/UiMessage" instance=ExtResource("8_xnr2x")]
 layout_mode = 1

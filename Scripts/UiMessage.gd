@@ -3,7 +3,7 @@ extends Control
 @export var message = "Sample Text"
 @export var time_for_letter = 0.1
 var string_index = 0
-var timer = 0.1
+var timer = 0.0
 var string_show = ""
 var start = false
 var done = false
@@ -17,7 +17,7 @@ func _ready():
 func _process(delta):
 	if start:
 		timer += delta
-		if string_index < message.length() and timer > 0.1 and !done:
+		if string_index < message.length() and timer > time_for_letter and !done:
 			string_show += message[string_index]
 			string_index += 1
 			timer = 0.0
@@ -32,3 +32,10 @@ func reset():
 	string_index = 0
 	string_show = ""
 	done = false
+	
+func dialogue_reset():
+	timer = 0.0
+	string_index = 0
+	string_show = ""
+	done = false
+	start = true
