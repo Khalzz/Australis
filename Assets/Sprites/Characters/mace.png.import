@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blyx5c5srdylb"
-path="res://.godot/imported/Rope.svg-266454fe59d0b7dd340151523a675083.ctex"
+uid="uid://cjw3kaprx2w3g"
+path="res://.godot/imported/mace.png-a0c2272d4ff0d87c7c2aa606e0a9acab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Items/Rope.svg"
-dest_files=["res://.godot/imported/Rope.svg-266454fe59d0b7dd340151523a675083.ctex"]
+source_file="res://Assets/Sprites/Characters/mace.png"
+dest_files=["res://.godot/imported/mace.png-a0c2272d4ff0d87c7c2aa606e0a9acab.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=5.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

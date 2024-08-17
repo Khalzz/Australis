@@ -8,7 +8,8 @@ var selected_item = null
 
 var inventory_management = {
 	"inventory": [null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null],
-	"investigated_items": []
+	"investigated_items": [],
+	"money": 0
 }
 
 var item_to_move = null
@@ -45,9 +46,7 @@ func _process(delta):
 			InventoryStates.ReplacingExisting:
 				hide_inventory_states()
 				$InventoryStateMachine/ReplacingExisting.visible = true
-	else:
-		hide_inventory_states()
-	
+
 func hide_inventory_states():
 	for state in $InventoryStateMachine.get_children():
 		state.visible = false

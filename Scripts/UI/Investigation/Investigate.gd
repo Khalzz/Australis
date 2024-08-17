@@ -32,25 +32,18 @@ func _process(delta):
 func load_uninvestigated(test):
 	items.clear()
 	
-	
 	for element in $"../Inventario".inventory_management.inventory:
 		if element != null:
 			# revisar el listado de items sin objetos duplicados
-			
-			
 			if !$"../Inventario".inventory_management.investigated_items.has(element.item_id) and Items.item_list[element.item_id].investigable:
 				if !items.has(element.item_id):
 					items.append(element.item_id)
 	
-	print(items)
 	for child in $SelectItem.get_children():
 		remove_child(child)
 		child.queue_free()
 	
 	for element in items:
-		print(!$"../Inventario".inventory_management.investigated_items.has(float(element)))
-		print(Items.item_list[element].investigable)
-		
 		var investigable_instance = investigation_slot.instantiate()
 		investigable_instance.item_id = element
 		investigable_instance.show_count = false

@@ -1,0 +1,6 @@
+talking,message
+vendedor, "Saludos muchacho, ¿que te apetece hacer hoy?"
+alex, "wena po perro qlo loco"
+vendedor, "pilin"
+mace, "soy un furro *mueve la colita*"
+black, "soy un furro *mueve la colita*"

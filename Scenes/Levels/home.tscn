@@ -242,11 +242,11 @@ grow_vertical = 2
 color = Color(0.517647, 0.517647, 0.517647, 1)
 
 [node name="Desk" type="Sprite2D" parent="."]
-position = Vector2(-549, -42)
-scale = Vector2(0.035, 0.035)
+position = Vector2(-552, -34)
+scale = Vector2(0.309394, 0.360122)
 texture = ExtResource("8_pk6ki")
 
 [node name="Chair" type="Sprite2D" parent="."]
-position = Vector2(-506, -46)
-scale = Vector2(-0.04, 0.04)
+position = Vector2(-509.474, -54.2092)
+scale = Vector2(-0.0822132, 0.0965214)
 texture = ExtResource("9_bq56r")

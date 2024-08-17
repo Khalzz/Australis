@@ -56,3 +56,7 @@ func toggle_fishing_ui(active):
 
 func toggle_inventary(active):
 	$Inventario.visible = active
+	
+func activate_merchant():
+	$CompraVenta.visible = true
+	$CompraVenta.state = $CompraVenta.MerchantStates.selectingAction

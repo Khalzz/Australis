@@ -45,6 +45,7 @@ func _process(delta):
 					
 				else:
 					message_id += 1
+					print(dialogue_dict[message_id])
 					$UiMessage.message = dialogue_dict[message_id][1]
 					$UiMessage.dialogue_reset()
 					set_talkable()
@@ -75,7 +76,9 @@ func set_talkable():
 		
 # this function will open the dialog itself
 func open_dialog(dialog_file_name, action_after_dialog):
-	action = action_after_dialog
+	if action_after_dialog:
+		action = action_after_dialog
+	message_id = 1
 	visible = true
 	set_dialog(dialog_file_name)
 	$UiMessage.message = dialogue_dict[message_id][1]

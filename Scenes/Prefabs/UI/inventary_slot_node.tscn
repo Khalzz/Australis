@@ -77,10 +77,11 @@ offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Usar" type="Control" parent="VBoxContainer"]
+[node name="Usar" type="Control" parent="VBoxContainer" node_paths=PackedStringArray("inner_select_owner")]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 script = ExtResource("4_6mdco")
+inner_select_owner = NodePath("../..")
 
 [node name="BaseSize" type="Control" parent="VBoxContainer/Usar"]
 clip_contents = true
@@ -119,12 +120,13 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Usar"
 
-[node name="Examinar" type="Control" parent="VBoxContainer"]
+[node name="Examinar" type="Control" parent="VBoxContainer" node_paths=PackedStringArray("inner_select_owner")]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 script = ExtResource("4_6mdco")
 id_inner_button = 1
 text = "Examinar"
+inner_select_owner = NodePath("../..")
 
 [node name="BaseSize" type="Control" parent="VBoxContainer/Examinar"]
 clip_contents = true
@@ -163,12 +165,13 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Usar"
 
-[node name="Descartar" type="Control" parent="VBoxContainer"]
+[node name="Descartar" type="Control" parent="VBoxContainer" node_paths=PackedStringArray("inner_select_owner")]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 script = ExtResource("4_6mdco")
 id_inner_button = 2
 text = "Descartar"
+inner_select_owner = NodePath("../..")
 
 [node name="BaseSize" type="Control" parent="VBoxContainer/Descartar"]
 clip_contents = true

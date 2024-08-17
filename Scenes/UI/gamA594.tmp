@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=45 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -27,7 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://qu8h7dpwtigl" path="res://Assets/UI/ItemManagement/Investigation/DiaryPages/Merlusa antartica.png" id="21_4bubk"]
 [ext_resource type="Texture2D" uid="uid://cywrqryxbjirb" path="res://Assets/UI/ItemManagement/Investigation/DiaryPages/Draco Antartico.png" id="21_vkbsa"]
 [ext_resource type="Script" path="res://Scenes/UI/Dialog.gd" id="27_6yx5f"]
-[ext_resource type="Script" path="res://Scripts/UI/HidableWhenUnactive.gd" id="27_wiy51"]
 [ext_resource type="Texture2D" uid="uid://dueysroooceay" path="res://Assets/Sprites/Characters/alex.png" id="28_py44i"]
 [ext_resource type="Texture2D" uid="uid://bj2w4drh6rawq" path="res://Assets/UI/ItemManagement/Monetary/Money.svg" id="29_1eu6e"]
 [ext_resource type="Script" path="res://Scripts/UI/Monetary/Money.gd" id="30_c8gl0"]
@@ -76,9 +75,6 @@ _data = {
 "NewItem": SubResource("Animation_wgov2")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_g7ffp"]
-font_size = 23
-
 [sub_resource type="LabelSettings" id="LabelSettings_liqup"]
 font_size = 35
 
@@ -87,6 +83,9 @@ font_size = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_clwoy"]
 font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_g7ffp"]
+font_size = 23
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_mqav7")
@@ -296,34 +295,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.67451)
-
-[node name="Money" type="TextureRect" parent="Inventario" node_paths=PackedStringArray("inventario")]
-custom_minimum_size = Vector2(197, 45)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -217.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 65.0
-grow_horizontal = 0
-texture = ExtResource("29_1eu6e")
-expand_mode = 1
-stretch_mode = 5
-script = ExtResource("30_c8gl0")
-inventario = NodePath("..")
-
-[node name="Label" type="Label" parent="Inventario/Money"]
-layout_mode = 0
-offset_left = 47.0
-offset_top = 6.0
-offset_right = 177.0
-offset_bottom = 39.0
-text = "0000001"
-label_settings = SubResource("LabelSettings_g7ffp")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ItemDescription" type="Control" parent="Inventario"]
 z_index = 20
@@ -843,32 +814,6 @@ offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("17_mxtq5")
 
-[node name="HidableWhenUnactive" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("27_wiy51")
-
-[node name="InventoryIcon" type="TextureRect" parent="HidableWhenUnactive"]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 178.0
-offset_bottom = 155.0
-texture = ExtResource("31_fsfd4")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Button" parent="HidableWhenUnactive/InventoryIcon" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-offset_left = 20.0
-offset_top = 33.5
-offset_right = 70.0
-offset_bottom = 83.5
-pressed = ExtResource("32_is1pi")
-unpressed = ExtResource("33_7scoj")
-action = "pause"
-
 [node name="Dialog" type="Control" parent="."]
 visible = false
 layout_mode = 3
@@ -983,8 +928,51 @@ grow_vertical = 2
 text = "Hola, soy alex, como te encuentras?"
 label_settings = SubResource("LabelSettings_uqq5d")
 
+[node name="Money" type="TextureRect" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -217.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 65.0
+grow_horizontal = 0
+texture = ExtResource("29_1eu6e")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("30_c8gl0")
+
+[node name="Label" type="Label" parent="Money"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 6.0
+offset_right = 177.0
+offset_bottom = 39.0
+text = "0000001"
+label_settings = SubResource("LabelSettings_g7ffp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InventoryIcon" type="TextureRect" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 178.0
+offset_bottom = 155.0
+texture = ExtResource("31_fsfd4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" parent="InventoryIcon" instance=ExtResource("8_xnr2x")]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 33.5
+offset_right = 70.0
+offset_bottom = 83.5
+pressed = ExtResource("32_is1pi")
+unpressed = ExtResource("33_7scoj")
+action = "pause"
+
 [node name="CompraVenta" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1002,15 +990,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.67451)
 
-[node name="States" type="Control" parent="CompraVenta"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SelectingAction" type="VBoxContainer" parent="CompraVenta/States"]
+[node name="SelectingAction" type="VBoxContainer" parent="CompraVenta"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1018,21 +998,20 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -85.0
-offset_top = -42.0
+offset_top = -64.0
 offset_right = 85.0
-offset_bottom = 42.0
+offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("35_v51n3")
 
-[node name="Vender" type="Control" parent="CompraVenta/States/SelectingAction" node_paths=PackedStringArray("inner_select_owner")]
+[node name="Vender" type="Control" parent="CompraVenta/SelectingAction" node_paths=PackedStringArray("inner_select_owner")]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 script = ExtResource("35_ji07o")
-text = "Vender"
 inner_select_owner = NodePath("..")
 
-[node name="BaseSize" type="Control" parent="CompraVenta/States/SelectingAction/Vender"]
+[node name="BaseSize" type="Control" parent="CompraVenta/SelectingAction/Vender"]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
@@ -1040,7 +1019,7 @@ offset_left = 10.0
 offset_right = 160.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="CompraVenta/States/SelectingAction/Vender/BaseSize"]
+[node name="TextureRect" type="TextureRect" parent="CompraVenta/SelectingAction/Vender/BaseSize"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 1
 anchors_preset = 4
@@ -1054,7 +1033,7 @@ texture = ExtResource("36_uxhm0")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CompraVenta/States/SelectingAction/Vender"]
+[node name="Label" type="Label" parent="CompraVenta/SelectingAction/Vender"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1069,15 +1048,15 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Usar"
 
-[node name="Comprar" type="Control" parent="CompraVenta/States/SelectingAction" node_paths=PackedStringArray("inner_select_owner")]
+[node name="Comprar" type="Control" parent="CompraVenta/SelectingAction" node_paths=PackedStringArray("inner_select_owner")]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 script = ExtResource("35_ji07o")
 id_inner_button = 1
-text = "Comprar"
+text = "Examinar"
 inner_select_owner = NodePath("..")
 
-[node name="BaseSize" type="Control" parent="CompraVenta/States/SelectingAction/Comprar"]
+[node name="BaseSize" type="Control" parent="CompraVenta/SelectingAction/Comprar"]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
@@ -1085,7 +1064,7 @@ offset_left = 10.0
 offset_right = 160.0
 offset_bottom = 40.0
 
-[node name="TextureRect" type="TextureRect" parent="CompraVenta/States/SelectingAction/Comprar/BaseSize"]
+[node name="TextureRect" type="TextureRect" parent="CompraVenta/SelectingAction/Comprar/BaseSize"]
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 1
 anchors_preset = 4
@@ -1099,7 +1078,7 @@ texture = ExtResource("36_uxhm0")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CompraVenta/States/SelectingAction/Comprar"]
+[node name="Label" type="Label" parent="CompraVenta/SelectingAction/Comprar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

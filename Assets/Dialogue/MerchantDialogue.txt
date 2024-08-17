@@ -1,0 +1,2 @@
+talking,message
+comerciante, "Saludos muchacho, ¿que te apetece hacer hoy?"

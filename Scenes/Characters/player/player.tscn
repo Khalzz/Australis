@@ -199,6 +199,9 @@ func interact(interaction, obj_position, move_to):
 			Enums.InteractionStates.CHECKING_DIARY:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/FirstTimeReadingDiary.txt\", checkDiary)
+			Enums.InteractionStates.BUYING:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
 
 func checkDiary():
 	ui.investigate.toggle_investigate(true)

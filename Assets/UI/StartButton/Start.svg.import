@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blyx5c5srdylb"
-path="res://.godot/imported/Rope.svg-266454fe59d0b7dd340151523a675083.ctex"
+uid="uid://b5kq0tbhnxm1h"
+path="res://.godot/imported/Start.svg-f27a91f5472c489181dcf4615b50c468.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Items/Rope.svg"
-dest_files=["res://.godot/imported/Rope.svg-266454fe59d0b7dd340151523a675083.ctex"]
+source_file="res://Assets/UI/StartButton/Start.svg"
+dest_files=["res://.godot/imported/Start.svg-f27a91f5472c489181dcf4615b50c468.ctex"]
 
 [params]
 
@@ -32,6 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=5.0
+svg/scale=1.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false

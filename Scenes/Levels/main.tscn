@@ -161,8 +161,8 @@ texture = ExtResource("1_dkxcw")
 
 [node name="Chair" type="Sprite2D" parent="WorldAssets"]
 z_index = -5
-position = Vector2(491, -48)
-scale = Vector2(0.04, 0.04)
+position = Vector2(495, -47)
+scale = Vector2(0.0795041, 0.0795238)
 texture = ExtResource("5_sbrt3")
 
 [node name="FishingRod" type="Sprite2D" parent="WorldAssets"]
@@ -195,3 +195,32 @@ z_index = -1
 position = Vector2(-1994, -236)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("11_4k3bn")
+
+[node name="Store" type="ColorRect" parent="."]
+offset_left = -457.0
+offset_top = -140.0
+offset_right = -399.0
+offset_bottom = -18.0
+
+[node name="Buy" type="Area2D" parent="Store"]
+position = Vector2(31, -2)
+script = ExtResource("8_rerl2")
+interaction = 5
+
+[node name="Button" parent="Store/Buy" instance=ExtResource("9_xoqkw")]
+offset_left = 50.0
+offset_top = -52.0
+offset_right = 50.0
+offset_bottom = -52.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Store/Buy"]
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_xqnm1")
+
+[node name="Label" type="Label" parent="Store/Buy"]
+offset_left = -42.0
+offset_top = -100.0
+offset_right = 41.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
