@@ -27,3 +27,10 @@ func add_money(money_to_add):
 	else:
 		inventario.inventory_management.money = 9999999
 	inventario.write_inventory()
+	
+func subtract_money(money_to_subtract):
+	if inventario.inventory_management.money - money_to_subtract >= 0:
+		inventario.inventory_management.money -= money_to_subtract
+	else:
+		inventario.inventory_management.money = 0
+	inventario.write_inventory()

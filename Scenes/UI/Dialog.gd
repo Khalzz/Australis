@@ -35,7 +35,11 @@ func _process(delta):
 			if $UiMessage.done:
 				if message_id + 1 > dialogue_dict.size() - 1:
 					visible = false
+					reset_positions()
 					if action:
+						# fix this
+						await get_tree().create_timer(0.2).timeout
+						# fix this
 						action.call()
 						turn = 0
 						message_id = 1
@@ -52,6 +56,11 @@ func _process(delta):
 			else:
 				$UiMessage.string_show = $UiMessage.message
 				$UiMessage.done = true
+
+func reset_positions():
+	$Talking1.position.x = TALKING1_BASE_POS - 1000.0
+	$Talking2.position.x = TALKING2_BASE_POS + 1000.0
+
 
 func set_dialog(dialog_file_name):
 	dialogue_dict = {}

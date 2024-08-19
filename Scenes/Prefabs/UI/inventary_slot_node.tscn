@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://gya7o6joswu6"]
+[gd_scene load_steps=6 format=3 uid="uid://gya7o6joswu6"]
 
 [ext_resource type="Script" path="res://Scripts/UI/InventarySlotNode.gd" id="1_573f6"]
 [ext_resource type="Texture2D" uid="uid://np63e1eykdg8" path="res://Assets/UI/ItemManagement/Inventary/itemSlotBackgroundUnactive.svg" id="2_k47sb"]
-[ext_resource type="Texture2D" uid="uid://cy0b4qevbqeus" path="res://Assets/Sprites/Fishable/Merluza Antartica.svg" id="3_fvgmn"]
 [ext_resource type="Script" path="res://Scripts/UI/InnerButton.gd" id="4_6mdco"]
 [ext_resource type="Texture2D" uid="uid://d2dl2xh405dx4" path="res://Assets/UI/LongButton/LongButton.svg" id="4_84c0n"]
 
@@ -40,7 +39,6 @@ grow_vertical = 2
 rotation = -0.698132
 pivot_offset = Vector2(72, 85)
 mouse_filter = 2
-texture = ExtResource("3_fvgmn")
 expand_mode = 4
 stretch_mode = 5
 

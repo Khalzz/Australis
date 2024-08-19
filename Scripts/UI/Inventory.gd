@@ -76,11 +76,10 @@ func add_item(item_id):
 				add_on = i
 		elif inventory_management["inventory"][i] == null and first_null == null:
 			first_null = i
-			
-	
+
 	# add to a item count
 	if add_on != null:
-		if inventory_management["inventory"][add_on].count < Items.fishable_list[item_id]["stackable_to"]:
+		if inventory_management["inventory"][add_on].count < Items.item_list[item_id]["stackable_to"]:
 			inventory_management["inventory"][add_on].count += 1
 			returnable = true
 		else:
@@ -105,6 +104,18 @@ func add_item(item_id):
 	
 	return returnable
 	
+func delete_unit_from_item(item_id):
+	for item in inventory_management.inventory.size():
+		if inventory_management.inventory[item] != null:
+			if inventory_management.inventory[item].item_id == item_id: 
+				if inventory_management.inventory[item].count - 1 > 0:
+					inventory_management.inventory[item].count -= 1
+					break
+				elif inventory_management.inventory[item].count - 1 <= 0:
+					inventory_management.inventory[item] = null
+					break
+	write_inventory()
+
 func new_inventory_node(item_id, count):
 	return { "item_id": item_id, "count": count }
 	

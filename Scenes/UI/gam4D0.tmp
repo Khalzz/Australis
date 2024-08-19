@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=51 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -94,9 +94,6 @@ font_size = 30
 
 [sub_resource type="LabelSettings" id="LabelSettings_quiqp"]
 font_size = 30
-
-[sub_resource type="LabelSettings" id="LabelSettings_d0t0y"]
-font_size = 50
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_mqav7")
@@ -1139,6 +1136,7 @@ script = ExtResource("35_v51n3")
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 script = ExtResource("35_ji07o")
+id_inner_button = 1
 text = "Comprar"
 inner_select_owner = NodePath("..")
 
@@ -1183,7 +1181,6 @@ text = "Usar"
 custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 script = ExtResource("35_ji07o")
-id_inner_button = 1
 text = "Vender"
 inner_select_owner = NodePath("..")
 
@@ -1225,6 +1222,7 @@ grow_vertical = 2
 text = "Usar"
 
 [node name="Buy" type="Control" parent="CompraVenta/States"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1357,22 +1355,8 @@ text = "No tienes dinero suficiente para este producto"
 horizontal_alignment = 1
 script = ExtResource("15_4y5g0")
 
-[node name="Comprar" type="Label" parent="CompraVenta/States/Buy"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -156.0
-offset_top = 68.0
-offset_right = 156.0
-offset_bottom = 110.0
-grow_horizontal = 2
-text = "Comprar"
-label_settings = SubResource("LabelSettings_d0t0y")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Sell" type="Control" parent="CompraVenta/States"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1382,7 +1366,6 @@ grow_vertical = 2
 script = ExtResource("42_koxgm")
 
 [node name="ElementsToSell" type="HBoxContainer" parent="CompraVenta/States/Sell"]
-layout_mode = 0
 offset_top = 540.0
 offset_right = 1920.0
 offset_bottom = 540.0
@@ -1446,74 +1429,5 @@ stretch_mode = 5
 layout_mode = 2
 text = "0000001"
 label_settings = SubResource("LabelSettings_g7ffp")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SoldOne" type="Label" parent="CompraVenta/States/Sell"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -258.0
-offset_right = 180.0
-offset_bottom = -235.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "+1 nombre de objeto"
-horizontal_alignment = 1
-script = ExtResource("15_4y5g0")
-
-[node name="Alerta" type="Label" parent="CompraVenta/States/Sell"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -156.0
-offset_top = -21.0
-offset_right = 156.0
-offset_bottom = 21.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "No tienes items para vender."
-label_settings = SubResource("LabelSettings_quiqp")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ProductName" type="Label" parent="CompraVenta/States/Sell"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -156.0
-offset_top = -423.0
-offset_right = 156.0
-offset_bottom = -381.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Nombre del producto"
-label_settings = SubResource("LabelSettings_quiqp")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Vender" type="Label" parent="CompraVenta/States/Sell"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -156.0
-offset_top = 68.0
-offset_right = 156.0
-offset_bottom = 110.0
-grow_horizontal = 2
-text = "Vender"
-label_settings = SubResource("LabelSettings_d0t0y")
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -10,6 +10,7 @@ extends Control
 @export var show_count = true
 @export var with_inner_menu = true
 
+
 var count = 0
 
 var inner_select = 0
@@ -27,6 +28,7 @@ func _process(delta):
 	else:
 		$Count.visible = true
 		$Count.text = str(count)
+		
 	
 	if item_id >= 0:
 		$Img.texture = load(Items.item_list[item_id]["img"])

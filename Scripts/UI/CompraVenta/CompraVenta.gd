@@ -8,7 +8,6 @@ var state = MerchantStates.selectingAction
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if visible:
@@ -18,8 +17,10 @@ func _process(delta):
 				$States/SelectingAction.visible = true
 			MerchantStates.selling:
 				hide_merchant_states()
+				$States/Sell.visible = true
 			MerchantStates.buying:
 				hide_merchant_states()
+				$States/Buy.visible = true
 	else:
 		hide_merchant_states()
 

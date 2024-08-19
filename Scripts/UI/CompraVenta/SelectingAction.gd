@@ -15,11 +15,21 @@ func _process(delta):
 				inner_select -= 1
 			else:
 				inner_select = get_children().size() - 1
+				
 		if Input.is_action_just_pressed("down"):
 			if inner_select < get_children().size() - 1:
 				inner_select += 1
 			else:
 				inner_select = 0
+				
 		if Input.is_action_just_pressed("pause") or Input.is_action_just_pressed("B"):
 			$"../..".visible = false
 			$"../../..".player.isActive = true
+			
+		if Input.is_action_just_pressed("A"):
+			if inner_select == 0:
+				$"../..".state = $"../..".MerchantStates.buying
+				$"../Buy".load_sellables()
+			else:
+				$"../..".state = $"../..".MerchantStates.selling
+				$"../Sell".load_sellables()

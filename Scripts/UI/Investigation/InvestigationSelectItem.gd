@@ -46,4 +46,3 @@ func close_investigation(set_active):
 	get_parent().get_parent().get_parent().paused = false
 	get_parent().get_parent().get_parent().isActive = set_active
 	visible = false
-
