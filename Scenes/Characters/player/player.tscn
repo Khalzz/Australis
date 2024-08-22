@@ -9,6 +9,7 @@
 script/source = "extends CharacterBody2D
 @export var debugging = false
 @export var camera_following = true # by default the camera will follow the player
+@export var can_open_inventory = true # by default the camera will follow the player
 
 @export var camera: Camera2D
 var ui
@@ -68,16 +69,15 @@ func _process(delta):
 		if fading_in:
 			camera.zoom.x = lerp(camera.zoom.x, 10.0, delta)
 			camera.zoom.y = lerp(camera.zoom.y, 10.0, delta)
-			ui.fadable.color.a = lerp(ui.fadable.color.a, 1.0, delta * 5.0)
+			ui.fadable.color.a = lerp(ui.fadable.color.a, 1.0, delta * 10.0)
 			camera.offset.y = lerp(camera.offset.y, 0.0, delta * 2.0)
 		else:
 			camera.zoom.x = lerp(camera.zoom.x, 1.4, delta * 2.0)
 			camera.zoom.y = lerp(camera.zoom.y, 1.4, delta * 2.0)
-			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta / 2.0)
+			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta * 10.0)
 		
 	jump_input = Input.is_action_pressed(\"jump\")
-	
-	if Input.is_action_just_pressed(\"pause\") and isActive and state != Enums.PlayerStates.FISHING and !ui.new_item_active:
+	if Input.is_action_just_pressed(\"pause\") and isActive and state != Enums.PlayerStates.FISHING and !ui.new_item_active and can_open_inventory:
 		toggle_inventory()
 
 func toggle_inventory():
@@ -202,6 +202,9 @@ func interact(interaction, obj_position, move_to):
 			Enums.InteractionStates.BUYING:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
+			Enums.InteractionStates.TALKING_TO_SAILOR:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/TalkingToSailor.txt\", null)
 
 func checkDiary():
 	ui.investigate.toggle_investigate(true)

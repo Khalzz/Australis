@@ -1,0 +1,15 @@
+image,message
+0,"Vengo de una familia de pescadores."
+1, "Desde mi tatarabuelo con mi bisabuelo."
+2, "A mi bisabuelo con mi abuelo."
+3, "A mi abuelo con mi padre."
+4, "A mi padre conmigo, aun que nunca fui fan de la pesca realmente."
+5, "Cada uno de ellos en su cumpleaños numero 18 tuvo que venir solo a convivir con esta parte del mundo, este desolado lugar a demostrar que pueden ser un pescador nato."
+5, "Capaz de continuar con el legado de la familia."
+6, "Cuando yo los cumplí, al día siguiente mis maletas estaban listas para que partiera."
+6, "Y mi padre se veía emocionado por que finalmente lograra encontrar la pasión en pescar."
+7,
+8,
+9,
+10, "Hey chico, ya estamos llegando a tierra firme, ve a la cubierta, el capitan quiere hablar contigo"
+11, "Una parte de mi esperaba que fuera un mal sueño"

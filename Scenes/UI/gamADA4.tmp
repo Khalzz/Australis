@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=55 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -42,6 +42,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/CompraVenta/buy.gd" id="39_xr0o1"]
 [ext_resource type="Texture2D" uid="uid://dlbsmxs8hc321" path="res://Assets/UI/ItemManagement/Monetary/CoinLogo.svg" id="41_fn04v"]
 [ext_resource type="Script" path="res://Scripts/UI/CompraVenta/sell.gd" id="42_koxgm"]
+[ext_resource type="Texture2D" uid="uid://db8qgeervxtid" path="res://Assets/Cinematics/Test1/llegada.png" id="43_6n68l"]
 [ext_resource type="Script" path="res://Scripts/UI/Cinematic/cinematic.gd" id="43_wcq4m"]
 [ext_resource type="Texture2D" uid="uid://dujjfywhuatcg" path="res://Assets/UI/Dialogue/Gradient.svg" id="44_43lvy"]
 
@@ -1521,7 +1522,6 @@ text = "Hola, soy alex, como te encuentras?"
 label_settings = SubResource("LabelSettings_uqq5d")
 
 [node name="Cinematic" type="Control" parent="."]
-visible = false
 z_index = 50
 layout_mode = 3
 anchors_preset = 15
@@ -1546,22 +1546,7 @@ offset_right = 981.0
 offset_bottom = 554.0
 grow_horizontal = 2
 grow_vertical = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="NextImage" type="TextureRect" parent="Cinematic"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -981.0
-offset_top = -616.0
-offset_right = 981.0
-offset_bottom = 554.0
-grow_horizontal = 2
-grow_vertical = 2
+texture = ExtResource("43_6n68l")
 expand_mode = 1
 stretch_mode = 5
 

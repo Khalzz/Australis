@@ -1,0 +1,2 @@
+talking,message
+marinero, "Hey chico, el capitán quería verte en la cubierta, la escalera esta a tu derecha."

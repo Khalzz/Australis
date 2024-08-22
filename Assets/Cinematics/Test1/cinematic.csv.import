@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://chjrinynjb5bj"
+
+[deps]
+
+files=["res://Assets/Cinematics/Test1/cinematic.message.translation"]
+
+source_file="res://Assets/Cinematics/Test1/cinematic.csv"
+dest_files=["res://Assets/Cinematics/Test1/cinematic.message.translation"]
+
+[params]
+
+compress=true
+delimiter=0

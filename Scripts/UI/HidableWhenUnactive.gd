@@ -9,3 +9,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	visible = $"..".player.isActive
+	
+	if !$"..".player.can_open_inventory:
+		$InventoryIcon.visible = false

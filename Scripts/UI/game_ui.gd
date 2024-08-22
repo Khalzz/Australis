@@ -1,10 +1,11 @@
 extends CanvasLayer
 
-var player
-var inventory
-var investigate
-var fadable
-var dialog
+@onready var player = $".."
+@onready var inventory = $Inventario
+@onready var investigate = $Investigate
+@onready var fadable = $Fadable
+@onready var dialog = $Dialog
+@onready var cinematic = $Cinematic
 
 var item_id = 0
 var new_item_active = false
@@ -12,15 +13,12 @@ var new_investigated_active = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	player = $".."
-	inventory = $Inventario
-	investigate = $Investigate
-	fadable = $Fadable
 	fadable.visible = true
-	dialog = $Dialog
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	
 	if new_investigated_active:
 		toggleNewInvestigatedItem(delta, new_investigated_active and !new_item_active)
 	else:

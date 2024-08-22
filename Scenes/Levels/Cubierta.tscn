@@ -1,0 +1,249 @@
+[gd_scene load_steps=22 format=3 uid="uid://rmhdvqvn0tgx"]
+
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_dg1bh"]
+[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="3_mlg2i"]
+[ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="4_5hvyv"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="5_ddcs2"]
+[ext_resource type="Texture2D" uid="uid://csn08kqxj3iks" path="res://Assets/Sprites/World/WoodFloor.svg" id="6_vhjdi"]
+[ext_resource type="Texture2D" uid="uid://dgvmepbvavn7y" path="res://Assets/Sprites/World/BoatDeck.svg" id="7_ho4su"]
+[ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="7_sgaop"]
+[ext_resource type="Script" path="res://Scripts/Water.gd" id="8_p6hvd"]
+[ext_resource type="Texture2D" uid="uid://ccpl8iwxx2v6d" path="res://Assets/Sprites/Sky/laterSky.png" id="9_6wmn1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdbkj"]
+size = Vector2(18.4, 27.2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtgsu"]
+size = Vector2(21.5, 63.7154)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vo1jr"]
+size = Vector2(15.5, 32.0337)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_60x6o"]
+size = Vector2(14.0041, 21.9672)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_okv8k"]
+size = Vector2(1174, 508)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ng5g"]
+
+[sub_resource type="Animation" id="Animation_drym4"]
+resource_name = "moving_water"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Water:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 8),
+"transitions": PackedFloat32Array(0.341511, 0.353554, 0.341511),
+"update": 0,
+"values": [Vector2(-3, 1360), Vector2(-3, 1410), Vector2(-3, 1360)]
+}
+
+[sub_resource type="Animation" id="Animation_4fwpp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Water:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, 1380)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3vi3k"]
+_data = {
+"RESET": SubResource("Animation_4fwpp"),
+"moving_water": SubResource("Animation_drym4")
+}
+
+[sub_resource type="Gradient" id="Gradient_vrjgn"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h3hpk"]
+gradient = SubResource("Gradient_vrjgn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ujf63"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1000, 1, 1)
+gravity = Vector3(0, 20, 0)
+radial_accel_min = -1.0
+radial_accel_max = -1.0
+damping_min = 5.0
+damping_max = 5.0
+scale_min = 2.0
+scale_max = 5.0
+color_ramp = SubResource("GradientTexture1D_h3hpk")
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 0.0
+
+[node name="World" type="Node2D"]
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_dg1bh")]
+position = Vector2(70, -49)
+debugging = true
+camera_following = false
+can_open_inventory = false
+camera = NodePath("../MainCamera")
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(71, -49)
+zoom = Vector2(10, 10)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("3_mlg2i")
+
+[node name="StaticInteractuables" type="Node" parent="."]
+
+[node name="TalkingToSailor" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-939, -76)
+script = ExtResource("4_5hvyv")
+interaction = 6
+move_to = "res://Scenes/Levels/main.tscn"
+
+[node name="Button" parent="StaticInteractuables/TalkingToSailor" instance=ExtResource("5_ddcs2")]
+offset_left = 11.0
+offset_top = -90.0
+offset_right = 61.0
+offset_bottom = -40.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/TalkingToSailor"]
+position = Vector2(-6, -2)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_mdbkj")
+
+[node name="Label" type="Label" parent="StaticInteractuables/TalkingToSailor"]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 38.0
+offset_bottom = -77.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="InvisibleWall-r" type="StaticBody2D" parent="Walls"]
+position = Vector2(108, -92)
+scale = Vector2(1, 9.205)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/InvisibleWall-r"]
+position = Vector2(-2, -19.9891)
+shape = SubResource("RectangleShape2D_qtgsu")
+
+[node name="Roof" type="StaticBody2D" parent="Walls"]
+position = Vector2(4.54747e-13, -180)
+rotation = 1.5708
+scale = Vector2(1, 61)
+
+[node name="InvisibleWall-l" type="StaticBody2D" parent="Walls"]
+position = Vector2(-945, -164)
+scale = Vector2(1, 16.165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/InvisibleWall-l"]
+position = Vector2(-47.25, -6.43905)
+shape = SubResource("RectangleShape2D_vo1jr")
+
+[node name="Roof2" type="StaticBody2D" parent="Walls"]
+position = Vector2(-1.0842e-19, -6)
+rotation = 1.5708
+scale = Vector2(1, 61)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Roof2"]
+position = Vector2(-2.99795, 7.4754)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_60x6o")
+
+[node name="Floor2" type="Sprite2D" parent="Walls/Roof2"]
+z_index = 50
+position = Vector2(-1.51992e-05, 7.49743)
+scale = Vector2(0.00188858, 0.0648141)
+texture = ExtResource("6_vhjdi")
+
+[node name="BoatDeck" type="Sprite2D" parent="."]
+z_index = 100
+position = Vector2(658, 138)
+scale = Vector2(0.43, 0.43)
+texture = ExtResource("7_ho4su")
+
+[node name="CameraTriggers" type="Node" parent="."]
+
+[node name="LivingCamera" type="Area2D" parent="CameraTriggers"]
+position = Vector2(-483, 123)
+script = ExtResource("7_sgaop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTriggers/LivingCamera"]
+position = Vector2(-7, -386)
+shape = SubResource("RectangleShape2D_okv8k")
+
+[node name="Camera" type="Camera2D" parent="CameraTriggers/LivingCamera"]
+position = Vector2(0, -98)
+offset = Vector2(0, -81.9)
+enabled = false
+zoom = Vector2(0.675, 0.675)
+
+[node name="Water" type="Area2D" parent="."]
+z_index = 100
+position = Vector2(-3, 1380)
+scale = Vector2(2032.72, 100)
+collision_layer = 2
+collision_mask = 2
+gravity_space_override = 1
+gravity = -2192.81
+linear_damp_space_override = 1
+linear_damp = 7.171
+angular_damp = 8.071
+script = ExtResource("8_p6hvd")
+moving = true
+
+[node name="Front" type="ColorRect" parent="Water"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0, 0.384314, 0.803922, 0.643137)
+
+[node name="Background" type="ColorRect" parent="Water"]
+z_index = -2
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.541176, 0.847059, 0.992157, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+shape = SubResource("RectangleShape2D_7ng5g")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3vi3k")
+}
+
+[node name="Ssky" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(-487, -701)
+scale = Vector2(1.86, 1.86)
+texture = ExtResource("9_6wmn1")
+
+[node name="Sailor" type="ColorRect" parent="."]
+offset_left = -984.0
+offset_top = -76.0
+offset_right = -954.0
+offset_bottom = -18.0
+color = Color(0.999995, 0.182742, 0.668272, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-699, -463)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_ujf63")
+lifetime = 20.0

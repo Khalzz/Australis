@@ -1,0 +1,5 @@
+image,message
+llegada,"Fue un viaje dificil, pero finalmente logre llegar al antiguo terreno de mi padre."
+llegada,"Una vez cumpli los 18, me dijo que como hombre de la familia, es mi deber venir aqui y continuar con el legado de pescador."
+casa,"Quiza si madre no se hubiera ido, el seria un hombre un poco mas... amable."
+casa,"Pero aqui estoy, listo para continuar lo que por generaciones mi familia ha hecho."
