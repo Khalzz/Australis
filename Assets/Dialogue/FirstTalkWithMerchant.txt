@@ -1,0 +1,6 @@
+talking,message
+comerciante, "Es un placer verte despues de tanto tiempo niño, le hare saber a tu padre que llegaste sano y salvo."
+alex, "Perfecto, por cierto, ¿donde me quedo yo?"
+comerciante, "Oh, cierto, tu familia tiene una casa en este terreno desde hace muchos años, sigue a tu izquierda y encontraras una casa color rojo, esa es."
+alex, "Bueno, ire a descansar un poco"
+comerciante, "Perfecto, mañana nos espera un dia grandioso chico, ten una buena noche hahaha."

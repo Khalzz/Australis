@@ -187,15 +187,7 @@ func interact(interaction, obj_position, move_to):
 				isActive = false
 				fishing_position = obj_position.x
 			Enums.InteractionStates.MOVING_TO_PLACE:
-				camera.looking_at_place = false
-				camera_following = false
-				camera.follow(obj_position, false, null)
-				fading = true
-				fading_in = true
-				await get_tree().create_timer(1).timeout
-				
-				if move_to != \"\":
-					get_tree().change_scene_to_file(move_to)
+				move_to_place(obj_position, move_to)
 			Enums.InteractionStates.CHECKING_DIARY:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/FirstTimeReadingDiary.txt\", checkDiary)
@@ -205,6 +197,25 @@ func interact(interaction, obj_position, move_to):
 			Enums.InteractionStates.TALKING_TO_SAILOR:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/TalkingToSailor.txt\", null)
+			Enums.InteractionStates.TALKING_TO_CAPTAIN:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/TalkingToCaptain.txt\", move_to_tierra_firme)
+
+func move_to_tierra_firme():
+	var obj_position = position
+	var move_to = \"res://Scenes/Levels/AlexLlegaTierraFirme.tscn\"
+	move_to_place(obj_position, move_to)
+	
+func move_to_place(obj_position, move_to):
+	camera.looking_at_place = false
+	camera_following = false
+	camera.follow(obj_position, false, null)
+	fading = true
+	fading_in = true
+	await get_tree().create_timer(1).timeout
+	
+	if move_to != \"\":
+		get_tree().change_scene_to_file(move_to)
 
 func checkDiary():
 	ui.investigate.toggle_investigate(true)

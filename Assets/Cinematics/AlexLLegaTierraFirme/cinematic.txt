@@ -1,0 +1,6 @@
+image,message
+0,
+1,
+2,
+3, "Al llegar a mi primera parada, un viejo amigo de mi padre me esperaba."
+4, "Me dijo que su trabajo sera asegurarse de que aprenda de pesca y que el sera quien se encargue de vender y comprar los peces que recolecte."

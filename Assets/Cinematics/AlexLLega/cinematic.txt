@@ -7,9 +7,9 @@ image,message
 5, "Cada uno de ellos en su cumpleaños numero 18 tuvo que venir solo a convivir con esta parte del mundo, este desolado lugar a demostrar que pueden ser un pescador nato."
 5, "Capaz de continuar con el legado de la familia."
 6, "Cuando yo los cumplí, al día siguiente mis maletas estaban listas para que partiera."
-6, "Y mi padre se veía emocionado por que finalmente lograra encontrar la pasión en pescar."
+6, "Nunca habia visto a mi padre tan emocionado, tampoco quise negarme, se que es algo especial para el, pero no creo que vaya a encontrar algo especial en ese lugar"
 7,
 8,
 9,
-10, "Hey chico, ya estamos llegando a tierra firme, ve a la cubierta, el capitan quiere hablar contigo"
+10, "-Marinero: Hey chico, ya estamos llegando a tierra firme, ve a la cubierta, el capitan quiere hablar contigo"
 11, "Una parte de mi esperaba que fuera un mal sueño"

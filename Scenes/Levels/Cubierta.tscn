@@ -17,7 +17,7 @@ size = Vector2(18.4, 27.2)
 size = Vector2(21.5, 63.7154)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vo1jr"]
-size = Vector2(15.5, 32.0337)
+size = Vector2(43, 32.0337)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_60x6o"]
 size = Vector2(14.0041, 21.9672)
@@ -26,6 +26,21 @@ size = Vector2(14.0041, 21.9672)
 size = Vector2(1174, 508)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ng5g"]
+
+[sub_resource type="Animation" id="Animation_4fwpp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Water:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3, 1380)]
+}
 
 [sub_resource type="Animation" id="Animation_drym4"]
 resource_name = "moving_water"
@@ -44,21 +59,6 @@ tracks/0/keys = {
 "values": [Vector2(-3, 1360), Vector2(-3, 1410), Vector2(-3, 1360)]
 }
 
-[sub_resource type="Animation" id="Animation_4fwpp"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Water:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-3, 1380)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3vi3k"]
 _data = {
 "RESET": SubResource("Animation_4fwpp"),
@@ -68,7 +68,7 @@ _data = {
 [sub_resource type="Gradient" id="Gradient_vrjgn"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_h3hpk"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_psl4o"]
 gradient = SubResource("Gradient_vrjgn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ujf63"]
@@ -82,7 +82,7 @@ damping_min = 5.0
 damping_max = 5.0
 scale_min = 2.0
 scale_max = 5.0
-color_ramp = SubResource("GradientTexture1D_h3hpk")
+color_ramp = SubResource("GradientTexture1D_psl4o")
 collision_mode = 1
 collision_friction = 1.0
 collision_bounce = 0.0
@@ -106,24 +106,24 @@ script = ExtResource("3_mlg2i")
 
 [node name="StaticInteractuables" type="Node" parent="."]
 
-[node name="TalkingToSailor" type="Area2D" parent="StaticInteractuables"]
-position = Vector2(-939, -76)
+[node name="TalkingToCaptain" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-883, -76)
 script = ExtResource("4_5hvyv")
-interaction = 6
+interaction = 7
 move_to = "res://Scenes/Levels/main.tscn"
 
-[node name="Button" parent="StaticInteractuables/TalkingToSailor" instance=ExtResource("5_ddcs2")]
+[node name="Button" parent="StaticInteractuables/TalkingToCaptain" instance=ExtResource("5_ddcs2")]
 offset_left = 11.0
 offset_top = -90.0
 offset_right = 61.0
 offset_bottom = -40.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/TalkingToSailor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/TalkingToCaptain"]
 position = Vector2(-6, -2)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_mdbkj")
 
-[node name="Label" type="Label" parent="StaticInteractuables/TalkingToSailor"]
+[node name="Label" type="Label" parent="StaticInteractuables/TalkingToCaptain"]
 offset_left = -45.0
 offset_top = -100.0
 offset_right = 38.0
@@ -146,11 +146,11 @@ rotation = 1.5708
 scale = Vector2(1, 61)
 
 [node name="InvisibleWall-l" type="StaticBody2D" parent="Walls"]
-position = Vector2(-945, -164)
+position = Vector2(-882, -164)
 scale = Vector2(1, 16.165)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/InvisibleWall-l"]
-position = Vector2(-47.25, -6.43905)
+position = Vector2(-33.5, -6.43905)
 shape = SubResource("RectangleShape2D_vo1jr")
 
 [node name="Roof2" type="StaticBody2D" parent="Walls"]
@@ -160,7 +160,6 @@ scale = Vector2(1, 61)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Roof2"]
 position = Vector2(-2.99795, 7.4754)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_60x6o")
 
 [node name="Floor2" type="Sprite2D" parent="Walls/Roof2"]
@@ -235,12 +234,12 @@ position = Vector2(-487, -701)
 scale = Vector2(1.86, 1.86)
 texture = ExtResource("9_6wmn1")
 
-[node name="Sailor" type="ColorRect" parent="."]
-offset_left = -984.0
-offset_top = -76.0
-offset_right = -954.0
-offset_bottom = -18.0
-color = Color(0.999995, 0.182742, 0.668272, 1)
+[node name="Captain" type="ColorRect" parent="."]
+offset_left = -936.0
+offset_top = -75.0
+offset_right = -906.0
+offset_bottom = -17.0
+color = Color(0.260653, 0.338077, 0.861935, 1)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(-699, -463)

@@ -7,7 +7,8 @@ enum InteractionStates {
 	TRAVELING_FISHING, 
 	CHECKING_DIARY, 
 	BUYING, 
-	TALKING_TO_SAILOR
+	TALKING_TO_SAILOR,
+	TALKING_TO_CAPTAIN
 }
 
 enum PlayerStates {

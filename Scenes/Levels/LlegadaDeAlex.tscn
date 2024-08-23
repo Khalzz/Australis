@@ -148,7 +148,6 @@ scale = Vector2(1, 61)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Roof"]
 position = Vector2(-0.500839, 4.84426)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_hhu8e")
 
 [node name="InvisibleWall-l" type="StaticBody2D" parent="Walls"]
@@ -166,7 +165,6 @@ scale = Vector2(1, 61)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Roof2"]
 position = Vector2(1.85966e-05, 3.29918)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_60x6o")
 
 [node name="Floor2" type="Sprite2D" parent="Walls/Roof2"]

@@ -1,0 +1,9 @@
+talking,message
+Capitan, Nunca me cansare de esta vista.
+Alex, Yo ya estoy cansado.
+Capitan, "Hehehe, créeme chico, los jovenes de tu familia siempre llegan con la misma falta de emoción"
+Capitan, "Pero una vez se van de aqui, solo desean volver."
+Alex, "¿Como conoce a mi familia?"
+Capitan, "Desde hace años mi familia se ha encargado de llevarlos de ida y vuelta hacia esta zona, asi conoci a tu padre y mi padre fue un gran amigo de tu abuelo."
+Capitan, "Solo te deseo suerte chico, tu padre esta orgulloso de verte dar un paso tan importante para tu familia."
+Alex, "hmmm... si usted lo dice."
