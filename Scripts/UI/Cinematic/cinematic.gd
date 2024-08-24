@@ -15,9 +15,10 @@ var turn = 0
 var transitioning = false
 var fading_out = false
 
+var action_flag = false
+
 func _ready():
 	pass
-	# open_cinematic("res://Assets/Cinematics/Test1",null)
 
 func _process(delta):
 	if visible:
@@ -37,7 +38,9 @@ func _process(delta):
 						fading_out = true
 						await get_tree().create_timer(1.5).timeout
 						visible = false
-						action.call()
+						if action_flag == false:
+							action.call()
+							action_flag = true
 						message_id = 1
 					else:
 						fading_out = true
@@ -96,6 +99,7 @@ func open_cinematic(dialog_folder_name, action_after_dialog):
 	message_id = 1
 	turn = 0
 	visible = true
+	action_flag = false
 	set_cinematic(dialog_folder_name + "/cinematic.txt")
 	last_image = assets_folder + "/" + cinematic_dict[message_id][0] + ".png"
 	fading_out = false

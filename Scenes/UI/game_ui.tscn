@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=55 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -44,6 +44,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/CompraVenta/sell.gd" id="42_koxgm"]
 [ext_resource type="Script" path="res://Scripts/UI/Cinematic/cinematic.gd" id="43_wcq4m"]
 [ext_resource type="Texture2D" uid="uid://dujjfywhuatcg" path="res://Assets/UI/Dialogue/Gradient.svg" id="44_43lvy"]
+[ext_resource type="Script" path="res://Scripts/UI/objetivo.gd" id="45_plngk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqq5d"]
 font_size = 18
@@ -1501,7 +1502,8 @@ offset_right = 749.0
 offset_bottom = -18.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "nombre"
+text = "
+"
 label_settings = SubResource("LabelSettings_clwoy")
 
 [node name="Label" type="Label" parent="Dialog/UiMessage/ColorRect"]
@@ -1517,7 +1519,6 @@ offset_right = 749.0
 offset_bottom = 91.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Hola, soy alex, como te encuentras?"
 label_settings = SubResource("LabelSettings_uqq5d")
 
 [node name="Cinematic" type="Control" parent="."]
@@ -1633,3 +1634,40 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Fue un viaje dificil, pero finalmente logre llegar al antiguo terreno de mi padre."
 label_settings = SubResource("LabelSettings_uqq5d")
+
+[node name="Objetivo" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -383.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 106.0
+grow_horizontal = 0
+script = ExtResource("45_plngk")
+
+[node name="Background" type="ColorRect" parent="Objetivo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.67451)
+
+[node name="Label" type="Label" parent="Objetivo"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ve a hablar con el comerciante"

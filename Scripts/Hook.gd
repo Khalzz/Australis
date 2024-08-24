@@ -1,14 +1,5 @@
 extends RigidBody2D
 
-"""
-this variable is a reference to the elements that will be showable in the game, 
-if the size of the list is 0 
-	it will show all the items
-else 
-	it will only show what is in it
-"""
-@export var fixed_items = []
-
 var still = false
 var particles
 var timer
@@ -45,9 +36,8 @@ func _process(delta):
 		if position.x < 0:
 			$"..".state = Enums.PlayerStates.IDLE
 			$"..".ui.new_item_active = true
-			if fixed_items.size() > 0:
-				print(fixed_items.size())
-				var new_item = fixed_items[randi_range(0, fixed_items.size() - 1)]
+			if $"..".fixed_items.size() > 0:
+				var new_item = $"..".fixed_items[randi_range(0, $"..".fixed_items.size() - 1)]
 				$"..".ui.item_id = new_item
 			else:
 				var new_item = randi_range(0, Items.fishable_list.size() - 1)

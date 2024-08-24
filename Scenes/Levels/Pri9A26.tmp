@@ -1,0 +1,264 @@
+[gd_scene load_steps=23 format=3 uid="uid://cepefi5x0cc02"]
+
+[ext_resource type="Script" path="res://Scripts/Scenes/PrimerDia/primer_dia.gd" id="1_bliov"]
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_71pl7"]
+[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="3_366j5"]
+[ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="4_8iwjt"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="5_ni0kp"]
+[ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="6_h24ym"]
+[ext_resource type="Script" path="res://Scripts/Water.gd" id="7_5nyxp"]
+[ext_resource type="Texture2D" uid="uid://cg4eb8jy4k16t" path="res://Assets/Sprites/FishingBay.svg" id="8_dn7ok"]
+[ext_resource type="Texture2D" uid="uid://br867g7fxtmnu" path="res://Assets/Sprites/World/WoodArrowBase.svg" id="9_4idcs"]
+[ext_resource type="Texture2D" uid="uid://cmxtm2pqp536v" path="res://Assets/Sprites/Land.svg" id="10_pautr"]
+[ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="10_ydif1"]
+[ext_resource type="Texture2D" uid="uid://cvjoxp8hv40pn" path="res://Assets/Sprites/House.svg" id="11_dy63v"]
+[ext_resource type="Texture2D" uid="uid://de6sharmma16o" path="res://Assets/Sprites/Sky/ssky.png" id="11_fou8u"]
+[ext_resource type="Texture2D" uid="uid://c4kvaadq5ivsf" path="res://Assets/Sprites/FishingRod.svg" id="13_y1b1l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
+size = Vector2(45.8, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dovua"]
+size = Vector2(45.8, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ficav"]
+
+[sub_resource type="Gradient" id="Gradient_nxh50"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h3hpk"]
+gradient = SubResource("Gradient_nxh50")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_75ism"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(2500, 1, 1)
+gravity = Vector3(10, 20, 0)
+radial_accel_min = -1.0
+radial_accel_max = -1.0
+damping_min = 5.0
+damping_max = 5.0
+scale_min = 2.0
+scale_max = 5.0
+color_ramp = SubResource("GradientTexture1D_h3hpk")
+collision_mode = 1
+collision_friction = 1.0
+collision_bounce = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_104e0"]
+size = Vector2(45.8, 52)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_bliov")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_71pl7")]
+position = Vector2(-2076, -44)
+debugging = true
+can_open_inventory = false
+camera = NodePath("../MainCamera")
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(-2077, 23)
+offset = Vector2(0, -170)
+zoom = Vector2(10, 10)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("3_366j5")
+
+[node name="StaticInteractuables" type="Node" parent="."]
+
+[node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-2080, -195)
+script = ExtResource("4_8iwjt")
+interaction = 8
+move_to = "res://Scenes/Levels/home.tscn"
+
+[node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("5_ni0kp")]
+offset_left = 16.0
+offset_top = -107.0
+offset_right = 66.0
+offset_bottom = -57.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoingHome"]
+position = Vector2(0, 47)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_xqnm1")
+
+[node name="Label" type="Label" parent="StaticInteractuables/GoingHome"]
+offset_left = -131.0
+offset_top = -241.0
+offset_right = -48.0
+offset_bottom = -218.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
+
+[node name="Fishing" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(538, -71)
+script = ExtResource("4_8iwjt")
+
+[node name="Button" parent="StaticInteractuables/Fishing" instance=ExtResource("5_ni0kp")]
+offset_left = 50.0
+offset_top = -52.0
+offset_right = 50.0
+offset_bottom = -52.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/Fishing"]
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_dovua")
+
+[node name="Label" type="Label" parent="StaticInteractuables/Fishing"]
+offset_left = -42.0
+offset_top = -100.0
+offset_right = 41.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
+
+[node name="Floor" parent="." instance=ExtResource("6_h24ym")]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(-1125, 139)
+scale = Vector2(99.68, 7.8)
+
+[node name="InvisibleWall-l" type="StaticBody2D" parent="."]
+position = Vector2(-3119, -496)
+scale = Vector2(1, 51.48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWall-l"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="InvisibleWall-r" type="StaticBody2D" parent="."]
+position = Vector2(600, -496)
+scale = Vector2(1, 51.48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWall-r"]
+shape = SubResource("RectangleShape2D_gr5qe")
+
+[node name="Water" type="Area2D" parent="."]
+position = Vector2(1.99805, 1074)
+scale = Vector2(2032.72, 100)
+collision_layer = 2
+collision_mask = 2
+gravity_space_override = 1
+gravity = -2192.81
+linear_damp_space_override = 1
+linear_damp = 7.171
+angular_damp = 8.071
+script = ExtResource("7_5nyxp")
+
+[node name="Front" type="ColorRect" parent="Water"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0, 0.384314, 0.803922, 0.643137)
+
+[node name="Background" type="ColorRect" parent="Water"]
+z_index = -2
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0.541176, 0.847059, 0.992157, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+shape = SubResource("RectangleShape2D_ficav")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="WorldAssets" type="Node" parent="."]
+
+[node name="FishingBay" type="Sprite2D" parent="WorldAssets"]
+position = Vector2(-8, 307)
+scale = Vector2(0.115, 0.115)
+texture = ExtResource("8_dn7ok")
+
+[node name="WoodArrowBase" type="Sprite2D" parent="WorldAssets"]
+z_index = -5
+position = Vector2(-2793, -53)
+rotation = -3.14159
+scale = Vector2(0.2, -0.2)
+texture = ExtResource("9_4idcs")
+
+[node name="Land" type="Sprite2D" parent="WorldAssets"]
+position = Vector2(-1893.9, 265)
+scale = Vector2(0.200452, 0.1)
+texture = ExtResource("10_pautr")
+
+[node name="LandBackground" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.713726, 0.713726, 0.713726, 1)
+z_index = -1
+position = Vector2(-1805.4, 290)
+scale = Vector2(0.20625, 0.1)
+texture = ExtResource("10_pautr")
+
+[node name="House" type="Sprite2D" parent="WorldAssets"]
+z_index = -50
+position = Vector2(-1994, -236)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("11_dy63v")
+
+[node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
+z_index = -100
+position = Vector2(7865.51, -124)
+scale = Vector2(8.59593, 1.99)
+texture = ExtResource("11_fou8u")
+
+[node name="Chair" type="Sprite2D" parent="WorldAssets"]
+z_index = -5
+position = Vector2(495, -47)
+scale = Vector2(0.0795041, 0.0795238)
+texture = ExtResource("10_ydif1")
+
+[node name="FishingRod" type="Sprite2D" parent="WorldAssets"]
+z_index = -5
+position = Vector2(595, -65)
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("13_y1b1l")
+
+[node name="Mercader" type="ColorRect" parent="."]
+z_index = -10
+offset_left = -445.0
+offset_top = -74.0
+offset_right = -415.0
+offset_bottom = -16.0
+color = Color(0.0977504, 0.673105, 0.698677, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -5
+position = Vector2(-1310, -937)
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_75ism")
+lifetime = 20.0
+visibility_rect = Rect2(-2000, -100, 4000, 1000)
+
+[node name="Store" type="ColorRect" parent="."]
+offset_left = -457.0
+offset_top = -140.0
+offset_right = -399.0
+offset_bottom = -18.0
+
+[node name="Buy" type="Area2D" parent="Store"]
+position = Vector2(31, -2)
+script = ExtResource("4_8iwjt")
+interaction = 5
+
+[node name="Button" parent="Store/Buy" instance=ExtResource("5_ni0kp")]
+offset_left = 50.0
+offset_top = -52.0
+offset_right = 50.0
+offset_bottom = -52.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Store/Buy"]
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_104e0")
+
+[node name="Label" type="Label" parent="Store/Buy"]
+offset_left = -42.0
+offset_top = -100.0
+offset_right = 41.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true

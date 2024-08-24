@@ -1,0 +1,5 @@
+talking,message
+comerciante, "Buen dia chico, hoy empezaras a trabajar conmigo, tendras que conseguir algunos peces antes de traermelos, que te parece."
+alex, "No hay nada mejor que hacer, asi que no tengo opcion."
+comerciante, "Jajaja, créeme chico, con el tiempo terminaras amando esto, que te parece si ahora me traes 3 Merluzas Antarticas."
+alex, "Esta bien."

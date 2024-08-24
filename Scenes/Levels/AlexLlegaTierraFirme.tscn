@@ -13,12 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://cvjoxp8hv40pn" path="res://Assets/Sprites/House.svg" id="12_2kuir"]
 [ext_resource type="Texture2D" uid="uid://ccpl8iwxx2v6d" path="res://Assets/Sprites/Sky/laterSky.png" id="12_vkweo"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
+size = Vector2(45.8, 52)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ficav"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
-size = Vector2(45.8, 52)
 
 [sub_resource type="Gradient" id="Gradient_nxh50"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -45,12 +45,6 @@ collision_bounce = 0.0
 [node name="World" type="Node2D"]
 script = ExtResource("1_cubnl")
 
-[node name="Floor" parent="." instance=ExtResource("1_lbptw")]
-modulate = Color(1, 1, 1, 0)
-z_index = 1
-position = Vector2(-1125, 139)
-scale = Vector2(99.68, 7.8)
-
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_wey6a")]
 position = Vector2(469, -44)
 debugging = true
@@ -65,6 +59,39 @@ process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
 script = ExtResource("3_t0trk")
+
+[node name="StaticInteractuables" type="Node" parent="."]
+
+[node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-2080, -195)
+script = ExtResource("5_5mtpw")
+interaction = 9
+move_to = "res://Scenes/Levels/home.tscn"
+
+[node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("6_fisll")]
+offset_left = 16.0
+offset_top = -107.0
+offset_right = 66.0
+offset_bottom = -57.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoingHome"]
+position = Vector2(0, 47)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_xqnm1")
+
+[node name="Label" type="Label" parent="StaticInteractuables/GoingHome"]
+offset_left = -131.0
+offset_top = -241.0
+offset_right = -48.0
+offset_bottom = -218.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
+
+[node name="Floor" parent="." instance=ExtResource("1_lbptw")]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(-1125, 139)
+scale = Vector2(99.68, 7.8)
 
 [node name="InvisibleWall-l" type="StaticBody2D" parent="."]
 position = Vector2(-3119, -496)
@@ -111,49 +138,6 @@ color = Color(0.541176, 0.847059, 0.992157, 1)
 shape = SubResource("RectangleShape2D_ficav")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="StaticInteractuables" type="Node" parent="."]
-
-[node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
-position = Vector2(-2080, -195)
-script = ExtResource("5_5mtpw")
-interaction = 2
-move_to = "res://Scenes/Levels/home.tscn"
-
-[node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("6_fisll")]
-offset_left = 16.0
-offset_top = -107.0
-offset_right = 66.0
-offset_bottom = -57.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoingHome"]
-position = Vector2(0, 47)
-scale = Vector2(5, 5)
-shape = SubResource("RectangleShape2D_xqnm1")
-
-[node name="Label" type="Label" parent="StaticInteractuables/GoingHome"]
-offset_left = -131.0
-offset_top = -241.0
-offset_right = -48.0
-offset_bottom = -218.0
-text = "Actionable"
-metadata/_edit_use_anchors_ = true
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-z_index = -5
-position = Vector2(3064, -2932)
-emitting = false
-amount = 800
-lifetime = 10.0
-emission_shape = 3
-emission_rect_extents = Vector2(5000, 1)
-direction = Vector2(1, 1)
-spread = 60.0
-gravity = Vector2(50, 200)
-initial_velocity_max = 80.81
-scale_amount_min = 2.0
-scale_amount_max = 2.0
-color = Color(1, 1, 1, 0.933333)
-
 [node name="WorldAssets" type="Node" parent="."]
 
 [node name="FishingBay" type="Sprite2D" parent="WorldAssets"]
@@ -181,18 +165,18 @@ scale = Vector2(0.20625, 0.1)
 texture = ExtResource("11_k3y0c")
 
 [node name="House" type="Sprite2D" parent="WorldAssets"]
-z_index = -1
+z_index = -50
 position = Vector2(-1994, -236)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("12_2kuir")
 
-[node name="LaterSky" type="Sprite2D" parent="."]
+[node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
 z_index = -100
 position = Vector2(-1396, -124)
 scale = Vector2(1.99, 1.99)
 texture = ExtResource("12_vkweo")
 
-[node name="Captain" type="ColorRect" parent="."]
+[node name="Mercader" type="ColorRect" parent="."]
 z_index = -10
 offset_left = 538.0
 offset_top = -74.0
@@ -202,7 +186,8 @@ color = Color(0.0977504, 0.673105, 0.698677, 1)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 z_index = -5
-position = Vector2(-1731, -655)
+position = Vector2(-1310, -937)
 amount = 1000
 process_material = SubResource("ParticleProcessMaterial_75ism")
 lifetime = 20.0
+visibility_rect = Rect2(-2000, -100, 4000, 1000)

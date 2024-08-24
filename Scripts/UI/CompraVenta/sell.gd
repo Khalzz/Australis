@@ -17,6 +17,7 @@ func _process(delta: float) -> void:
 		if $ElementsToSell.get_children().size() > 0: 
 			if Input.is_action_just_pressed("A"):
 				# muestro el mensaje que se ha vendido
+				Items.sold_items.append($ElementsToSell.get_children()[selected].item_id)
 				$SoldOne.text = "Has vendido un " + Items.item_list[$ElementsToSell.get_children()[selected].item_id].name
 				$SoldOne.activate()
 				

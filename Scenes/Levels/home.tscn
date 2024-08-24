@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ndxog7fkfule"]
+[gd_scene load_steps=17 format=3 uid="uid://ndxog7fkfule"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/home.gd" id="1_rtdg0"]
 [ext_resource type="Texture2D" uid="uid://csn08kqxj3iks" path="res://Assets/Sprites/World/WoodFloor.svg" id="2_kljye"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="9_bq56r"]
 [ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="9_jd43e"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="10_1ramb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pb0xh"]
+size = Vector2(31.2, 27.8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dnbvy"]
 size = Vector2(14.6, 27.8)
@@ -43,6 +46,31 @@ position_smoothing_speed = 6.0
 script = ExtResource("8_th5ap")
 
 [node name="StaticInteractuables" type="Node" parent="."]
+
+[node name="Sleeping" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(554, -84)
+script = ExtResource("9_jd43e")
+interaction = 2
+move_to = "res://Scenes/Levels/main.tscn"
+
+[node name="Button" parent="StaticInteractuables/Sleeping" instance=ExtResource("10_1ramb")]
+offset_left = -144.0
+offset_top = -90.0
+offset_right = -94.0
+offset_bottom = -40.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/Sleeping"]
+position = Vector2(-46, -3.5)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_pb0xh")
+
+[node name="Label" type="Label" parent="StaticInteractuables/Sleeping"]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 38.0
+offset_bottom = -77.0
+text = "Actionable"
+metadata/_edit_use_anchors_ = true
 
 [node name="ExitingHome" type="Area2D" parent="StaticInteractuables"]
 position = Vector2(-174, -75.23)
