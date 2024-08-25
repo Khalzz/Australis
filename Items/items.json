@@ -88,5 +88,17 @@
 			"stackable_to": 5,
 			"investigable": false,
 		},
+		{
+			"id": 7,
+			"img": "res://Assets/Sprites/Items/Piolet.svg",
+			"name": "Kit de escalada",
+			"description": "Un conjunto de herramientas utiles para la escalada y el montañismo.",
+			"fishable": false,
+			"price": 1000,
+			"specialty_level": 2,
+				"fished_message": "Has conseguido un kit de escalada.",
+			"stackable_to": 1,
+			"investigable": false,
+		},
 	],
 }

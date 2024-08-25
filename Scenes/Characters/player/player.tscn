@@ -202,12 +202,52 @@ func interact(interaction, obj_position, move_to):
 				move_to_place(position, \"res://Scenes/Levels/AlexLLegaCasa.tscn\")
 			Enums.InteractionStates.SLEEPING:
 				paused = true
-				ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", alex_want_to_work)
+				
+				match Items.dia:
+					0:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", alex_want_to_work)
+					1:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", alex_want_to_work_2)
+					2:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", null)
+				Items.dia += 1
 			Enums.InteractionStates.TALKING_TO_SELLER_FISHING_TUTORIAL:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/FishingTutorial.txt\", update_level_state)
+			Enums.InteractionStates.ENTERING_HOME_SECOND_TIME:
+				paused = true
+				Items.house_night_1 = true
+				move_to_place(position, \"res://Scenes/Levels/AlexLLegaCasa.tscn\")
+			Enums.InteractionStates.TALKING_TO_SELLER_SECOND_DAY:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogueSecondDay.txt\", update_level_state)
+			Enums.InteractionStates.TALKING_TO_SELLER_DONT_KNOW_FISH:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDontKnowFish.txt\", update_level_state)
+			Enums.InteractionStates.ENTERING_HOME_INVESTIGATION_TUTORIAL:
+				paused = true
+				Items.altered_day = 1
+				move_to_place(position, \"res://Scenes/Levels/AlexLLegaCasa.tscn\")
+			Enums.InteractionStates.INTERACTING_WITH_MOUNTAIN:
+				if Items.dia == 3:
+					var contains_elements = false
+					
+					for element in ui.inventory.inventory_management.inventory:
+						if element != null:
+							if element.item_id == 7:
+								contains_elements = true
+								break
+					if contains_elements:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/GettingInMountain/\", update_level_state)
+					else:
+						ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexCantGoToMountain.txt\", null)
+				else:
+					ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexVeLaMontaña/\", update_level_state)
 
-
+func alex_want_to_work_2():
+	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWorkAgain.txt\", null)
+	update_level_state()
+	
 func alex_want_to_work():
 	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWork.txt\", null)
 	update_level_state()

@@ -34,8 +34,6 @@ func reset():
 	done = false
 	
 func dialogue_reset():
-	print("dialog reseted")
-	
 	timer = 0.0
 	string_index = 0
 	string_show = ""

@@ -14,8 +14,8 @@ height = 18.0
 
 [node name="Hook" type="RigidBody2D"]
 z_index = -1
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_2vnkj")
 
 [node name="Hook" type="Sprite2D" parent="."]

@@ -1,0 +1,8 @@
+talking,message
+comerciante, "¿Que es eso?"
+alex, "No lo se, esperaba que me pudieras iluminar con algo de informacion."
+comerciante, "Nunca habia visto un pez asi con el tiempo que he estado aqui."
+comerciante, "Ahora que lo pienso, tu madre solia tener un diario donde anotaba mucha informacion sobre distinta flora y fauna de este lugar."
+comerciante, "Si lo encuentras puede que encuentres que tipo de pez sea este."
+alex, "Tienes razon, lo vi el primer dia que llegue, le echare un vistazo."
+comerciante, "Una vez lo investigues puedes traermelo y lo vendo por ti, o se lo das a ese amigito tuyo que te persigue a todos lados jajaja."

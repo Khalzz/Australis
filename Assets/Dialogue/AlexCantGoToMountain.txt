@@ -1,0 +1,2 @@
+talking,message
+alex, "Aun tengo que conseguir el kit de costura para poder escalar esta montaña, el comerciante debe tener uno."

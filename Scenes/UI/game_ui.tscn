@@ -1121,7 +1121,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("39_xr0o1")
-selling = Array[int]([0, 6])
+selling = Array[int]([0, 6, 7])
 
 [node name="ElementsToBuy" type="HBoxContainer" parent="CompraVenta/States/Buy"]
 layout_mode = 2
@@ -1636,7 +1636,6 @@ text = "Fue un viaje dificil, pero finalmente logre llegar al antiguo terreno de
 label_settings = SubResource("LabelSettings_uqq5d")
 
 [node name="Objetivo" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0

@@ -64,7 +64,7 @@ func load_sellables():
 	for element in $"../../../Inventario".inventory_management.inventory:
 		if element != null:
 			if Items.item_list[element.item_id].investigable:
-				if $"../../../Inventario".inventory_management.investigated_items.has(element.item_id):
+				if $"../../../Inventario".inventory_management.investigated_items.has(float(element.item_id)):
 					for count in element.count:
 						items.append(element.item_id)
 			else:
@@ -74,10 +74,10 @@ func load_sellables():
 	for child in $ElementsToSell.get_children():
 		$ElementsToSell.remove_child(child)
 		child.queue_free()
-	
+
 	items.sort()
 	var setted = []
-	
+
 	for element in items:
 		if !setted.has(element):
 			setted.append(element)

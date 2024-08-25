@@ -32,6 +32,8 @@ func _process(delta):
 	timer += delta
 	$"..".hooked = still
 
+	print($"..".fixed_items)
+
 	if still:
 		if position.x < 0:
 			$"..".state = Enums.PlayerStates.IDLE

@@ -6,6 +6,10 @@ var fishable_list = []
 
 var sold_items = []
 
+var dia = 2
+var altered_day = 0
+var house_night_1 = false
+
 func _ready():
 	var json_as_text = FileAccess.get_file_as_string(JSON_FILE)
 	var json_as_dict = JSON.parse_string(json_as_text)

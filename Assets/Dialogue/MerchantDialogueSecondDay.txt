@@ -1,0 +1,4 @@
+talking,message
+comerciante, "Saludos muchacho, hoy simplemente traeme lo que encuentres, si encuentras algo extraño te me acercas."
+comerciante, "Recuerda que estar aqui no es juntar una cuota diaria, solo dedicate a generar lo necesario para ti."
+alex, "Entendido."
