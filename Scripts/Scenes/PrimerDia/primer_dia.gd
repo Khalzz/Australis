@@ -87,7 +87,18 @@ func _process(delta: float) -> void:
 				$StaticInteractuables/InteractingWithMountain.monitoring = false
 				Items.altered_day = 3
 	elif Items.dia == 3:
-		$Player.objective = "Compra el kit de escalada del comerciante."
+		var has_piolet = false
+		
+		if $Player.isActive:
+			for element in $Player.ui.inventory.inventory_management.inventory:
+				if element != null:
+					if element.item_id == 7:
+						has_piolet = true
+						break
+		if has_piolet:
+			$Player.objective = "Interactua con la montaña"
+		else:
+			$Player.objective = "Compra el kit de escalada del comerciante."
 		$StaticInteractuables/GoingHome.monitoring = true
 		$StaticInteractuables/InteractingWithMountain.monitoring = true
 		

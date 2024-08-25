@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ckolds6kabfyj"]
+[gd_scene load_steps=20 format=3 uid="uid://ckolds6kabfyj"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/AlexLLegaTierraFirme/alex_llega_tierra_firme.gd" id="1_cubnl"]
 [ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="1_lbptw"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cmxtm2pqp536v" path="res://Assets/Sprites/Land.svg" id="11_k3y0c"]
 [ext_resource type="Texture2D" uid="uid://cvjoxp8hv40pn" path="res://Assets/Sprites/House.svg" id="12_2kuir"]
 [ext_resource type="Texture2D" uid="uid://ccpl8iwxx2v6d" path="res://Assets/Sprites/Sky/laterSky.png" id="12_vkweo"]
+[ext_resource type="Texture2D" uid="uid://dl7cx46xdo1jp" path="res://Assets/Sprites/Mountain.svg" id="13_carl4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
 size = Vector2(45.8, 52)
@@ -65,7 +66,7 @@ script = ExtResource("3_t0trk")
 [node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
 position = Vector2(-2080, -195)
 script = ExtResource("5_5mtpw")
-interaction = 9
+interaction = 11
 move_to = "res://Scenes/Levels/home.tscn"
 
 [node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("6_fisll")]
@@ -191,3 +192,8 @@ amount = 1000
 process_material = SubResource("ParticleProcessMaterial_75ism")
 lifetime = 20.0
 visibility_rect = Rect2(-2000, -100, 4000, 1000)
+
+[node name="Mountain" type="Sprite2D" parent="."]
+position = Vector2(-3643, -634)
+scale = Vector2(0.413699, 0.431683)
+texture = ExtResource("13_carl4")
