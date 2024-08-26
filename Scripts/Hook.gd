@@ -13,6 +13,8 @@ var selectable_bar
 var smash_mode = false
 var smash_button
 
+var base_list = [0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 5, 5, 5]
+
 var distance = 0
 
 func _ready():
@@ -31,19 +33,18 @@ func reset_data():
 func _process(delta):
 	timer += delta
 	$"..".hooked = still
-
-	print($"..".fixed_items)
-
 	if still:
 		if position.x < 0:
 			$"..".state = Enums.PlayerStates.IDLE
 			$"..".ui.new_item_active = true
 			if $"..".fixed_items.size() > 0:
-				var new_item = $"..".fixed_items[randi_range(0, $"..".fixed_items.size() - 1)]
+				var random_value = randi_range(0, $"..".fixed_items.size() - 1)
+				print(random_value)
+				var new_item = $"..".fixed_items[random_value]
 				$"..".ui.item_id = new_item
 			else:
-				var new_item = randi_range(0, Items.fishable_list.size() - 1)
-				$"..".ui.item_id = new_item
+				var new_item = randi_range(0, base_list.size() - 1)
+				$"..".ui.item_id = base_list[new_item]
 			die()
 	else:
 		distance = position.x

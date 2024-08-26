@@ -49,7 +49,6 @@ func _process(delta):
 					
 				else:
 					message_id += 1
-					print(dialogue_dict[message_id])
 					$UiMessage.message = dialogue_dict[message_id][1]
 					$UiMessage.dialogue_reset()
 					set_talkable()

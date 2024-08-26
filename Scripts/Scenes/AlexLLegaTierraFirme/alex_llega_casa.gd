@@ -10,9 +10,6 @@ func _ready() -> void:
 		$Player.ui.cinematic.open_cinematic("res://Assets/Cinematics/AlexLLegaCasa/", starting_dialog)
 
 func _process(delta: float) -> void:
-	print("dia: " + str(Items.dia))
-	print("state: " + str(state))
-	
 	if Items.dia == 0:
 		if state == 0:
 			$Player.objective = "Ve a dormir"

@@ -238,11 +238,14 @@ func interact(interaction, obj_position, move_to):
 								contains_elements = true
 								break
 					if contains_elements:
-						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/GettingInMountain/\", update_level_state)
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/GettingInMountain/\", back_to_menu)
 					else:
 						ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexCantGoToMountain.txt\", null)
 				else:
 					ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexVeLaMontaña/\", update_level_state)
+
+func back_to_menu():
+	get_tree().change_scene_to_file(\"res://Scenes/MainMenu.tscn\")
 
 func alex_want_to_work_2():
 	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWorkAgain.txt\", null)

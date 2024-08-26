@@ -25,6 +25,7 @@ func _process(delta):
 		if Input.is_action_just_pressed("pause") or Input.is_action_just_pressed("B"):
 			$"../..".visible = false
 			$"../../..".player.isActive = true
+			$"../../..".player.paused = false
 			
 		if Input.is_action_just_pressed("A"):
 			if inner_select == 0:

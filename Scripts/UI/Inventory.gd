@@ -1,7 +1,5 @@
 extends Control
 
-const JSON_FILE = "res://Items/item_management.json"
-
 var selected_setted = null
 var selected = 0;
 var selected_item = null
@@ -20,9 +18,7 @@ var state = InventoryStates.SelectingItem
 var replace_item = null
 
 func _ready():
-	var json_as_text = FileAccess.get_file_as_string(JSON_FILE)
-	var json_as_dict = JSON.parse_string(json_as_text)
-	inventory_management = json_as_dict
+	inventory_management = Items.load_inventory_management()
 	reset_data()
 
 func reset_data():
@@ -120,6 +116,4 @@ func new_inventory_node(item_id, count):
 	return { "item_id": item_id, "count": count }
 	
 func write_inventory():
-	var file = FileAccess.open(JSON_FILE, FileAccess.WRITE)
-	file.store_string(JSON.stringify(inventory_management))
-	file.close()
+	Items.save_inventory_management(inventory_management)

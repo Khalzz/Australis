@@ -21,9 +21,9 @@ func _process(delta):
 					$"..".new_item_active = false
 					if $"../Inventario".add_item($"..".item_id):
 						$"..".player.isActive = true
+						$"..".player.paused = true
 					else:
 						$"..".player.toggle_inventory()
-						
 				if $"..".new_investigated_active:
 					$"..".new_investigated_active = false
 					$"..".player.toggle_inventory()

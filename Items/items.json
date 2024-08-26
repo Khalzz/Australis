@@ -10,7 +10,7 @@
 			"specialty_level": 1,
 			"fished_message": "Has atrapado una Merluza Antartica.",
 			"stackable_to": 10,
-			"investigable": true,
+			"investigable": false,
 			"investigated_message": "Has aprendido sobre la Merluza Antartica",
 			"investigable_texture": "res://Assets/UI/ItemManagement/Investigation/DiaryPages/Merlusa antartica.png"
 		},

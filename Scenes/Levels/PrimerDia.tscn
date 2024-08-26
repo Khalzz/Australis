@@ -24,7 +24,7 @@ size = Vector2(45.8, 52)
 size = Vector2(45.8, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oahvh"]
-size = Vector2(45.8, 52)
+size = Vector2(53.9, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
 
@@ -156,7 +156,7 @@ offset_right = 137.0
 offset_bottom = 16.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/InteractingWithMountain"]
-position = Vector2(0, 47)
+position = Vector2(-20.25, 47)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_oahvh")
 

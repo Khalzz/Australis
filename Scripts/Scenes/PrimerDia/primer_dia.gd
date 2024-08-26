@@ -13,6 +13,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Items.dia == 1:
 		if state == 0:
+			var items_array_fixed: Array[int] = [0, 0, 0, 0, 0, 1, 2, 3, 4]
+			$Player.fixed_items = items_array_fixed
 			$StaticInteractuables/InteractingWithMountain.monitoring = false
 			$Pinguin.visible = false
 			$Player.objective = "Habla con el comerciante"
@@ -70,6 +72,7 @@ func _process(delta: float) -> void:
 								break
 			2:
 				var array_items: Array[int] = []
+				$Player.fixed_items = array_items
 				$Store/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_DONT_KNOW_FISH
 				$Player.objective = "Preguntale al mercader sobre el pez extraño"
 			3:
@@ -87,6 +90,9 @@ func _process(delta: float) -> void:
 				$StaticInteractuables/InteractingWithMountain.monitoring = false
 				Items.altered_day = 3
 	elif Items.dia == 3:
+		var array_items: Array[int] = []
+		$Player.fixed_items = array_items
+		
 		var has_piolet = false
 		
 		if $Player.isActive:
