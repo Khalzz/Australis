@@ -1,2 +1,2 @@
 talking,message
-alex, "Hey, ¿donde se encuentra ese pinguino?"
+Alex, "Hey, ¿dónde se encuentra el pingüino?"

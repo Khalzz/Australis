@@ -1,14 +1,14 @@
 image,message
-0, "Mientras hablaba con el comerciante sobre los pesces que consegui y la basura existente en estas aguas, logre notar algo que me cambio desde mi llegada a este lugar."
-1, "Pero algo desvio mi mirada mientras hablaba con el"
+0, "Mientras hablaba con el comerciante sobre los peces que conseguí y la basura existente en estas aguas, logre notar algo que me cambio desde mi llegada a este lugar."
+1, "Pero algo desvío mi mirada mientras hablaba con él"
 2,
 3,
 4, "-Alex: Con permiso."
 5,
-6, "-Comerciante: Hey, eso era mio"
-7, "-Alex: Hey pequeñin."
+6, "-Comerciante: Hey, eso era mío"
+7, "-Alex: Hey pequeñín."
 8, "-Alex: Ten."
 9, 
-10, "-Comerciante: Es bueno saber que tienes un alma chico, los pinguinos a veces suelen dejar sus huevos solos y para algunos con poca suerte como este pequeñin deben convivir con ello como puedan."
-11, "-Comerciante: Eso no te exime del pez que me quitaste para alimentarlo, tendras que traerme otro similar."
-12, "-Alex: Lo hare enseguida."
+10, "-Comerciante: Es bueno saber que tienes un alma, chico, los pingüinos a veces suelen dejar sus huevos solos y para algunos con poca suerte como este pequeñín deben convivir con ello como puedan."
+11, "-Comerciante: Eso no te exime del pez que me quitaste para alimentarlo, tendrás que traerme otro similar."
+12, "-Alex: Lo haré enseguida."

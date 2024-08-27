@@ -1,2 +1,2 @@
 talking,message
-comerciante, "Perfecto, con eso terminas la cuota chico, ahora puedes irte a descansar."
+Comerciante, "Perfecto, con eso terminas la cuota, chico, ahora puedes irte a descansar."

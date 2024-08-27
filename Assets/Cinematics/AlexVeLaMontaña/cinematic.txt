@@ -1,9 +1,9 @@
 image,message
-0,"Hey pequeñin, ¿que encontraste?"
+0,"Hey pequeñín, ¿qué encontraste?"
 1, "Esta, montaña..."
-1, "Mi madre solia hablar de una montaña que era especial... ¿puede que sea esta?"
+1, "Mi madre solía hablar de una montaña que era especial... ¿Puede que sea esta?"
 2, "¿Quieres escalarla?"
-3, "En algun momento lo hare, pero primero, necesito el equipamiento correcto"
+3, "En algún momento lo haré, pero primero, necesito el equipamiento correcto"
 4,
 5,
-6, "Algun dia vere lo que te emocionaba tanto mama."
+6, "Algún día veré lo que te emocionaba tanto mama."

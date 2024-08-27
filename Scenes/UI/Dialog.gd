@@ -25,6 +25,8 @@ func _process(delta):
 		$UiMessage/ColorRect/Name.text = dialogue_dict[message_id][0]
 		
 		if turn == 0:
+			
+			
 			$Talking1.position.x = lerp($Talking1.position.x, TALKING1_BASE_POS, delta * 7.0)
 			$Talking2.position.x = lerp($Talking2.position.x, TALKING2_BASE_POS + 1000.0, delta * 7.0)
 		if turn == 1:

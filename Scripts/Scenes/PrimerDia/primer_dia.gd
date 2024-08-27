@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 			$Store/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_FISHING_TUTORIAL
 			$StaticInteractuables/GoingHome.monitoring = false
 		elif state == 1:
-			$Player.objective = "Pesca y vende 3 Merluzas Antarticas"
+			$Player.objective = "Pesca y vende 3 Merluzas Antárticas"
 			var count_of_merluzas = 0
 			for element in Items.sold_items:
 				if element == 0:
@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 					count_of_merluzas += 1
 				
 			$Pinguin.visible = true
-			$Player.objective = "Pesca y vende 1 Merluza Antartica"
+			$Player.objective = "Pesca y vende 1 Merluza Antártica"
 			$WorldAssets/LaterSky.texture = load("res://Assets/Sprites/Sky/laterSky.png")
 			
 			if count_of_merluzas >= 1:
@@ -74,14 +74,14 @@ func _process(delta: float) -> void:
 				var array_items: Array[int] = []
 				$Player.fixed_items = array_items
 				$Store/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_DONT_KNOW_FISH
-				$Player.objective = "Preguntale al mercader sobre el pez extraño"
+				$Player.objective = "Pregúntale al comerciante sobre el pez extraño"
 			3:
 				$Store/Buy.interaction = Enums.InteractionStates.BUYING
 				$Player.objective = "Ve a casa a revisar el diario de mama"
 				$StaticInteractuables/GoingHome.monitoring = true
 				$StaticInteractuables/GoingHome.interaction = Enums.InteractionStates.ENTERING_HOME_INVESTIGATION_TUTORIAL
 			4:
-				$Player.objective = "Busca al pinguino"
+				$Player.objective = "Busca al pingüino"
 				$StaticInteractuables/GoingHome.monitoring = false
 				$StaticInteractuables/InteractingWithMountain.monitoring = true
 			5: 
@@ -102,10 +102,8 @@ func _process(delta: float) -> void:
 						has_piolet = true
 						break
 		if has_piolet:
-			$Player.objective = "Interactua con la montaña"
+			$Player.objective = "Interactúa con la montaña"
 		else:
 			$Player.objective = "Compra el kit de escalada del comerciante."
 		$StaticInteractuables/GoingHome.monitoring = true
 		$StaticInteractuables/InteractingWithMountain.monitoring = true
-		
-		

@@ -1,2 +1,2 @@
 talking,message
-alex, "Fue un viaje largo, quiero dormir un poco."
+Alex, "Fue un viaje largo, quiero dormir un poco."

@@ -1,3 +1,3 @@
 talking,message
-comerciante, "Saludos muchacho, ¿que te apetece hacer hoy?"
-alex, "Hoy me apetece..."
+Comerciante, "Saludos muchacho, ¿qué te apetece hacer hoy?"
+Alex, "Hoy me apetece..."

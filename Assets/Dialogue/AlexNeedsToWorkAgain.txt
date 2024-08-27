@@ -1,3 +1,3 @@
 talking,message
-alex, "Oh... eso fue un buen sueño."
-alex, "Pero tengo que ir a pescar hoy tambien."
+Alex, "Oh... eso fue un buen sueño."
+Alex, "Pero tengo que ir a pescar hoy también."

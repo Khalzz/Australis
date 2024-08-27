@@ -301,7 +301,7 @@ offset_left = -303.0
 offset_top = -245.0
 offset_right = -194.0
 offset_bottom = -222.0
-text = "Muevete con: "
+text = "Muévete con: "
 label_settings = SubResource("LabelSettings_4ep38")
 
 [node name="Left" parent="Label" instance=ExtResource("6_rdcub")]

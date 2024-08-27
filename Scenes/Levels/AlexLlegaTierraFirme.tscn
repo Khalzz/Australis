@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ckolds6kabfyj"]
+[gd_scene load_steps=19 format=3 uid="uid://ckolds6kabfyj"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/AlexLLegaTierraFirme/alex_llega_tierra_firme.gd" id="1_cubnl"]
 [ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="1_lbptw"]
@@ -18,8 +18,6 @@
 size = Vector2(45.8, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ficav"]
 
 [sub_resource type="Gradient" id="Gradient_nxh50"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -109,7 +107,7 @@ scale = Vector2(1, 51.48)
 shape = SubResource("RectangleShape2D_gr5qe")
 
 [node name="Water" type="Area2D" parent="."]
-position = Vector2(1.99805, 1074)
+position = Vector2(697, 1074)
 scale = Vector2(2032.72, 100)
 collision_layer = 2
 collision_mask = 2
@@ -121,23 +119,20 @@ angular_damp = 8.071
 script = ExtResource("4_d5adv")
 
 [node name="Front" type="ColorRect" parent="Water"]
-offset_left = -10.0
+z_index = 5
+offset_left = -3.0
 offset_top = -10.0
-offset_right = 10.0
+offset_right = 1.0
 offset_bottom = 10.0
 color = Color(0, 0.384314, 0.803922, 0.643137)
 
 [node name="Background" type="ColorRect" parent="Water"]
 z_index = -2
-offset_left = -10.0
+offset_left = -3.0
 offset_top = -10.0
-offset_right = 10.0
+offset_right = 1.0
 offset_bottom = 10.0
 color = Color(0.541176, 0.847059, 0.992157, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
-shape = SubResource("RectangleShape2D_ficav")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="WorldAssets" type="Node" parent="."]
 
@@ -154,15 +149,16 @@ scale = Vector2(0.2, -0.2)
 texture = ExtResource("10_qsbwk")
 
 [node name="Land" type="Sprite2D" parent="WorldAssets"]
-position = Vector2(-1893.9, 265)
-scale = Vector2(0.200452, 0.1)
+z_index = 10
+position = Vector2(-2213.5, 327.5)
+scale = Vector2(0.370118, 0.610816)
 texture = ExtResource("11_k3y0c")
 
 [node name="LandBackground" type="Sprite2D" parent="WorldAssets"]
 modulate = Color(0.713726, 0.713726, 0.713726, 1)
 z_index = -1
-position = Vector2(-1805.4, 290)
-scale = Vector2(0.20625, 0.1)
+position = Vector2(-1518.96, 303.5)
+scale = Vector2(0.257395, 0.527482)
 texture = ExtResource("11_k3y0c")
 
 [node name="House" type="Sprite2D" parent="WorldAssets"]
@@ -173,8 +169,8 @@ texture = ExtResource("12_2kuir")
 
 [node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
 z_index = -100
-position = Vector2(-1396, -124)
-scale = Vector2(1.99, 1.99)
+position = Vector2(-1392.01, -124)
+scale = Vector2(1.98715, 1.99)
 texture = ExtResource("12_vkweo")
 
 [node name="Mercader" type="ColorRect" parent="."]
@@ -188,7 +184,7 @@ color = Color(0.0977504, 0.673105, 0.698677, 1)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 z_index = -5
 position = Vector2(-1310, -937)
-amount = 1000
+amount = 500
 process_material = SubResource("ParticleProcessMaterial_75ism")
 lifetime = 20.0
 visibility_rect = Rect2(-2000, -100, 4000, 1000)
