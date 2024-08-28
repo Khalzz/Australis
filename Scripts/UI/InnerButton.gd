@@ -8,12 +8,10 @@ extends Control
 
 @export var inner_select_owner: Node
 
-
 func _ready():
 	$Label.text = text
 
 func _process(delta):
-	# $"../.."
 	if inner_select_owner.inner_select == id_inner_button:
 		$BaseSize/TextureRect.texture = load(active_texture)
 	else:

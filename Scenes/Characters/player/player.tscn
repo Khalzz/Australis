@@ -93,27 +93,29 @@ func _physics_process(delta):
 	touchingFloor(delta) # this function i will use it if the user is touching the floor or not
 	stateReseters() # reseters of data
 	fishing(delta)
-
 	if isActive:
 		inputMovement() # here i get the values of direction
 		jumpLogic(delta)
 		movementLogic(delta)
+	else:
+		velocity = Vector2.ZERO
 	move_and_slide()
 
 func inputMovement():
-	axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
-	if (axisDirection.x < 0.1 and axisDirection.x > -0.1):
-		axisDirection.x = 0
-	if (axisDirection.y < 0.1 and axisDirection.y > -0.1):
-		axisDirection.y = 0
-	if (axisDirection.x > 0.8):
-		axisDirection.x = 1
-	if (axisDirection.x < -0.8):
-		axisDirection.x = -1
-	if !isWalking:
-		direction = axisDirection
-	else:
-		direction = axisDirection / 2.1
+	if isActive:
+		axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+		if (axisDirection.x < 0.1 and axisDirection.x > -0.1):
+			axisDirection.x = 0
+		if (axisDirection.y < 0.1 and axisDirection.y > -0.1):
+			axisDirection.y = 0
+		if (axisDirection.x > 0.8):
+			axisDirection.x = 1
+		if (axisDirection.x < -0.8):
+			axisDirection.x = -1
+		if !isWalking:
+			direction = axisDirection
+		else:
+			direction = axisDirection / 2.1
 
 func touchingFloor(delta):
 	if is_on_floor():

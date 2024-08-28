@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cepefi5x0cc02"]
+[gd_scene load_steps=26 format=3 uid="uid://cepefi5x0cc02"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/PrimerDia/primer_dia.gd" id="1_bliov"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_71pl7"]
@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cvjoxp8hv40pn" path="res://Assets/Sprites/House.svg" id="11_dy63v"]
 [ext_resource type="Texture2D" uid="uid://de6sharmma16o" path="res://Assets/Sprites/Sky/ssky.png" id="11_fou8u"]
 [ext_resource type="Texture2D" uid="uid://c4kvaadq5ivsf" path="res://Assets/Sprites/FishingRod.svg" id="13_y1b1l"]
-[ext_resource type="Script" path="res://Scripts/pinguin.gd" id="15_3m4pi"]
+[ext_resource type="PackedScene" uid="uid://dom1pl43r05ny" path="res://Scenes/Characters/pinguin.tscn" id="15_wkwkm"]
 [ext_resource type="Texture2D" uid="uid://dl7cx46xdo1jp" path="res://Assets/Sprites/Mountain.svg" id="16_fg6e2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6avw"]
@@ -54,21 +54,6 @@ collision_bounce = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_104e0"]
 size = Vector2(45.8, 52)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hicuu"]
-resource_local_to_scene = true
-radius = 14.2852
-height = 53.8462
-
-[sub_resource type="GDScript" id="GDScript_5qkxc"]
-script/source = "extends CollisionShape2D
-
-func _ready():
-	pass # Replace with function body.
-
-func _process(delta):
-	pass
-"
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_bliov")
@@ -236,15 +221,15 @@ scale = Vector2(0.2, -0.2)
 texture = ExtResource("9_4idcs")
 
 [node name="Land" type="Sprite2D" parent="WorldAssets"]
-position = Vector2(-1893.9, 265)
-scale = Vector2(0.200452, 0.1)
+position = Vector2(-1720.5, 253)
+scale = Vector2(0.262398, 0.47695)
 texture = ExtResource("10_pautr")
 
 [node name="LandBackground" type="Sprite2D" parent="WorldAssets"]
 modulate = Color(0.713726, 0.713726, 0.713726, 1)
 z_index = -1
-position = Vector2(-1805.4, 290)
-scale = Vector2(0.20625, 0.1)
+position = Vector2(-1632, 254.5)
+scale = Vector2(0.280109, 0.467199)
 texture = ExtResource("10_pautr")
 
 [node name="House" type="Sprite2D" parent="WorldAssets"]
@@ -319,25 +304,9 @@ offset_bottom = -77.0
 text = "Actionable"
 metadata/_edit_use_anchors_ = true
 
-[node name="Pinguin" type="CharacterBody2D" parent="."]
-position = Vector2(-2002, -54)
-scale = Vector2(0.560019, 0.52)
-collision_layer = 2
-script = ExtResource("15_3m4pi")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pinguin"]
-position = Vector2(-6.96182e-05, 1.90735e-06)
-shape = SubResource("CapsuleShape2D_hicuu")
-debug_color = Color(0, 0.6, 0.701961, 0.419608)
-script = SubResource("GDScript_5qkxc")
-
-[node name="ColorRect" type="ColorRect" parent="Pinguin"]
-offset_left = -12.4996
-offset_top = -25.0
-offset_right = 12.1304
-offset_bottom = 15.0
-scale = Vector2(1, 1.30769)
-color = Color(0.223529, 0.427451, 1, 1)
+[node name="Pinguin" parent="." node_paths=PackedStringArray("player") instance=ExtResource("15_wkwkm")]
+scale = Vector2(0.8, 0.743)
+player = NodePath("../Player")
 
 [node name="Mountain" type="Sprite2D" parent="."]
 position = Vector2(-3643, -634)
