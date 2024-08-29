@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://da2jrniviifbx"]
+[gd_scene load_steps=18 format=3 uid="uid://da2jrniviifbx"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/AlexLLegaTierraFirme/alex_llega_casa.gd" id="1_rg6nd"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_ertbp"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="8_8mp5e"]
 [ext_resource type="Texture2D" uid="uid://bk6kh4mgdnexq" path="res://Assets/Sprites/World/Desk.svg" id="9_1fuxl"]
 [ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="10_fg3o6"]
+[ext_resource type="Texture2D" uid="uid://cpcd2tmxsik5m" path="res://Assets/Sprites/Door.svg" id="11_cqkol"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f4faq"]
 size = Vector2(31.2, 27.8)
@@ -32,8 +33,7 @@ size = Vector2(764, 292)
 script = ExtResource("1_rg6nd")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_ertbp")]
-position = Vector2(-177, -78)
-debugging = true
+position = Vector2(-177, -47)
 camera_following = false
 can_open_inventory = false
 camera = NodePath("../MainCamera")
@@ -70,7 +70,8 @@ offset_left = -45.0
 offset_top = -100.0
 offset_right = 38.0
 offset_bottom = -77.0
-text = "Actionable"
+text = "
+"
 metadata/_edit_use_anchors_ = true
 
 [node name="ExitingHome" type="Area2D" parent="StaticInteractuables"]
@@ -95,7 +96,8 @@ offset_left = -45.0
 offset_top = -100.0
 offset_right = 38.0
 offset_bottom = -77.0
-text = "Actionable"
+text = "
+"
 metadata/_edit_use_anchors_ = true
 
 [node name="OpeningDiary" type="Area2D" parent="StaticInteractuables"]
@@ -120,7 +122,8 @@ offset_left = -45.0
 offset_top = -100.0
 offset_right = 38.0
 offset_bottom = -77.0
-text = "Actionable"
+text = "
+"
 metadata/_edit_use_anchors_ = true
 
 [node name="Backrgound" type="ColorRect" parent="."]
@@ -255,21 +258,6 @@ offset = Vector2(0, -81.9)
 enabled = false
 zoom = Vector2(2.015, 2.015)
 
-[node name="Door" type="ColorRect" parent="."]
-z_index = -20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -214.0
-offset_top = -147.0
-offset_right = -143.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.517647, 0.517647, 0.517647, 1)
-
 [node name="Desk" type="Sprite2D" parent="."]
 position = Vector2(-552, -34)
 scale = Vector2(0.309394, 0.360122)
@@ -279,3 +267,9 @@ texture = ExtResource("9_1fuxl")
 position = Vector2(-509.474, -54.2092)
 scale = Vector2(-0.0822132, 0.0965214)
 texture = ExtResource("10_fg3o6")
+
+[node name="Door" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(-178, -79)
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("11_cqkol")

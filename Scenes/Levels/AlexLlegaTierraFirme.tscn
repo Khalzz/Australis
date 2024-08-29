@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ckolds6kabfyj"]
+[gd_scene load_steps=24 format=3 uid="uid://ckolds6kabfyj"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/AlexLLegaTierraFirme/alex_llega_tierra_firme.gd" id="1_cubnl"]
 [ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="1_lbptw"]
@@ -13,16 +13,21 @@
 [ext_resource type="Texture2D" uid="uid://cvjoxp8hv40pn" path="res://Assets/Sprites/House.svg" id="12_2kuir"]
 [ext_resource type="Texture2D" uid="uid://ccpl8iwxx2v6d" path="res://Assets/Sprites/Sky/laterSky.png" id="12_vkweo"]
 [ext_resource type="Texture2D" uid="uid://dl7cx46xdo1jp" path="res://Assets/Sprites/Mountain.svg" id="13_carl4"]
+[ext_resource type="Texture2D" uid="uid://on4tot75gj5s" path="res://Assets/Sprites/Store.svg" id="13_gagn3"]
+[ext_resource type="Texture2D" uid="uid://4b20ueceymf2" path="res://Assets/Sprites/Characters/Comerciante.png" id="15_ngt7p"]
+[ext_resource type="Texture2D" uid="uid://dlchl75kg0x5d" path="res://Assets/Sprites/World/FloorTiles.png" id="16_lhwyw"]
+[ext_resource type="Texture2D" uid="uid://dq0aoawdhliuy" path="res://Assets/Sprites/World/TerrainTile2.png" id="16_pdtqk"]
+[ext_resource type="Texture2D" uid="uid://d1n1gvg58au83" path="res://Assets/Sprites/World/Background.png" id="18_cl6ar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
-size = Vector2(45.8, 52)
+size = Vector2(54.8, 37.2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
 
 [sub_resource type="Gradient" id="Gradient_nxh50"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_h3hpk"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8bda0"]
 gradient = SubResource("Gradient_nxh50")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_75ism"]
@@ -36,7 +41,7 @@ damping_min = 5.0
 damping_max = 5.0
 scale_min = 2.0
 scale_max = 5.0
-color_ramp = SubResource("GradientTexture1D_h3hpk")
+color_ramp = SubResource("GradientTexture1D_8bda0")
 collision_mode = 1
 collision_friction = 1.0
 collision_bounce = 0.0
@@ -46,7 +51,6 @@ script = ExtResource("1_cubnl")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_wey6a")]
 position = Vector2(469, -44)
-debugging = true
 can_open_inventory = false
 camera = NodePath("../MainCamera")
 
@@ -68,13 +72,13 @@ interaction = 11
 move_to = "res://Scenes/Levels/home.tscn"
 
 [node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("6_fisll")]
-offset_left = 16.0
-offset_top = -107.0
-offset_right = 66.0
-offset_bottom = -57.0
+offset_left = 199.0
+offset_top = -73.0
+offset_right = 249.0
+offset_bottom = -23.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoingHome"]
-position = Vector2(0, 47)
+position = Vector2(85, 84)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_xqnm1")
 
@@ -83,7 +87,6 @@ offset_left = -131.0
 offset_top = -241.0
 offset_right = -48.0
 offset_bottom = -218.0
-text = "Actionable"
 metadata/_edit_use_anchors_ = true
 
 [node name="Floor" parent="." instance=ExtResource("1_lbptw")]
@@ -149,31 +152,60 @@ scale = Vector2(0.2, -0.2)
 texture = ExtResource("10_qsbwk")
 
 [node name="Land" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.203922, 0.298039, 0.439216, 1)
 z_index = 10
-position = Vector2(-2213.5, 327.5)
+position = Vector2(-3073, 356)
 scale = Vector2(0.370118, 0.610816)
 texture = ExtResource("11_k3y0c")
+region_enabled = true
+region_rect = Rect2(-10893, 0, 15911, 1128)
 
 [node name="LandBackground" type="Sprite2D" parent="WorldAssets"]
-modulate = Color(0.713726, 0.713726, 0.713726, 1)
+modulate = Color(0.0291921, 0.066838, 0.139372, 1)
 z_index = -1
-position = Vector2(-1518.96, 303.5)
-scale = Vector2(0.257395, 0.527482)
+position = Vector2(-2400, 261)
+scale = Vector2(0.328417, 0.461175)
 texture = ExtResource("11_k3y0c")
+region_enabled = true
+region_rect = Rect2(-8944.38, 0, 13962.4, 1128)
 
-[node name="House" type="Sprite2D" parent="WorldAssets"]
-z_index = -50
-position = Vector2(-1994, -236)
-scale = Vector2(0.08, 0.08)
-texture = ExtResource("12_2kuir")
+[node name="Floor2" type="Node2D" parent="WorldAssets"]
+z_index = 9
+position = Vector2(-2570, 21)
+
+[node name="TerrainTile2" type="Sprite2D" parent="WorldAssets/Floor2"]
+texture_filter = 1
+position = Vector2(2012, 69)
+texture = ExtResource("16_pdtqk")
+
+[node name="FloorTiles" type="Sprite2D" parent="WorldAssets/Floor2"]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("16_lhwyw")
+region_enabled = true
+region_rect = Rect2(0, 0, 4000, 90.355)
 
 [node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
 z_index = -100
-position = Vector2(-1392.01, -124)
-scale = Vector2(1.98715, 1.99)
+position = Vector2(-1392.01, 131.708)
+scale = Vector2(1.98715, 1.69215)
 texture = ExtResource("12_vkweo")
 
+[node name="Store" type="Sprite2D" parent="WorldAssets"]
+z_index = -20
+position = Vector2(-282, -110)
+scale = Vector2(0.255, 0.255)
+texture = ExtResource("13_gagn3")
+
+[node name="House" type="Sprite2D" parent="WorldAssets"]
+z_index = -50
+position = Vector2(-1994, -140)
+scale = Vector2(0.045, 0.045)
+texture = ExtResource("12_2kuir")
+
 [node name="Mercader" type="ColorRect" parent="."]
+visible = false
 z_index = -10
 offset_left = 538.0
 offset_top = -74.0
@@ -189,7 +221,26 @@ process_material = SubResource("ParticleProcessMaterial_75ism")
 lifetime = 20.0
 visibility_rect = Rect2(-2000, -100, 4000, 1000)
 
+[node name="Comerciante" type="Sprite2D" parent="."]
+position = Vector2(552, -48)
+scale = Vector2(-0.025, 0.025)
+texture = ExtResource("15_ngt7p")
+
 [node name="Mountain" type="Sprite2D" parent="."]
+modulate = Color(0.203922, 0.298039, 0.439216, 1)
+z_index = 30
 position = Vector2(-3643, -634)
 scale = Vector2(0.413699, 0.431683)
 texture = ExtResource("13_carl4")
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.372549)
+z_index = -50
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-2502.51, -463.395)
+rotation = 0.0872665
+scale = Vector2(2.1992, 2.15723)
+texture = ExtResource("18_cl6ar")
+region_enabled = true
+region_rect = Rect2(-3880.42, 0, 1800, 480)

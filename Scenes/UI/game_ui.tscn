@@ -47,7 +47,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/objetivo.gd" id="45_plngk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqq5d"]
-font_size = 18
+font_size = 25
 
 [sub_resource type="Animation" id="Animation_wgov2"]
 resource_name = "NewItem"
@@ -105,7 +105,6 @@ font_size = 30
 script = ExtResource("1_mqav7")
 
 [node name="UI" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -152,8 +151,7 @@ offset_top = -11.0
 offset_right = 157.0
 offset_bottom = 12.0
 grow_vertical = 2
-text = "Throw Hook"
-horizontal_alignment = 2
+text = "Lanzar"
 vertical_alignment = 1
 
 [node name="BButton(redLetter)" type="Control" parent="UI/FishingUi"]
@@ -183,7 +181,7 @@ offset_top = -11.0
 offset_right = 157.0
 offset_bottom = 12.0
 grow_vertical = 2
-text = "Stop Fishing"
+text = "Dejar de pescar"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -692,6 +690,78 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_qi4ke")
 
+[node name="FishingUi" type="HBoxContainer" parent="Investigate"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -480.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+
+[node name="AButton(greenLetter)" type="Control" parent="Investigate/FishingUi"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button" parent="Investigate/FishingUi/AButton(greenLetter)" instance=ExtResource("8_xnr2x")]
+layout_mode = 1
+anchors_preset = 4
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 0.0
+offset_right = 50.0
+grow_horizontal = 1
+
+[node name="Label" type="Label" parent="Investigate/FishingUi/AButton(greenLetter)"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 63.0
+offset_top = -11.0
+offset_right = 157.0
+offset_bottom = 12.0
+grow_vertical = 2
+text = "Seleccionar"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BButton(redLetter)" type="Control" parent="Investigate/FishingUi"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button" parent="Investigate/FishingUi/BButton(redLetter)" instance=ExtResource("8_xnr2x")]
+layout_mode = 1
+anchors_preset = 4
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 0.0
+offset_right = 50.0
+grow_horizontal = 1
+pressed = ExtResource("3_0ic2g")
+unpressed = ExtResource("4_q1bps")
+action = "B"
+
+[node name="Label" type="Label" parent="Investigate/FishingUi/BButton(redLetter)"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 63.0
+offset_top = -11.0
+offset_right = 157.0
+offset_bottom = 12.0
+grow_vertical = 2
+text = "Atras"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Background" type="ColorRect" parent="Investigate"]
 visible = false
 layout_mode = 1
@@ -938,7 +1008,7 @@ offset_top = -11.0
 offset_right = 157.0
 offset_bottom = 12.0
 grow_vertical = 2
-text = "Select"
+text = "Seleccionar"
 vertical_alignment = 1
 
 [node name="Cancel" type="Control" parent="CompraVenta/UiControllerGuide"]
@@ -968,7 +1038,7 @@ offset_top = -11.0
 offset_right = 157.0
 offset_bottom = 12.0
 grow_vertical = 2
-text = "Cancel"
+text = "Cancelar"
 vertical_alignment = 1
 
 [node name="Back" type="Control" parent="CompraVenta/UiControllerGuide"]
@@ -998,7 +1068,7 @@ offset_top = -11.0
 offset_right = 157.0
 offset_bottom = 12.0
 grow_vertical = 2
-text = "Back"
+text = "Atras"
 vertical_alignment = 1
 
 [node name="States" type="Control" parent="CompraVenta"]
@@ -1505,8 +1575,6 @@ offset_right = 749.0
 offset_bottom = -18.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "
-"
 label_settings = SubResource("LabelSettings_clwoy")
 
 [node name="Label" type="Label" parent="Dialog/UiMessage/ColorRect"]
@@ -1522,7 +1590,10 @@ offset_right = 749.0
 offset_bottom = 91.5
 grow_horizontal = 2
 grow_vertical = 2
+text = "
+"
 label_settings = SubResource("LabelSettings_uqq5d")
+autowrap_mode = 2
 
 [node name="Cinematic" type="Control" parent="."]
 visible = false
@@ -1633,17 +1704,18 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 60.97
 grow_horizontal = 2
 grow_vertical = 2
-text = "Fue un viaje dificil, pero finalmente logre llegar al antiguo terreno de mi padre."
 label_settings = SubResource("LabelSettings_uqq5d")
+autowrap_mode = 2
 
 [node name="Objetivo" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -383.0
+offset_left = -474.0
 offset_top = 20.0
 offset_right = -20.0
 offset_bottom = 106.0

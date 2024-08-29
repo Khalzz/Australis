@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://btnlv2vwv2vd8"]
+[gd_scene load_steps=15 format=3 uid="uid://btnlv2vwv2vd8"]
 
 [ext_resource type="Script" path="res://Scripts/Label.gd" id="1_vm8iq"]
 [ext_resource type="Texture2D" uid="uid://bjfeom0n50oat" path="res://Assets/UI/InGame/FishingArrow.svg" id="3_50q3t"]
 [ext_resource type="Script" path="res://Scripts/FishingNode.gd" id="3_dyto1"]
+[ext_resource type="Texture2D" uid="uid://k2ac5kgddb85" path="res://Assets/Sprites/SpriteSheets/Player.png" id="5_kwebl"]
 [ext_resource type="PackedScene" uid="uid://c01b7svihusgt" path="res://Scenes/UI/game_ui.tscn" id="5_qe2aq"]
 
 [sub_resource type="GDScript" id="GDScript_yv2bm"]
@@ -60,11 +61,29 @@ var interacting = false
 var fading = true
 var fading_in = false
 
+@onready var sprite = $Player
 
 func _ready():
 	ui = $HUD
 	
 func _process(delta):
+	if Input.is_action_just_pressed(\"reset\"):
+		get_tree().change_scene_to_file(\"res://Scenes/MainMenu.tscn\")
+	
+	if last_direction > 0:
+		$Player.flip_h = true
+	else:
+		$Player.flip_h = false
+		
+	if state != Enums.PlayerStates.FISHING:
+		if velocity.y == 0:
+			if direction.x == 0 and velocity.y == 0:
+				$AnimationPlayer.play(\"IDLE\")
+			elif direction.x != 0 and velocity.y == 0:
+				$AnimationPlayer.play(\"WALKING\")
+		else:
+			$AnimationPlayer.play(\"JUMPING\")
+	
 	if camera_following:
 		camera.follow(position, false, null)
 
@@ -166,6 +185,8 @@ func jumpLogic(delta):
 # FISHING-------------------------------------------------------------------------------------------
 func fishing(delta):
 	if state == Enums.PlayerStates.FISHING:
+		$AnimationPlayer.play(\"FISHING\")
+		$Player.flip_h = true
 		camera.offset.x = lerp(camera.offset.x, 400.0, delta * 7.0)
 		position.x = fishing_position
 		if Input.is_action_just_released(\"B\"):
@@ -298,6 +319,96 @@ func _process(delta):
 	pass
 "
 
+[sub_resource type="Animation" id="Animation_8b3yu"]
+resource_name = "FISHING"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_a0gm1"]
+resource_name = "IDLE"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_g8852"]
+resource_name = "JUMPING"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_fwes0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0m63x"]
+resource_name = "WALKING"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lq6qo"]
+_data = {
+"FISHING": SubResource("Animation_8b3yu"),
+"IDLE": SubResource("Animation_a0gm1"),
+"JUMPING": SubResource("Animation_g8852"),
+"RESET": SubResource("Animation_fwes0"),
+"WALKING": SubResource("Animation_0m63x")
+}
+
 [node name="Player" type="CharacterBody2D"]
 floor_snap_length = 0.0
 script = SubResource("GDScript_yv2bm")
@@ -320,12 +431,16 @@ horizontal_alignment = 1
 script = ExtResource("1_vm8iq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lq6qo")
+}
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 offset_left = -15.0
 offset_top = -29.0
 offset_right = 15.0
-offset_bottom = 29.0
+offset_bottom = 30.0
 color = Color(1, 0.631373, 0.184314, 1)
 
 [node name="FishingNode" type="Node2D" parent="."]
@@ -338,3 +453,11 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_50q3t")
 
 [node name="Node2D" type="Node2D" parent="."]
+
+[node name="Player" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("5_kwebl")
+hframes = 3
+vframes = 3

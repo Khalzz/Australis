@@ -1,6 +1,5 @@
 image,message
 0,
 1,
-2,
-3, "Al llegar a mi primera parada, un viejo amigo de mi padre me esperaba."
-4, "Me dijo que su trabajo será asegurarse de que aprenda de pesca y que él será quien se encargue de vender y comprar los peces que recolecte."
+2, "Al llegar a la zona, un viejo amigo de mi padre me esperaba."
+3, "Me dijo que su trabajo será asegurarse de que aprenda de pesca y que él será quien se encargue de vender y comprar los peces que recolecte."

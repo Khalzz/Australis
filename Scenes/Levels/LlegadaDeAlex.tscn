@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://clnghuojq023w"]
+[gd_scene load_steps=20 format=3 uid="uid://clnghuojq023w"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/LlegadaDeAlex/llegada_de_alex.gd" id="1_y40i7"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_bm4gh"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="8_5v6co"]
 [ext_resource type="Texture2D" uid="uid://d2j1c6wc76tvf" path="res://Assets/UI/Arrow/X Key(pressed).svg" id="8_yrhot"]
 [ext_resource type="Texture2D" uid="uid://dqsk8q2ir2iip" path="res://Assets/UI/Arrow/X Key(red letter).svg" id="9_l2vuw"]
+[ext_resource type="Texture2D" uid="uid://cpcd2tmxsik5m" path="res://Assets/Sprites/Door.svg" id="10_kdre2"]
+[ext_resource type="Texture2D" uid="uid://8iuaf3po4aem" path="res://Assets/Sprites/Characters/marinero.png" id="11_e0lqx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mdbkj"]
 size = Vector2(10.4, 32)
@@ -38,7 +40,6 @@ script = ExtResource("1_y40i7")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_bm4gh")]
 position = Vector2(-286, -49)
-debugging = true
 camera_following = false
 can_open_inventory = false
 camera = NodePath("../MainCamera")
@@ -197,6 +198,7 @@ enabled = false
 zoom = Vector2(2.015, 2.015)
 
 [node name="Sailor" type="ColorRect" parent="."]
+visible = false
 offset_left = -609.0
 offset_top = -73.0
 offset_right = -579.0
@@ -266,36 +268,6 @@ position = Vector2(1208, 10.5)
 scale = Vector2(0.00188858, 0.391176)
 texture = ExtResource("7_hq7dp")
 
-[node name="Door3" type="ColorRect" parent="."]
-z_index = -20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -323.0
-offset_top = -147.0
-offset_right = -252.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.517647, 0.517647, 0.517647, 1)
-
-[node name="Door2" type="ColorRect" parent="."]
-z_index = -20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -698.0
-offset_top = -147.0
-offset_right = -627.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.517647, 0.517647, 0.517647, 1)
-
 [node name="Label" type="Label" parent="."]
 offset_left = -303.0
 offset_top = -245.0
@@ -324,3 +296,20 @@ scale = Vector2(-1, 1)
 pressed = ExtResource("8_yrhot")
 unpressed = ExtResource("9_l2vuw")
 action = "right"
+
+[node name="Door" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(-288, -79)
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("10_kdre2")
+
+[node name="Door4" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(-663, -79)
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("10_kdre2")
+
+[node name="Marinero" type="Sprite2D" parent="."]
+position = Vector2(-594, -42)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("11_e0lqx")

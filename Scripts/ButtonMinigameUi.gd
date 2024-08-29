@@ -8,6 +8,12 @@ func _ready():
 	$Pressed.texture = pressed
 	$Unpressed.texture = unpressed
 
+func _input(event):
+	if event is InputEventKey:
+		Items.isUsingController = false
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		Items.isUsingController = true
+
 func _process(delta):
 	if !Items.isUsingController:
 		match action:

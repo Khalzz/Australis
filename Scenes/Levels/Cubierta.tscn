@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://rmhdvqvn0tgx"]
+[gd_scene load_steps=23 format=3 uid="uid://rmhdvqvn0tgx"]
 
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_dg1bh"]
 [ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="3_mlg2i"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="7_sgaop"]
 [ext_resource type="Script" path="res://Scripts/Water.gd" id="8_p6hvd"]
 [ext_resource type="Texture2D" uid="uid://ccpl8iwxx2v6d" path="res://Assets/Sprites/Sky/laterSky.png" id="9_6wmn1"]
+[ext_resource type="Texture2D" uid="uid://b6otoya8hfssw" path="res://Assets/Sprites/Characters/capitán.png" id="10_10rmm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mdbkj"]
 size = Vector2(18.4, 27.2)
@@ -91,7 +92,6 @@ collision_bounce = 0.0
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_dg1bh")]
 position = Vector2(70, -49)
-debugging = true
 camera_following = false
 can_open_inventory = false
 camera = NodePath("../MainCamera")
@@ -235,6 +235,7 @@ scale = Vector2(1.86, 1.86)
 texture = ExtResource("9_6wmn1")
 
 [node name="Captain" type="ColorRect" parent="."]
+visible = false
 offset_left = -936.0
 offset_top = -75.0
 offset_right = -906.0
@@ -246,3 +247,8 @@ position = Vector2(-699, -463)
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_ujf63")
 lifetime = 20.0
+
+[node name="Capitán" type="Sprite2D" parent="."]
+position = Vector2(-919, -38)
+scale = Vector2(-0.04, 0.04)
+texture = ExtResource("10_10rmm")

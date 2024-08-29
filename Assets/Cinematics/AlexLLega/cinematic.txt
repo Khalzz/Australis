@@ -1,9 +1,9 @@
 image,message
 0,"Vengo de una familia de pescadores."
 1, "Desde mi tatarabuelo con mi bisabuelo."
-2, "A mi bisabuelo con mi abuelo."
-3, "A mi abuelo con mi padre."
-4, "A mi padre conmigo, aunque nunca fui fan de la pesca realmente."
+2, "Pasando por mi bisabuelo con mi abuelo."
+3, "mi abuelo con mi padre."
+4, "Y a mi padre conmigo, aunque nunca fui fan de la pesca realmente."
 5, "Cada uno de ellos en su cumpleaños número 18 tuvo que venir solo a convivir con esta parte del mundo, este desolado lugar a demostrar que pueden ser un pescador nato."
 5, "Capaz de continuar con el legado de la familia."
 6, "Cuando yo los cumplí, al día siguiente mis maletas estaban listas para que partiera."

@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 			$StaticInteractuables/InteractingWithMountain.monitoring = false
 			$Pinguin.visible = false
 			$Player.objective = "Habla con el comerciante"
-			$Store/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_FISHING_TUTORIAL
+			$StaticInteractuables/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_FISHING_TUTORIAL
 			$StaticInteractuables/GoingHome.monitoring = false
 		elif state == 1:
 			$Player.objective = "Pesca y vende 3 Merluzas Antárticas"
@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 				$Player.ui.cinematic.open_cinematic("res://Assets/Cinematics/AlexConoceAlPinguino/", null)
 				Items.sold_items.clear()
 
-			$Store/Buy.interaction = Enums.InteractionStates.BUYING
+			$StaticInteractuables/Buy.interaction = Enums.InteractionStates.BUYING
 		elif state == 2:
 			var count_of_merluzas = 0
 			for element in Items.sold_items:
@@ -54,7 +54,7 @@ func _process(delta: float) -> void:
 		match state:
 			0:
 				$StaticInteractuables/InteractingWithMountain.monitoring = false
-				$Store/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_SECOND_DAY
+				$StaticInteractuables/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_SECOND_DAY
 				$StaticInteractuables/GoingHome.monitoring = false
 				$Pinguin.visible = true
 				$Player.objective = "Ve a hablar con el comerciante"
@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 				var array_items: Array[int] = [5]
 				$Player.fixed_items = array_items
 				$Player.objective = "Pesca un pez"
-				$Store/Buy.interaction = Enums.InteractionStates.BUYING
+				$StaticInteractuables/Buy.interaction = Enums.InteractionStates.BUYING
 				
 				if $Player.isActive:
 					for element in $Player.ui.inventory.inventory_management.inventory:
@@ -73,15 +73,16 @@ func _process(delta: float) -> void:
 			2:
 				var array_items: Array[int] = []
 				$Player.fixed_items = array_items
-				$Store/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_DONT_KNOW_FISH
+				$StaticInteractuables/Buy.interaction = Enums.InteractionStates.TALKING_TO_SELLER_DONT_KNOW_FISH
 				$Player.objective = "Pregúntale al comerciante sobre el pez extraño"
 			3:
-				$Store/Buy.interaction = Enums.InteractionStates.BUYING
+				$StaticInteractuables/Buy.interaction = Enums.InteractionStates.BUYING
 				$Player.objective = "Ve a casa a revisar el diario de mama"
 				$StaticInteractuables/GoingHome.monitoring = true
 				$StaticInteractuables/GoingHome.interaction = Enums.InteractionStates.ENTERING_HOME_INVESTIGATION_TUTORIAL
 			4:
 				$Player.objective = "Busca al pingüino"
+				$WorldAssets/LaterSky.texture = load("res://Assets/Sprites/Sky/laterSky.png")
 				$StaticInteractuables/GoingHome.monitoring = false
 				$StaticInteractuables/InteractingWithMountain.monitoring = true
 			5: 
