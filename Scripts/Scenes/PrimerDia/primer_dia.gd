@@ -3,6 +3,8 @@ extends Node2D
 var state = 0
 
 func _ready() -> void:
+	state = 0
+	
 	if Items.dia == 2:
 		if Items.altered_day == 0:
 			state = 0
@@ -77,7 +79,7 @@ func _process(delta: float) -> void:
 				$Player.objective = "Pregúntale al comerciante sobre el pez extraño"
 			3:
 				$StaticInteractuables/Buy.interaction = Enums.InteractionStates.BUYING
-				$Player.objective = "Ve a casa a revisar el diario de mama"
+				$Player.objective = "Ve a casa a revisar el diario de mamá"
 				$StaticInteractuables/GoingHome.monitoring = true
 				$StaticInteractuables/GoingHome.interaction = Enums.InteractionStates.ENTERING_HOME_INVESTIGATION_TUTORIAL
 			4:

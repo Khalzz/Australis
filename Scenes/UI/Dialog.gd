@@ -22,7 +22,7 @@ func _process(delta):
 	
 	if visible:
 		$"..".player.isActive = false
-		$UiMessage/ColorRect/Name.text = dialogue_dict[message_id][0]
+		$UiMessage/ColorRect/VBoxContainer/Name.text = dialogue_dict[message_id][0]
 		
 		if turn == 0:
 			

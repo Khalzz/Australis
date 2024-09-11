@@ -2,5 +2,5 @@ talking,message
 Comerciante, "Es un placer verte después de tanto tiempo niño, le haré saber a tu padre que llegaste sano y salvo."
 Alex, "Perfecto, por cierto, ¿dónde me quedo yo?"
 Comerciante, "Oh, cierto, tu familia tiene una casa en este terreno desde hace muchos años, sigue a tu izquierda y encontrarás una casa color rojo, esa es."
-Alex, "Bueno, iré a descansar un poco"
+Alex, "Bueno, iré a descansar un poco."
 Comerciante, "Perfecto, mañana nos espera un día grandioso, chico, ten una buena noche hahaha."

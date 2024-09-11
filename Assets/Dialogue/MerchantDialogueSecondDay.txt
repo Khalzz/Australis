@@ -1,4 +1,4 @@
 talking,message
-Comerciante, "Saludos muchacho, hoy simplemente tráeme lo que encuentres, si encuentras algo extraño te me acercas."
+Comerciante, "Saludos muchacho, hoy simplemente tráeme lo que encuentres, sobre todo si es algo extraño."
 Comerciante, "Recuerda que estar aquí no es juntar una cuota diaria, solo dedícate a generar lo necesario para ti."
 Alex, "Entendido."

@@ -188,7 +188,7 @@ shape = SubResource("RectangleShape2D_okv8k")
 position = Vector2(0, -98)
 offset = Vector2(0, -81.9)
 enabled = false
-zoom = Vector2(0.675, 0.675)
+zoom = Vector2(0.77, 0.77)
 
 [node name="Water" type="Area2D" parent="."]
 z_index = 100
@@ -247,6 +247,7 @@ position = Vector2(-699, -463)
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_ujf63")
 lifetime = 20.0
+preprocess = 20.0
 
 [node name="Capitán" type="Sprite2D" parent="."]
 position = Vector2(-919, -38)

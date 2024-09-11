@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://clnghuojq023w"]
+[gd_scene load_steps=18 format=3 uid="uid://clnghuojq023w"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/LlegadaDeAlex/llegada_de_alex.gd" id="1_y40i7"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_bm4gh"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Scenes/Levels/Interactable.gd" id="5_mr8jt"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="6_rdcub"]
 [ext_resource type="Texture2D" uid="uid://csn08kqxj3iks" path="res://Assets/Sprites/World/WoodFloor.svg" id="7_hq7dp"]
-[ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="8_5v6co"]
 [ext_resource type="Texture2D" uid="uid://d2j1c6wc76tvf" path="res://Assets/UI/Arrow/X Key(pressed).svg" id="8_yrhot"]
 [ext_resource type="Texture2D" uid="uid://dqsk8q2ir2iip" path="res://Assets/UI/Arrow/X Key(red letter).svg" id="9_l2vuw"]
 [ext_resource type="Texture2D" uid="uid://cpcd2tmxsik5m" path="res://Assets/Sprites/Door.svg" id="10_kdre2"]
@@ -30,9 +29,6 @@ size = Vector2(37, 11.8559)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_60x6o"]
 size = Vector2(20, 13.6148)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_egmeg"]
-size = Vector2(607, 166)
-
 [sub_resource type="LabelSettings" id="LabelSettings_4ep38"]
 
 [node name="World" type="Node2D"]
@@ -45,8 +41,7 @@ can_open_inventory = false
 camera = NodePath("../MainCamera")
 
 [node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(-175, -79)
-zoom = Vector2(10, 10)
+position = Vector2(-281, -140)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
@@ -174,29 +169,6 @@ position = Vector2(-1.51992e-05, 7.49743)
 scale = Vector2(0.00188858, 0.0648141)
 texture = ExtResource("7_hq7dp")
 
-[node name="CameraTriggers" type="Node" parent="."]
-
-[node name="BedroomCamera" type="Area2D" parent="CameraTriggers"]
-position = Vector2(393, -159)
-script = ExtResource("8_5v6co")
-
-[node name="Camera" type="Camera2D" parent="CameraTriggers/BedroomCamera"]
-enabled = false
-zoom = Vector2(2.9, 2.9)
-
-[node name="LivingCamera" type="Area2D" parent="CameraTriggers"]
-position = Vector2(-205, -159)
-script = ExtResource("8_5v6co")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTriggers/LivingCamera"]
-position = Vector2(-81.5, 61)
-shape = SubResource("RectangleShape2D_egmeg")
-
-[node name="Camera" type="Camera2D" parent="CameraTriggers/LivingCamera"]
-offset = Vector2(0, -81.9)
-enabled = false
-zoom = Vector2(2.015, 2.015)
-
 [node name="Sailor" type="ColorRect" parent="."]
 visible = false
 offset_left = -609.0
@@ -269,10 +241,10 @@ scale = Vector2(0.00188858, 0.391176)
 texture = ExtResource("7_hq7dp")
 
 [node name="Label" type="Label" parent="."]
-offset_left = -303.0
-offset_top = -245.0
-offset_right = -194.0
-offset_bottom = -222.0
+offset_left = -398.0
+offset_top = -258.0
+offset_right = -289.0
+offset_bottom = -235.0
 text = "Muévete con: "
 label_settings = SubResource("LabelSettings_4ep38")
 

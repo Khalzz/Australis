@@ -4,7 +4,7 @@ image,message
 2, "Solo es una montaña."
 3,
 4, "¿Quieres escalarla?"
-4, "En algún momento lo haré, pero primero, necesito el equipamiento correcto"
+4, "En algún momento lo haré, pero primero, necesito el equipamiento correcto."
 5,
 6,
 7,

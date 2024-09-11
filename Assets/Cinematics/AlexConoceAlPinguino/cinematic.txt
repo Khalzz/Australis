@@ -1,5 +1,5 @@
 image,message
-0, "Mientras hablaba con el comerciante sobre los peces que conseguí y la basura existente en estas aguas, note algo a la lejanía."
+0, "Mientras hablaba con el comerciante sobre los peces que conseguí y la basura existente en estas aguas, noté algo a la lejanía."
 1,
 2,
 3, "Un huevo, solo."
@@ -8,11 +8,11 @@ image,message
 6,
 7,
 8, "-Alex: Con permiso."
-9, "-Comerciante: Hey, eso era mío"
+9, "-Comerciante: ¡Hey!, eso era mío."
 10, "-Alex: Hey pequeñín, ten esto."
 11,
 12,
 13,
-14, "-Comerciante: Es bueno saber que tienes un alma, chico, los pingüinos a veces suelen dejar sus huevos solos y para algunos con poca suerte como este pequeñín deben convivir con ello como puedan."
+14, "-Comerciante: Es bueno saber que tienes alma, chico. Los pingüinos a veces dejan uno de sus huevos, y esas crías deben sobrevivir como puedan."
 15, "-Comerciante: Eso no te exime del pez que me quitaste para alimentarlo, tendrás que traerme otro similar."
 15, "-Alex: Lo haré enseguida."

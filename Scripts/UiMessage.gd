@@ -25,7 +25,7 @@ func _process(delta):
 		if string_index >= message.length():
 			done = true
 	
-		$ColorRect/Label.set_text(string_show)
+		$ColorRect/VBoxContainer/Label.set_text(string_show)
 
 func reset():
 	timer = 0.0

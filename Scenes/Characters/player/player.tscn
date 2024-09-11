@@ -44,6 +44,7 @@ var jump_timer = 0
 var isActive = true
 var isWalking = false
 var jumpCount = 2
+var canJump = true
 
 # Controls
 var jump_input
@@ -149,11 +150,14 @@ func stateReseters():
 		isWalking = false
 
 	if jump_input:
-		if (state == Enums.PlayerStates.FALLING and jumpCount > 0) or is_on_floor():
+		if ((state == Enums.PlayerStates.FALLING and jumpCount > 0) or is_on_floor()) and canJump:
+			canJump = false
 			jump_direction = last_direction
 			jumpCount -= 1
 			is_jumping = true
 			jump_timer = 0
+	else:
+		canJump = true
 
 func movementLogic(delta):
 	if direction.x != 0:
@@ -438,9 +442,9 @@ libraries = {
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false
 offset_left = -15.0
-offset_top = -29.0
+offset_top = -27.0
 offset_right = 15.0
-offset_bottom = 30.0
+offset_bottom = 32.0
 color = Color(1, 0.631373, 0.184314, 1)
 
 [node name="FishingNode" type="Node2D" parent="."]

@@ -202,6 +202,7 @@ offset_top = -10.0
 offset_right = 5.0
 offset_bottom = 10.0
 color = Color(0, 0.384314, 0.803922, 0.643137)
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="ColorRect" parent="Water"]
 z_index = -2
@@ -210,6 +211,7 @@ offset_top = -10.0
 offset_right = 5.0
 offset_bottom = 10.0
 color = Color(0.541176, 0.847059, 0.992157, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
 position = Vector2(1.40034, 0)
@@ -298,6 +300,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 4000, 90.355)
 
 [node name="GPUParticles2D" parent="." instance=ExtResource("18_gin32")]
+preprocess = 20.0
 
 [node name="Pinguin" parent="." node_paths=PackedStringArray("player") instance=ExtResource("15_wkwkm")]
 scale = Vector2(0.8, 0.743)

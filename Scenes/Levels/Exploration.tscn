@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://mrsv8n8ndcuf"]
+
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="1_043nk"]
+[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="2_d7h17"]
+[ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="3_bhf34"]
+[ext_resource type="Script" path="res://Scripts/Water.gd" id="4_pccgn"]
+[ext_resource type="Texture2D" uid="uid://3v3e72odgtoe" path="res://Assets/Sprites/Sky/DaySky2.png" id="5_rugld"]
+[ext_resource type="Texture2D" uid="uid://cmxtm2pqp536v" path="res://Assets/Sprites/Land.svg" id="6_kksop"]
+[ext_resource type="Texture2D" uid="uid://dq0aoawdhliuy" path="res://Assets/Sprites/World/TerrainTile2.png" id="7_x6el5"]
+[ext_resource type="Texture2D" uid="uid://dlchl75kg0x5d" path="res://Assets/Sprites/World/FloorTiles.png" id="8_2ygmy"]
+[ext_resource type="PackedScene" uid="uid://dg1epy58w8otu" path="res://Scenes/Prefabs/snow.tscn" id="9_64nj8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am3fv"]
+
+[node name="Exploration" type="Node2D"]
+position = Vector2(1762.47, -0.140137)
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_043nk")]
+position = Vector2(-2043, -47)
+collision_layer = 2
+camera = NodePath("../MainCamera")
+fixed_items = Array[int]([0, 1, 2, 4])
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(-2046, 97)
+offset = Vector2(0, -170)
+zoom = Vector2(10, 10)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("2_d7h17")
+
+[node name="Floor" parent="." instance=ExtResource("3_bhf34")]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(-1778, 141)
+scale = Vector2(70.88, 7.8)
+
+[node name="InvisibleWall-l" type="StaticBody2D" parent="."]
+position = Vector2(-3119, -496)
+scale = Vector2(1, 51.48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWall-l"]
+shape = SubResource("RectangleShape2D_am3fv")
+
+[node name="InvisibleWall-r" type="StaticBody2D" parent="."]
+position = Vector2(-570, -496)
+scale = Vector2(1, 51.48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWall-r"]
+shape = SubResource("RectangleShape2D_am3fv")
+
+[node name="Water" type="Area2D" parent="."]
+position = Vector2(1.99805, 1074)
+scale = Vector2(2032.72, 100)
+collision_layer = 4
+collision_mask = 4
+gravity_space_override = 1
+gravity = -2192.81
+linear_damp_space_override = 1
+linear_damp = 7.171
+angular_damp = 8.071
+script = ExtResource("4_pccgn")
+
+[node name="WorldAssets" type="Node" parent="."]
+
+[node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.427493, 0.427493, 0.427493, 1)
+z_index = -100
+position = Vector2(-86.8984, -921.068)
+scale = Vector2(1.69427, 2.16882)
+texture = ExtResource("5_rugld")
+
+[node name="Land" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.203922, 0.298039, 0.439216, 1)
+z_index = 10
+position = Vector2(170.737, 355.86)
+scale = Vector2(0.40409, 0.610816)
+texture = ExtResource("6_kksop")
+region_enabled = true
+region_rect = Rect2(-10893, 0, 15911, 1128)
+
+[node name="Floor2" type="Node2D" parent="WorldAssets"]
+z_index = 9
+position = Vector2(-807.526, 20.8599)
+
+[node name="TerrainTile2" type="Sprite2D" parent="WorldAssets/Floor2"]
+texture_filter = 1
+position = Vector2(2012, 69)
+texture = ExtResource("7_x6el5")
+
+[node name="FloorTiles" type="Sprite2D" parent="WorldAssets/Floor2"]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, 3)
+texture = ExtResource("8_2ygmy")
+region_enabled = true
+region_rect = Rect2(0, 0, 4000, 90.355)
+
+[node name="GPUParticles2D" parent="." instance=ExtResource("9_64nj8")]
+position = Vector2(-3408.47, -1956.86)
+amount = 1000
+preprocess = 20.0
+visibility_rect = Rect2(0, -100, 3000, 2000)
+
+[node name="Floor2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
+z_index = 1
+position = Vector2(-2215.47, -172.86)
+scale = Vector2(6.31999, 0.759999)
+collision_layer = 2
+collision_mask = 2
+can_jump_through = true
+player = NodePath("../Player")
+
+[node name="Floor3" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
+z_index = 1
+position = Vector2(-2050.47, -292.86)
+scale = Vector2(6.31999, 0.759999)
+collision_layer = 2
+collision_mask = 2
+can_jump_through = true
+player = NodePath("../Player")

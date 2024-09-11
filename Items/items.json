@@ -46,7 +46,7 @@
 			"fishable": true,
 			"price": 1,
 			"specialty_level": 0,
-			"fished_message": "Iugh, ¿eso es un Cigarro Mojado?",
+			"fished_message": "Ugh, ¿eso es un Cigarro Mojado?",
 			"stackable_to": 1,
 			"investigable": false,
 		},

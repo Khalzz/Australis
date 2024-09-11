@@ -1,19 +1,19 @@
 image,message
-0, "Al llegar a la casa encontré una carta firmada por mi padre."
+0,Al llegar a la casa encontré una carta firmada por mi padre.
 1,
 2,
 3,
 4,
 5,
-6, "La carta era más que nada un recordatorio de que debía dar lo mejor de mí, y que me acostumbrara a la idea de olvidarme de mis comodidades de la ciudad."
-6, "Como sea..."
-6, "¿Y eso?"
+6,"La carta era más que nada un recordatorio de que debía dar lo mejor de mí, y que me acostumbrara a la idea de olvidarme de mis comodidades de la ciudad."
+6,Como sea...
+6,¿Y eso?
 7,
 8,
-9, "Parece un diario escondido."
-10, "Al abrir la primera página encontré un texto firmado."
-10, "Para quienes cuyo corazón esté repleto de aventura y también contengan la necesidad de que este hermoso lugar perdure."
-10, "Te amo, hijo. -mama <3"
-10, "¿e-este diario le pertenecía a mi madre?"
-10, "Desde que desapareció, he tenido acceso a pocos recuerdos de ella, mañana le echaré un vistazo."
-11, "Mientras tanto..."
+9,Parece un diario escondido.
+10,Al abrir la primera página encontré un texto firmado.
+10,"""Para quienes cuyo corazón esté repleto de aventura y también tengan la necesidad de que este hermoso lugar perdure."""
+10,"""Te amo, hijo. -mama"""
+10,¿E-esa es la firma de mi madre? Debe haber sido su diario.
+10,"Desde que desapareció, he tenido acceso a pocos recuerdos de ella, mañana le echaré un vistazo."
+11,Mientras tanto...

@@ -3,6 +3,8 @@ extends Node2D
 var state = 0
 
 func _ready() -> void:
+	state = 0
+	
 	if Items.dia == 2:
 		state = 0
 	
