@@ -25,5 +25,6 @@ enum PlayerStates {
 	RUNNING, 
 	JUMPING, 
 	FALLING, 
-	FISHING
+	FISHING,
+	CLIMBING
 }

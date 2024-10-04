@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://chseqk8natkxj"]
+
+[node name="ClimbableWall" type="Node2D"]

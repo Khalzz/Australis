@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://btnlv2vwv2vd8"]
+[gd_scene load_steps=18 format=3 uid="uid://btnlv2vwv2vd8"]
 
 [ext_resource type="Script" path="res://Scripts/Label.gd" id="1_vm8iq"]
 [ext_resource type="Texture2D" uid="uid://bjfeom0n50oat" path="res://Assets/UI/InGame/FishingArrow.svg" id="3_50q3t"]
@@ -73,8 +73,6 @@ enum IndependentInteractions {
 var can_interact = false
 var independent_interaction: Variant = null
 var climbing_pos: Node2D
-var climbing_left = false
-var climbing_rect = []
 
 @onready var sprite = $Player
 
@@ -82,16 +80,21 @@ func _ready():
 	ui = $HUD
 	
 func _process(delta):
-	if can_interact and isActive:
-		$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.6, delta * 7.0)
-		$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.6, delta * 7.0)
+	if isActive:
+		if can_interact:
+			$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.6, delta * 7.0)
+			$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.6, delta * 7.0)
 			
-		if Input.is_action_just_pressed(\"B\"):
-			isActive = false
-			state = Enums.PlayerStates.CLIMBING
-	else :
-		$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.0, delta * 7.0)
-		$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.0, delta * 7.0)
+			if Input.is_action_just_pressed(\"B\"):
+				isActive = false
+				state = Enums.PlayerStates.CLIMBING
+		else:
+			$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.0, delta * 7.0)
+			$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.0, delta * 7.0)
+	
+	if state == Enums.PlayerStates.CLIMBING:
+		global_position.x = climbing_pos.global_position.x
+			
 	
 	if Input.is_action_just_pressed(\"reset\"):
 		get_tree().change_scene_to_file(\"res://Scenes/MainMenu.tscn\")
@@ -101,7 +104,7 @@ func _process(delta):
 	else:
 		$Player.flip_h = false
 		
-	if state != Enums.PlayerStates.FISHING and state != Enums.PlayerStates.CLIMBING:
+	if state != Enums.PlayerStates.FISHING:
 		if velocity.y == 0:
 			if direction.x == 0 and velocity.y == 0:
 				$AnimationPlayer.play(\"IDLE\")
@@ -109,9 +112,6 @@ func _process(delta):
 				$AnimationPlayer.play(\"WALKING\")
 		else:
 			$AnimationPlayer.play(\"JUMPING\")
-	elif state == Enums.PlayerStates.CLIMBING:
-		$AnimationPlayer.play(\"CLIMBING\")
-		
 	
 	if camera_following:
 		camera.follow(position, false, null)
@@ -146,36 +146,8 @@ func _physics_process(delta):
 		jumpLogic(delta)
 		movementLogic(delta)
 	else:
-		if state == Enums.PlayerStates.CLIMBING:
-			climbing_logic(delta)
-		else:
-			velocity = Vector2.ZERO
+		velocity = Vector2.ZERO
 	move_and_slide()
-
-func climbing_logic(delta):
-	
-	if climbing_left:
-		global_position.x = climbing_pos.global_position.x - .0
-	else:
-		global_position.x = climbing_pos.global_position.x + .0
-	var buffer = 5.0  # Small buffer value
-	
-	direction = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
-	
-	velocity.y = move_toward(velocity.y, -direction.y * 120.0, ((acceleration * 2.0) * delta) * 10)
-	global_position.y += velocity.y * delta
-	global_position.y = clamp(global_position.y, climbing_rect[0] + 20.0, climbing_rect[1] - 20.0)
-			
-	if Input.is_action_just_pressed(\"jump\"):
-		isActive = true
-		jump_input = true
-		state = Enums.PlayerStates.JUMPING
-	
-	if direction.y == 0:
-		$AnimationPlayer.pause()
-	
-	if global_position.y == climbing_rect[0] or global_position.y == climbing_rect[1]:
-		velocity.y = 0  # Stop vertical movement when at either limit
 
 func inputMovement():
 	if isActive:
@@ -194,17 +166,12 @@ func inputMovement():
 			direction = axisDirection / 2.1
 
 func touchingFloor(delta):
-	if state != Enums.PlayerStates.CLIMBING:
-		if is_on_floor():
-			jump_direction = last_direction
-			jumpCount = 2
-		else:
-			velocity.y += gravity * delta
-			state = Enums.PlayerStates.FALLING
-	else:
-		jump_direction = -last_direction
+	if is_on_floor():
+		jump_direction = last_direction
 		jumpCount = 2
-
+	else:
+		velocity.y += gravity * delta
+		state = Enums.PlayerStates.FALLING
 
 func stateReseters():
 	if isWalking and direction.x == 0:
@@ -465,25 +432,8 @@ tracks/0/keys = {
 "values": [0, 1, 2, 1]
 }
 
-[sub_resource type="Animation" id="Animation_4qwqe"]
-resource_name = "CLIMBING"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [8, 9]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lq6qo"]
 _data = {
-"CLIMBING": SubResource("Animation_4qwqe"),
 "FISHING": SubResource("Animation_8b3yu"),
 "IDLE": SubResource("Animation_a0gm1"),
 "JUMPING": SubResource("Animation_g8852"),
@@ -542,7 +492,7 @@ position = Vector2(-1, 0)
 scale = Vector2(2, 2)
 texture = ExtResource("5_kwebl")
 hframes = 3
-vframes = 4
+vframes = 3
 
 [node name="InteractionButton" parent="." instance=ExtResource("6_3bf7s")]
 offset_left = 0.0

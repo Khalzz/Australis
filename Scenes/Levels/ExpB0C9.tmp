@@ -18,7 +18,7 @@
 size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fv65"]
-size = Vector2(6.40001, 6.4)
+size = Vector2(6, 6.4)
 
 [node name="Exploration" type="Node2D"]
 position = Vector2(1762.47, -0.140137)
@@ -77,7 +77,7 @@ preprocess = 20.0
 visibility_rect = Rect2(0, -100, 3000, 2000)
 
 [node name="FloatingFloor" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
-z_index = -1
+z_index = 1
 position = Vector2(-2215.47, -172.86)
 scale = Vector2(6.31999, 0.759999)
 collision_layer = 2
@@ -86,7 +86,7 @@ can_jump_through = true
 player = NodePath("../Player")
 
 [node name="FloatingFloor2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
-z_index = -1
+z_index = 1
 position = Vector2(-2050.47, -292.86)
 scale = Vector2(6.31999, 0.759999)
 collision_layer = 2
@@ -130,32 +130,30 @@ texture = ExtResource("8_2ygmy")
 region_enabled = true
 region_rect = Rect2(0, 0, 4000, 90.355)
 
-[node name="ClimbableIce" type="Sprite2D" parent="."]
-texture_filter = 1
-texture_repeat = 2
-position = Vector2(-2493.47, -214.86)
-texture = ExtResource("10_u4cij")
-region_enabled = true
-region_rect = Rect2(0, 0, 32, 256)
+[node name="ClimbableIce" type="StaticBody2D" parent="."]
+position = Vector2(-2444.47, -31.8599)
 
-[node name="ClimbableIce" type="StaticBody2D" parent="ClimbableIce"]
-scale = Vector2(1, 8)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbableIce/ClimbableIce"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbableIce"]
 position = Vector2(0, 0.000137329)
 shape = SubResource("RectangleShape2D_48w3q")
 
+[node name="Sprite2D" type="Sprite2D" parent="ClimbableIce"]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("10_u4cij")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
 [node name="ClimbColliders" type="Area2D" parent="ClimbableIce"]
-scale = Vector2(1, 8)
 collision_mask = 2
 script = ExtResource("11_8mol0")
 
 [node name="RightClimbing" type="CollisionShape2D" parent="ClimbableIce/ClimbColliders"]
-position = Vector2(32, 0)
+position = Vector2(31, 0)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_1fv65")
 
 [node name="LeftClimbing" type="CollisionShape2D" parent="ClimbableIce/ClimbColliders"]
-position = Vector2(-32, 0)
+position = Vector2(-31, 0)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_1fv65")
