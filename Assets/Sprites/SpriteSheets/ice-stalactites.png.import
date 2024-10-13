@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c01beyvedylue"
-path="res://.godot/imported/2.png-6f679f0d474c27444101959c2015509f.ctex"
+uid="uid://esheiyve1624"
+path="res://.godot/imported/ice-stalactites.png-9a4aafd10c62d2d45caf014b41cf3ed6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Cinematics/GettingInMountain/2.png"
-dest_files=["res://.godot/imported/2.png-6f679f0d474c27444101959c2015509f.ctex"]
+source_file="res://Assets/Sprites/SpriteSheets/ice-stalactites.png"
+dest_files=["res://.godot/imported/ice-stalactites.png-9a4aafd10c62d2d45caf014b41cf3ed6.ctex"]
 
 [params]
 

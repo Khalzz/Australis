@@ -1,0 +1,291 @@
+[gd_scene load_steps=23 format=3 uid="uid://mrsv8n8ndcuf"]
+
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="1_043nk"]
+[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="2_d7h17"]
+[ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="3_bhf34"]
+[ext_resource type="Texture2D" uid="uid://3v3e72odgtoe" path="res://Assets/Sprites/Sky/DaySky2.png" id="5_rugld"]
+[ext_resource type="Texture2D" uid="uid://cmxtm2pqp536v" path="res://Assets/Sprites/Land.svg" id="6_kksop"]
+[ext_resource type="Texture2D" uid="uid://dq0aoawdhliuy" path="res://Assets/Sprites/World/TerrainTile2.png" id="7_x6el5"]
+[ext_resource type="Texture2D" uid="uid://dlchl75kg0x5d" path="res://Assets/Sprites/World/FloorTiles.png" id="8_2ygmy"]
+[ext_resource type="PackedScene" uid="uid://dg1epy58w8otu" path="res://Scenes/Prefabs/snow.tscn" id="9_64nj8"]
+[ext_resource type="Texture2D" uid="uid://ds2pah556y80a" path="res://Assets/Sprites/ice.png" id="10_u4cij"]
+[ext_resource type="Script" path="res://Scripts/climb_colliders.gd" id="11_8mol0"]
+[ext_resource type="Texture2D" uid="uid://esheiyve1624" path="res://Assets/Sprites/SpriteSheets/ice-stalactites.png" id="11_82l52"]
+[ext_resource type="Script" path="res://Scripts/respawn_before_jumps.gd" id="11_qmldk"]
+[ext_resource type="Script" path="res://Scripts/ice-stalactites.gd" id="12_6ebr6"]
+[ext_resource type="Texture2D" uid="uid://udpu0cuwal1r" path="res://Assets/Sprites/SpriteSheets/flag.png" id="14_2jh5h"]
+[ext_resource type="Texture2D" uid="uid://bmrbonu453lr4" path="res://Assets/Sprites/SpriteSheets/flagStick.png" id="14_h02sy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am3fv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48w3q"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fv65"]
+size = Vector2(6.40001, 6.4)
+
+[sub_resource type="Animation" id="Animation_6hhbk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flag:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_octop"]
+resource_name = "flagging"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Flag:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wfoe4"]
+_data = {
+"RESET": SubResource("Animation_6hhbk"),
+"flagging": SubResource("Animation_octop")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lrxb"]
+size = Vector2(32, 166)
+
+[node name="Exploration" type="Node2D"]
+position = Vector2(1762.47, -0.140137)
+
+[node name="WorldAssets" type="Node" parent="."]
+
+[node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.427493, 0.427493, 0.427493, 1)
+z_index = -100
+position = Vector2(-62, -912)
+scale = Vector2(1.69427, 2.16882)
+texture = ExtResource("5_rugld")
+
+[node name="Land" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.203922, 0.298039, 0.439216, 1)
+z_index = 10
+position = Vector2(170.737, 355.86)
+scale = Vector2(0.40409, 0.610816)
+texture = ExtResource("6_kksop")
+region_enabled = true
+region_rect = Rect2(-10893, 0, 15911, 1128)
+
+[node name="Floor2" type="Node2D" parent="WorldAssets"]
+z_index = 9
+position = Vector2(-807.526, 20.8599)
+
+[node name="TerrainTile2" type="Sprite2D" parent="WorldAssets/Floor2"]
+texture_filter = 1
+position = Vector2(2012, 69)
+texture = ExtResource("7_x6el5")
+
+[node name="FloorTiles" type="Sprite2D" parent="WorldAssets/Floor2"]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, 3)
+texture = ExtResource("8_2ygmy")
+region_enabled = true
+region_rect = Rect2(0, 0, 4000, 90.355)
+
+[node name="GPUParticles2D" parent="WorldAssets" instance=ExtResource("9_64nj8")]
+position = Vector2(-1646, -1957)
+amount = 1000
+preprocess = 20.0
+visibility_rect = Rect2(0, -100, 3000, 2000)
+
+[node name="MainFloor" parent="." instance=ExtResource("3_bhf34")]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(-1778, 141)
+scale = Vector2(70.88, 7.8)
+
+[node name="InvisibleWalls" type="Node2D" parent="."]
+position = Vector2(-3119, -496)
+scale = Vector2(1, 51.48)
+
+[node name="InvisibleWall-l" type="StaticBody2D" parent="InvisibleWalls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls/InvisibleWall-l"]
+shape = SubResource("RectangleShape2D_am3fv")
+
+[node name="InvisibleWall-r" type="StaticBody2D" parent="InvisibleWalls"]
+position = Vector2(2549, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls/InvisibleWall-r"]
+shape = SubResource("RectangleShape2D_am3fv")
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="FloatingFloor" parent="Platforms" node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
+z_index = -1
+position = Vector2(-1984.47, -199.86)
+scale = Vector2(6.31999, 0.759999)
+collision_layer = 2
+collision_mask = 2
+can_jump_through = true
+player = NodePath("../../Player")
+
+[node name="FloatingFloor2" parent="Platforms" node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
+z_index = -1
+position = Vector2(-2244.47, -306.86)
+scale = Vector2(6.31999, 0.759999)
+collision_layer = 2
+collision_mask = 2
+can_jump_through = true
+player = NodePath("../../Player")
+
+[node name="ClimbableIce" type="Sprite2D" parent="."]
+z_index = 5
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-1680.47, -147.86)
+texture = ExtResource("10_u4cij")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 256)
+
+[node name="ClimbableIce" type="StaticBody2D" parent="ClimbableIce"]
+scale = Vector2(1, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbableIce/ClimbableIce"]
+position = Vector2(0, 0.000137329)
+shape = SubResource("RectangleShape2D_48w3q")
+
+[node name="ClimbColliders" type="Area2D" parent="ClimbableIce"]
+scale = Vector2(1, 8)
+collision_mask = 2
+script = ExtResource("11_8mol0")
+
+[node name="RightClimbing" type="CollisionShape2D" parent="ClimbableIce/ClimbColliders"]
+position = Vector2(32, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_1fv65")
+
+[node name="LeftClimbing" type="CollisionShape2D" parent="ClimbableIce/ClimbColliders"]
+position = Vector2(-32, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_1fv65")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_043nk")]
+position = Vector2(-2045.47, -113.86)
+collision_layer = 2
+debugging = true
+camera = NodePath("../MainCamera")
+fixed_items = Array[int]([0, 1, 2, 4])
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(-2046, 97)
+offset = Vector2(0, -170)
+zoom = Vector2(10, 10)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("2_d7h17")
+
+[node name="Flag" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(-1878.47, -32.8599)
+
+[node name="FlagStick" type="Sprite2D" parent="Flag"]
+texture_filter = 1
+position = Vector2(0, -12)
+scale = Vector2(2, 2)
+texture = ExtResource("14_h02sy")
+
+[node name="Flag" type="Sprite2D" parent="Flag"]
+visible = false
+texture_filter = 1
+position = Vector2(0, -12)
+scale = Vector2(2, 2)
+texture = ExtResource("14_2jh5h")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Flag"]
+libraries = {
+"": SubResource("AnimationLibrary_wfoe4")
+}
+autoplay = "flagging"
+
+[node name="RespawnBeforeJumps" type="Area2D" parent="Flag"]
+position = Vector2(4, -70)
+collision_mask = 2
+script = ExtResource("11_qmldk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Flag/RespawnBeforeJumps"]
+shape = SubResource("RectangleShape2D_2lrxb")
+
+[node name="ice-stalactites" type="Node2D" parent="."]
+position = Vector2(-1800.47, -30.8599)
+
+[node name="Ice-stalactite" type="Node2D" parent="ice-stalactites"]
+position = Vector2(48, 3.62396e-05)
+
+[node name="CollidableArea" type="Area2D" parent="ice-stalactites/Ice-stalactite"]
+collision_mask = 2
+script = ExtResource("12_6ebr6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ice-stalactites/Ice-stalactite/CollidableArea"]
+position = Vector2(1, 0)
+polygon = PackedVector2Array(-37, -18, -17, -17, 32, -15, 50, -14, 52, 12, -46, 13)
+
+[node name="ice-stalactite7" type="Sprite2D" parent="ice-stalactites/Ice-stalactite"]
+texture_filter = 1
+position = Vector2(45, -2)
+texture = ExtResource("11_82l52")
+hframes = 3
+frame = 1
+
+[node name="ice-stalactite4" type="Sprite2D" parent="ice-stalactites/Ice-stalactite"]
+texture_filter = 1
+position = Vector2(15, -2)
+texture = ExtResource("11_82l52")
+hframes = 3
+frame = 1
+
+[node name="ice-stalactite6" type="Sprite2D" parent="ice-stalactites/Ice-stalactite"]
+texture_filter = 1
+position = Vector2(21, 14)
+texture = ExtResource("11_82l52")
+hframes = 3
+frame = 2
+
+[node name="ice-stalactite5" type="Sprite2D" parent="ice-stalactites/Ice-stalactite"]
+texture_filter = 1
+position = Vector2(33, 2)
+texture = ExtResource("11_82l52")
+hframes = 3
+
+[node name="ice-stalactite" type="Sprite2D" parent="ice-stalactites/Ice-stalactite"]
+texture_filter = 1
+position = Vector2(-36, -1)
+texture = ExtResource("11_82l52")
+hframes = 3
+
+[node name="ice-stalactite2" type="Sprite2D" parent="ice-stalactites/Ice-stalactite"]
+texture_filter = 1
+position = Vector2(-20, -4)
+texture = ExtResource("11_82l52")
+hframes = 3
+frame = 1
+
+[node name="ice-stalactite3" type="Sprite2D" parent="ice-stalactites/Ice-stalactite"]
+texture_filter = 1
+texture = ExtResource("11_82l52")
+hframes = 3
+frame = 2

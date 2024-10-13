@@ -10,5 +10,5 @@ func _ready():
 func _process(delta):
 	visible = $"..".player.isActive
 	
-	if !$"..".player.can_open_inventory:
+	if !$"..".player.can_open_inventory or !$"..".player.show_backpack:
 		$InventoryIcon.visible = false

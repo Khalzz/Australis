@@ -102,6 +102,7 @@ func _process(delta: float) -> void:
 			for element in $Player.ui.inventory.inventory_management.inventory:
 				if element != null:
 					if element.item_id == 7:
+						Items.can_explore = true
 						has_piolet = true
 						break
 		if has_piolet:

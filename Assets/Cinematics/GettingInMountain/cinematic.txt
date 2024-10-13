@@ -1,4 +1,3 @@
 image,message
 0,"Aqui vamos."
 1, " "
-2, " "

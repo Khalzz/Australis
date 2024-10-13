@@ -1,0 +1,9 @@
+talking,message
+Alex, "Buen trabajo, escalar es parte importante para llegar a la cima de una montaña."
+Alex, "Delante de ti encontrarás otro punto de descanso."
+Alex, "Recuerda, cada vez que desees descansar en una de estas, se transformara en tu punto de reaparición, o sea si no has tocado una bandera después de descansar aquí."
+Alex, "Volverás a este lugar."
+Alex, "A demás, al avanzar territorio inexplorado, en lugar de tener corazones, tendrás un temporizador de energía."
+Alex, "Si este llega a cero, volverás al punto de descanso anterior."
+Alex, "Pero si deseas explorar terreno ya conocido (entre 2 puntos de reaparición que ya hayas explorado), no contaras con límite de tiempo, sino que con los corazones que has visto durante este tutorial."
+Alex, "Suerte en la subida."

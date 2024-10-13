@@ -1,0 +1,7 @@
+talking,message
+Alex, "Durante tu aventura encontrarás mástiles como el que tienes en frente."
+Alex, "Estos sirven como puntos de descanso temporales."
+Alex, "Al caminar sobre ellos, los activarás, lo que se representara con una bandera roja."
+Alex, "Cuando recibas daño (mientras aún mantengas más de 1 vida o tiempo restante) volverás a aparecer aquí."
+Alex, "Una vez tus vidas se acaben, volverás al punto de descanso anterior."
+Alex, "Prueba activar este."

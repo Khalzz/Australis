@@ -100,5 +100,17 @@
 			"stackable_to": 1,
 			"investigable": false,
 		},
+		{
+			"id": 8,
+			"img": "res://Assets/Sprites/Items/Obsidiana.svg",
+			"name": "Obsidiana",
+			"description": "Un cristal afilado y duro de roca ígnea que antiguas civilizaciones utilizaban para la manufacturación de armas y herramientas.",
+			"fishable": false,
+			"price": 500,
+			"specialty_level": 2,
+				"fished_message": "Has conseguido obsidiana.",
+			"stackable_to": 5,
+			"investigable": true,
+		},
 	],
 }

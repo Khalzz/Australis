@@ -8,6 +8,9 @@ func _process(delta):
 	var debugging = get_parent().debugging
 	
 	if !debugging:
+		$"../ClimbingCheckers/Bottom".visible = false
+		$"../ClimbingCheckers/ClimbingPos".visible = false
+		$"../ClimbingCheckers/Top".visible = false
 		text = str("")
 		return
 	
@@ -24,3 +27,8 @@ func _process(delta):
 			text = str("FALLING")
 		Enums.PlayerStates.FISHING:
 			text = str("FISHING")
+		Enums.PlayerStates.CLIMBING:
+			text = str("CLIMBING")
+		Enums.PlayerStates.DYING:
+			text = str("DYING")
+		

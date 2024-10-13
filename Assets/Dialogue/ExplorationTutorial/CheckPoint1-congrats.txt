@@ -1,0 +1,4 @@
+talking,message
+Alex, "Buen trabajo, ahora cada vez que recibas daño o pierdas todas tus vidas, podrás reaparecer aquí."
+Alex, "Recuerda que los puntos de descanso no se activaran hasta descansar en ellos y estos ocupan cuerda."
+Alex, "Así que ten cuidado si deseas avanzar mucho sin usar estos puntos."

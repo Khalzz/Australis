@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://qfnqdp8xjdju"]
+
+[ext_resource type="Script" path="res://Scripts/UI/heart.gd" id="1_b5cw8"]
+[ext_resource type="Texture2D" uid="uid://bpn7w34virkis" path="res://Assets/UI/Lifes/outer-heart.png" id="1_mtjmo"]
+[ext_resource type="Texture2D" uid="uid://csltrplq4dk4c" path="res://Assets/UI/Lifes/inner-heart.png" id="2_bkn82"]
+
+[node name="Heart" type="Control"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_b5cw8")
+
+[node name="Outer" type="TextureRect" parent="."]
+z_index = -4
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_mtjmo")
+
+[node name="Inner" type="Control" parent="."]
+z_index = -5
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Inner" type="TextureRect" parent="Inner"]
+texture_filter = 1
+clip_contents = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+texture = ExtResource("2_bkn82")
+stretch_mode = 5

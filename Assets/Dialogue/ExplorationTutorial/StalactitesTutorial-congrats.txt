@@ -1,0 +1,5 @@
+talking,message
+Alex, "Ese fue un gran despliegue de tus habilidades acrobáticas."
+Alex, "Delante de ti encontrarás una pared de hielo, si te acercas e interactúas con ella podrás escalarla."
+Alex, "Estas te servirá para llegar a zonas más altas, hacer saltos más fáciles, o para descubrir secretos."
+Alex, "Mientras estés en la misma, podrás moverte hacia arriba y abajo, a demás de saltar en cualquier dirección."

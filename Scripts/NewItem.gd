@@ -32,14 +32,14 @@ func _process(delta):
 				$UiMessage.done = true
 	
 func set_base(item_id):
-	item_img.texture = load(Items.fishable_list[item_id]["img"])
-	if Items.fishable_list[item_id]["investigable"]:
+	item_img.texture = load(Items.item_list[item_id]["img"])
+	if Items.item_list[item_id]["investigable"]:
 		if $"../Inventario".inventory_management.investigated_items.has(float(item_id)):
-			ui_message.message = Items.fishable_list[item_id].fished_message
+			ui_message.message = Items.item_list[item_id].fished_message
 		else:
 			ui_message.message = "Has encontrado un ???, investigalo para saber que es"
 	else:
-		ui_message.message = Items.fishable_list[item_id].fished_message
+		ui_message.message = Items.item_list[item_id].fished_message
 		
 
 func set_base_investigated(item_id):

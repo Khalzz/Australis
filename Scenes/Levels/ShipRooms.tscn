@@ -1,0 +1,248 @@
+[gd_scene load_steps=15 format=4 uid="uid://clnghuojq023w"]
+
+[ext_resource type="Script" path="res://Scripts/Scenes/LlegadaDeAlex/llegada_de_alex.gd" id="1_hbp8g"]
+[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="2_p381y"]
+[ext_resource type="Script" path="res://Scripts/Interactable.gd" id="3_qhglu"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="4_h677s"]
+[ext_resource type="Texture2D" uid="uid://d2j1c6wc76tvf" path="res://Assets/UI/Arrow/X Key(pressed).svg" id="5_owjgs"]
+[ext_resource type="Texture2D" uid="uid://dqsk8q2ir2iip" path="res://Assets/UI/Arrow/X Key(red letter).svg" id="6_23ot6"]
+[ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="7_3bsm5"]
+[ext_resource type="Texture2D" uid="uid://8iuaf3po4aem" path="res://Assets/Sprites/Characters/marinero.png" id="8_8cww3"]
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="9_vuuep"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdbkj"]
+size = Vector2(10.4, 39.2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7xhh"]
+size = Vector2(10, 38.65)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4ep38"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kfqwe"]
+texture = ExtResource("7_3bsm5")
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/terrains_peering_bit/top_left_corner = 0
+0:0/0/terrains_peering_bit/top_side = 0
+0:0/0/terrains_peering_bit/top_right_corner = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0/terrains_peering_bit/right_side = 0
+1:0/0/terrains_peering_bit/bottom_right_corner = 0
+1:0/0/terrains_peering_bit/top_left_corner = 0
+1:0/0/terrains_peering_bit/top_side = 0
+1:0/0/terrains_peering_bit/top_right_corner = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0/terrains_peering_bit/right_side = 0
+2:0/0/terrains_peering_bit/bottom_right_corner = 0
+2:0/0/terrains_peering_bit/top_right_corner = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, 1.25, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 1.375, 8, 8, -8, 8)
+2:1/next_alternative_id = 2
+2:1/0 = 0
+2:1/1 = 1
+2:1/1/modulate = Color(0.501407, 0.501406, 0.501406, 1)
+0:2/0 = 0
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0/physics_layer_1/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0/custom_data_0 = 1
+2:2/next_alternative_id = 2
+2:2/0 = 0
+2:2/1 = 1
+2:2/1/modulate = Color(0.501961, 0.501961, 0.501961, 1)
+3:1/next_alternative_id = 2
+3:1/0 = 0
+3:1/1 = 1
+3:1/1/modulate = Color(0.501961, 0.501961, 0.501961, 1)
+3:0/0 = 0
+3:2/next_alternative_id = 2
+3:2/0 = 0
+4:0/next_alternative_id = 2
+4:0/0 = 0
+4:0/1 = 1
+4:0/1/modulate = Color(0.501961, 0.501961, 0.501961, 1)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:0/0 = 0
+6:0/0 = 0
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:2/0 = 0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-3.0052, -8, 3.03125, -8, 3, 8, -3.01563, 8)
+5:2/0 = 0
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8, -8, -8)
+4:2/0 = 0
+7:1/0 = 0
+7:0/0 = 0
+7:2/0 = 0
+8:1/0 = 0
+8:2/0 = 0
+8:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:2/0 = 0
+9:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:1/0 = 0
+8:0/next_alternative_id = 2
+8:0/0 = 0
+8:0/1 = 1
+8:0/1/modulate = Color(1, 0.47451, 0.92549, 1)
+10:2/0 = 0
+10:1/0 = 0
+11:2/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+11:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_yyda6"]
+physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 8
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Terrain 0"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+custom_data_layer_0/name = "ice"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_kfqwe")
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_hbp8g")
+
+[node name="Backrgound" type="ColorRect" parent="."]
+z_index = -50
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1500.0
+offset_top = -1000.0
+offset_right = 1500.0
+offset_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(-281, -140)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("2_p381y")
+
+[node name="StaticInteractuables" type="Node" parent="."]
+
+[node name="TalkingToSailor" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-567, -68)
+script = ExtResource("3_qhglu")
+interaction = 6
+
+[node name="Button" parent="StaticInteractuables/TalkingToSailor" instance=ExtResource("4_h677s")]
+offset_left = 11.0
+offset_top = -117.0
+offset_right = 61.0
+offset_bottom = -67.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/TalkingToSailor"]
+position = Vector2(14, -32)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_mdbkj")
+
+[node name="Label" type="Label" parent="StaticInteractuables/TalkingToSailor"]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 38.0
+offset_bottom = -77.0
+metadata/_edit_use_anchors_ = true
+
+[node name="GoUpstairs" type="Area2D" parent="StaticInteractuables"]
+position = Vector2(-27, -85)
+script = ExtResource("3_qhglu")
+interaction = 2
+move_to = "res://Scenes/Levels/ShipTop.tscn"
+
+[node name="Button" parent="StaticInteractuables/GoUpstairs" instance=ExtResource("4_h677s")]
+offset_left = 0.0
+offset_top = -100.0
+offset_right = 50.0
+offset_bottom = -50.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoUpstairs"]
+position = Vector2(0, -15.375)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_n7xhh")
+
+[node name="Label" type="Label" parent="StaticInteractuables/GoUpstairs"]
+offset_left = -45.0
+offset_top = -100.0
+offset_right = 38.0
+offset_bottom = -77.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -398.0
+offset_top = -258.0
+offset_right = -289.0
+offset_bottom = -235.0
+text = "Muévete con: "
+label_settings = SubResource("LabelSettings_4ep38")
+
+[node name="Left" parent="Label" instance=ExtResource("4_h677s")]
+layout_mode = 1
+offset_left = 56.5
+offset_top = -24.5
+offset_right = 106.5
+offset_bottom = 25.5
+pressed = ExtResource("5_owjgs")
+unpressed = ExtResource("6_23ot6")
+action = "left"
+
+[node name="Right" parent="Label" instance=ExtResource("4_h677s")]
+layout_mode = 1
+offset_left = 111.5
+offset_top = -24.5
+offset_right = 161.5
+offset_bottom = 25.5
+scale = Vector2(-1, 1)
+pressed = ExtResource("5_owjgs")
+unpressed = ExtResource("6_23ot6")
+action = "right"
+
+[node name="Wallpaper" type="TileMapLayer" parent="."]
+texture_filter = 1
+position = Vector2(-93, -5.96046e-08)
+scale = Vector2(2.5, 2.5)
+tile_map_data = PackedByteArray("AAD+////AAAIAAAAAQD+//7/AAAIAAAAAQD4////AAAIAAAAAQD7//7/AAAIAAAAAQD8//7/AAAIAAAAAQD4//7/AAAIAAAAAQD4//3/AAAIAAAAAQAFAP//AAAIAAAAAQAEAP//AAAIAAAAAQADAP//AAAIAAAAAQACAP//AAAIAAAAAQABAP//AAAIAAAAAQAAAP//AAAIAAAAAQD/////AAAIAAAAAQD9////AAAIAAAAAQD8////AAAIAAAAAQD6////AAAIAAAAAQD5////AAAIAAAAAQD5//7/AAAIAAAAAQD6//7/AAAIAAAAAQD9//7/AAAIAAAAAQD///7/AAAIAAAAAQAAAP7/AAAIAAAAAQABAP7/AAAIAAAAAQACAP7/AAAIAAAAAQADAP7/AAAIAAAAAQAEAP7/AAAIAAAAAQAFAP7/AAAIAAAAAQAFAP3/AAAIAAAAAQADAP3/AAAIAAAAAQAEAP3/AAAIAAAAAQACAP3/AAAIAAAAAQABAP3/AAAIAAAAAQAAAP3/AAAIAAAAAQD///3/AAAIAAAAAQD+//3/AAAIAAAAAQD9//3/AAAIAAAAAQD8//3/AAAIAAAAAQD7//3/AAAIAAAAAQD6//3/AAAIAAAAAQD5//3/AAAIAAAAAQD7////AAAIAAAAAQDz//v/AAAIAAAAAQDz//z/AAAIAAAAAQDz//3/AAAIAAAAAQDz//7/AAAIAAAAAQDz////AAAIAAAAAQD0//v/AAAIAAAAAQD0//z/AAAIAAAAAQD0//3/AAAIAAAAAQD0//7/AAAIAAAAAQD0////AAAIAAAAAQD1//v/AAAIAAAAAQD1//z/AAAIAAAAAQD1//3/AAAIAAAAAQD1//7/AAAIAAAAAQD1////AAAIAAAAAQD2//v/AAAIAAAAAQD2//z/AAAIAAAAAQD2//3/AAAIAAAAAQD2//7/AAAIAAAAAQD2////AAAIAAAAAQD3//v/AAAIAAAAAQD3//z/AAAIAAAAAQD3//3/AAAIAAAAAQD3//7/AAAIAAAAAQD3////AAAIAAAAAQD4//v/AAAIAAAAAQD4//z/AAAIAAAAAQD5//v/AAAIAAAAAQD5//z/AAAIAAAAAQD6//v/AAAIAAAAAQD6//z/AAAIAAAAAQD7//v/AAAIAAAAAQD7//z/AAAIAAAAAQD8//v/AAAIAAAAAQD8//z/AAAIAAAAAQD9//v/AAAIAAAAAQD9//z/AAAIAAAAAQD+//v/AAAIAAAAAQD+//z/AAAIAAAAAQD///v/AAAIAAAAAQD///z/AAAIAAAAAQAAAPv/AAAIAAAAAQAAAPz/AAAIAAAAAQABAPv/AAAIAAAAAQABAPz/AAAIAAAAAQACAPv/AAAIAAAAAQACAPz/AAAIAAAAAQADAPv/AAAIAAAAAQADAPz/AAAIAAAAAQAEAPv/AAAIAAAAAQAEAPz/AAAIAAAAAQAFAPv/AAAIAAAAAQAFAPz/AAAIAAAAAQAGAPv/AAAIAAAAAQAGAPz/AAAIAAAAAQAGAP3/AAAIAAAAAQAGAP7/AAAIAAAAAQAGAP//AAAIAAAAAQAHAPv/AAAIAAAAAQAHAPz/AAAIAAAAAQAHAP3/AAAIAAAAAQAHAP7/AAAIAAAAAQAHAP//AAAIAAAAAQDy////AAAIAAAAAQDx////AAAIAAAAAQDw////AAAIAAAAAQDv////AAAIAAAAAQDu////AAAIAAAAAQDt////AAAIAAAAAQDs////AAAIAAAAAQDr////AAAIAAAAAQDq////AAAIAAAAAQDp////AAAIAAAAAQDo////AAAIAAAAAQDn////AAAIAAAAAQDm////AAAIAAAAAQDy//7/AAAIAAAAAQDx//7/AAAIAAAAAQDw//7/AAAIAAAAAQDv//7/AAAIAAAAAQDu//7/AAAIAAAAAQDt//7/AAAIAAAAAQDs//7/AAAIAAAAAQDr//7/AAAIAAAAAQDq//7/AAAIAAAAAQDp//7/AAAIAAAAAQDo//7/AAAIAAAAAQDn//7/AAAIAAAAAQDm//7/AAAIAAAAAQDy//3/AAAIAAAAAQDx//3/AAAIAAAAAQDw//3/AAAIAAAAAQDv//3/AAAIAAAAAQDu//3/AAAIAAAAAQDt//3/AAAIAAAAAQDs//3/AAAIAAAAAQDr//3/AAAIAAAAAQDq//3/AAAIAAAAAQDp//3/AAAIAAAAAQDo//3/AAAIAAAAAQDn//3/AAAIAAAAAQDm//3/AAAIAAAAAQDy//z/AAAIAAAAAQDx//z/AAAIAAAAAQDw//z/AAAIAAAAAQDv//z/AAAIAAAAAQDu//z/AAAIAAAAAQDt//z/AAAIAAAAAQDs//z/AAAIAAAAAQDr//z/AAAIAAAAAQDq//z/AAAIAAAAAQDp//z/AAAIAAAAAQDo//z/AAAIAAAAAQDn//z/AAAIAAAAAQDm//z/AAAIAAAAAQDy//v/AAAIAAAAAQDx//v/AAAIAAAAAQDw//v/AAAIAAAAAQDv//v/AAAIAAAAAQDu//v/AAAIAAAAAQDt//v/AAAIAAAAAQDs//v/AAAIAAAAAQDr//v/AAAIAAAAAQDq//v/AAAIAAAAAQDp//v/AAAIAAAAAQDo//v/AAAIAAAAAQDn//v/AAAIAAAAAQDm//v/AAAIAAAAAQA=")
+tile_set = SubResource("TileSet_yyda6")
+
+[node name="Background" type="TileMapLayer" parent="."]
+texture_filter = 1
+position = Vector2(-134, 0)
+scale = Vector2(4.1, 4.1)
+tile_map_data = PackedByteArray("AAD3//7/AAAKAAEAAAD3////AAAKAAIAAAD9////AAAKAAIAAAD9//7/AAAKAAEAAAACAP//AAAEAAEAAAACAP7/AAAEAAEAAAACAP3/AAAEAAEAAAA=")
+tile_set = SubResource("TileSet_yyda6")
+
+[node name="Map" type="TileMapLayer" parent="."]
+texture_filter = 1
+scale = Vector2(2.5, 2.5)
+tile_map_data = PackedByteArray("AAD7/wAAAAAFAAEAAAD8/wAAAAAFAAEAAAD9/wAAAAAFAAEAAAAAAAAAAAAFAAEAAAABAAAAAAAFAAEAAAACAAAAAAAFAAEAAAADAAAAAAAFAAEAAAAEAAAAAAAFAAEAAAAFAAAAAAAFAAEAAAD6/wAAAAAFAAEAAAD5/wAAAAAFAAEAAAD4/wAAAAAFAAEAAAD3/wAAAAAFAAEAAAD2/wAAAAAFAAEAAAD1/wAAAAAFAAEAAAD0/wAAAAAFAAEAAADz/wAAAAAFAAEAAADy/wAAAAAFAAEAAADx/wAAAAAFAAEAAADw//r/AAAIAAIAAADw/wAAAAAFAAEAAADx//r/AAAIAAIAAADy//r/AAAIAAIAAADz//r/AAAIAAIAAAD0//r/AAAIAAIAAAD1//r/AAAIAAIAAAD2//r/AAAIAAIAAAD3//r/AAAIAAIAAAD4//r/AAAIAAIAAAD5//r/AAAIAAIAAAD6//r/AAAIAAIAAAD7//r/AAAIAAIAAAD8//r/AAAIAAIAAAD9//r/AAAIAAIAAAD+//r/AAAIAAIAAAD///r/AAAIAAIAAAAAAPr/AAAIAAIAAAD+/wAAAAAFAAEAAAD//wAAAAAFAAEAAADv//r/AAAIAAIAAADu//r/AAAIAAIAAADt//r/AAAIAAIAAADs//r/AAAIAAIAAADr//r/AAAIAAIAAADq//r/AAAIAAIAAADp//r/AAAIAAIAAADo//r/AAAIAAIAAADn//r/AAAIAAIAAADm//r/AAAIAAIAAADl//r/AAAIAAIAAADk//r/AAAIAAIAAADv/wAAAAAFAAEAAADu/wAAAAAFAAEAAADt/wAAAAAFAAEAAADs/wAAAAAFAAEAAADr/wAAAAAFAAEAAADq/wAAAAAFAAEAAADp/wAAAAAFAAEAAADo/wAAAAAFAAEAAADn/wAAAAAFAAEAAADm/wAAAAAFAAEAAADl/wAAAAAFAAEAAADk/wAAAAAFAAEAAAAAAP//AAALAAAAAAABAP//AAAGAAEAAAACAP7/AAALAAAAAAAEAP3/AAALAAAAAAADAP7/AAAGAAEAAAAFAP3/AAAGAAEAAAADAP//AAAGAAIAAAAEAP//AAAGAAIAAAAFAP7/AAAGAAIAAAACAP//AAAGAAIAAAAFAP//AAAGAAIAAAAEAP7/AAAGAAIAAADx////AAAEAAEAAADx//7/AAAEAAEAAADx//3/AAAEAAEAAADx//z/AAAEAAEAAADx//v/AAAEAAEAAAABAPr/AAAIAAIAAAACAPr/AAAIAAIAAAADAPr/AAAIAAIAAAAEAPr/AAAIAAIAAAAFAPr/AAAIAAIAAAA=")
+tile_set = SubResource("TileSet_yyda6")
+
+[node name="Marinero" type="Sprite2D" parent="."]
+position = Vector2(-594, -42)
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("8_8cww3")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("9_vuuep")]
+position = Vector2(-286, -49)
+debugging = false
+camera_following = false
+can_open_inventory = false
+camera = NodePath("../MainCamera")

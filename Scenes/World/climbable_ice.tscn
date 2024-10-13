@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbghysjx575t"]
+
+[ext_resource type="Texture2D" uid="uid://ds2pah556y80a" path="res://Assets/Sprites/ice.png" id="1_tf4cu"]
+[ext_resource type="Script" path="res://Scripts/climb_colliders.gd" id="2_dvc6c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48w3q"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fv65"]
+size = Vector2(6.40001, 6.4)
+
+[node name="ClimbableIce" type="Sprite2D"]
+z_index = 5
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-3199.47, -611.86)
+texture = ExtResource("1_tf4cu")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 256)
+
+[node name="ClimbableIce" type="StaticBody2D" parent="."]
+scale = Vector2(1, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbableIce"]
+position = Vector2(0, 0.000137329)
+shape = SubResource("RectangleShape2D_48w3q")
+
+[node name="ClimbColliders" type="Area2D" parent="."]
+scale = Vector2(1, 8)
+collision_mask = 2
+script = ExtResource("2_dvc6c")
+
+[node name="RightClimbing" type="CollisionShape2D" parent="ClimbColliders"]
+position = Vector2(32, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_1fv65")
+
+[node name="LeftClimbing" type="CollisionShape2D" parent="ClimbColliders"]
+position = Vector2(-32, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_1fv65")

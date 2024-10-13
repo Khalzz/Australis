@@ -101,16 +101,24 @@ func add_item(item_id):
 	return returnable
 	
 func delete_unit_from_item(item_id):
+	var item_exists = false
+	
 	for item in inventory_management.inventory.size():
 		if inventory_management.inventory[item] != null:
 			if inventory_management.inventory[item].item_id == item_id: 
+				item_exists = true
 				if inventory_management.inventory[item].count - 1 > 0:
 					inventory_management.inventory[item].count -= 1
 					break
 				elif inventory_management.inventory[item].count - 1 <= 0:
 					inventory_management.inventory[item] = null
 					break
-	write_inventory()
+	
+	if item_exists:
+		write_inventory()
+		return true
+	else:
+		return false
 
 func new_inventory_node(item_id, count):
 	return { "item_id": item_id, "count": count }

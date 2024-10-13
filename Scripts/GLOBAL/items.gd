@@ -18,6 +18,9 @@ var sold_items = []
 var dia = 0
 var altered_day = 0
 var house_night_1 = false
+var can_explore = false
+
+var spawn_point_name: String
 
 var isUsingController = false
 

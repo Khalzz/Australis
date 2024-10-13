@@ -1,0 +1,4 @@
+talking,message
+Alex, "Bienvenido al tutorial de exploración, antes de avanzar hay ciertos conceptos que debes aprender."
+Alex, "Delante de ti encontrarás un punto de descanso, estos guardan la última posición donde aparecerás al recibir daño o quedarte sin energía."
+Alex, "Prueba activarlo para continuar."

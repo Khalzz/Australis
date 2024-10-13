@@ -1,0 +1,212 @@
+[gd_scene load_steps=18 format=3 uid="uid://mrsv8n8ndcuf"]
+
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="1_043nk"]
+[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="2_d7h17"]
+[ext_resource type="PackedScene" uid="uid://d2r7fs0237ltw" path="res://Scenes/World/floor.tscn" id="3_bhf34"]
+[ext_resource type="Texture2D" uid="uid://3v3e72odgtoe" path="res://Assets/Sprites/Sky/DaySky2.png" id="5_rugld"]
+[ext_resource type="Texture2D" uid="uid://cmxtm2pqp536v" path="res://Assets/Sprites/Land.svg" id="6_kksop"]
+[ext_resource type="Texture2D" uid="uid://dq0aoawdhliuy" path="res://Assets/Sprites/World/TerrainTile2.png" id="7_x6el5"]
+[ext_resource type="Texture2D" uid="uid://dlchl75kg0x5d" path="res://Assets/Sprites/World/FloorTiles.png" id="8_2ygmy"]
+[ext_resource type="PackedScene" uid="uid://dg1epy58w8otu" path="res://Scenes/Prefabs/snow.tscn" id="9_64nj8"]
+[ext_resource type="Texture2D" uid="uid://ds2pah556y80a" path="res://Assets/Sprites/ice.png" id="10_u4cij"]
+[ext_resource type="Script" path="res://Scripts/climb_colliders.gd" id="11_8mol0"]
+[ext_resource type="Texture2D" uid="uid://esheiyve1624" path="res://Assets/Sprites/SpriteSheets/ice-stalactites.png" id="11_82l52"]
+[ext_resource type="Script" path="res://Scripts/respawn_before_jumps.gd" id="11_qmldk"]
+[ext_resource type="Script" path="res://Scripts/ice-stalactites.gd" id="12_6ebr6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am3fv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48w3q"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fv65"]
+size = Vector2(6.40001, 6.4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lrxb"]
+size = Vector2(32, 166)
+
+[node name="Exploration" type="Node2D"]
+position = Vector2(1762.47, -0.140137)
+
+[node name="WorldAssets" type="Node" parent="."]
+
+[node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.427493, 0.427493, 0.427493, 1)
+z_index = -100
+position = Vector2(-86.8984, -921.068)
+scale = Vector2(1.69427, 2.16882)
+texture = ExtResource("5_rugld")
+
+[node name="Land" type="Sprite2D" parent="WorldAssets"]
+modulate = Color(0.203922, 0.298039, 0.439216, 1)
+z_index = 10
+position = Vector2(170.737, 355.86)
+scale = Vector2(0.40409, 0.610816)
+texture = ExtResource("6_kksop")
+region_enabled = true
+region_rect = Rect2(-10893, 0, 15911, 1128)
+
+[node name="Floor2" type="Node2D" parent="WorldAssets"]
+z_index = 9
+position = Vector2(-807.526, 20.8599)
+
+[node name="TerrainTile2" type="Sprite2D" parent="WorldAssets/Floor2"]
+texture_filter = 1
+position = Vector2(2012, 69)
+texture = ExtResource("7_x6el5")
+
+[node name="FloorTiles" type="Sprite2D" parent="WorldAssets/Floor2"]
+z_index = -1
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, 3)
+texture = ExtResource("8_2ygmy")
+region_enabled = true
+region_rect = Rect2(0, 0, 4000, 90.355)
+
+[node name="GPUParticles2D" parent="WorldAssets" instance=ExtResource("9_64nj8")]
+position = Vector2(-1646, -1957)
+amount = 1000
+preprocess = 20.0
+visibility_rect = Rect2(0, -100, 3000, 2000)
+
+[node name="MainFloor" parent="." instance=ExtResource("3_bhf34")]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(-1778, 141)
+scale = Vector2(70.88, 7.8)
+
+[node name="InvisibleWalls" type="Node2D" parent="."]
+position = Vector2(-3119, -496)
+scale = Vector2(1, 51.48)
+
+[node name="InvisibleWall-l" type="StaticBody2D" parent="InvisibleWalls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls/InvisibleWall-l"]
+shape = SubResource("RectangleShape2D_am3fv")
+
+[node name="InvisibleWall-r" type="StaticBody2D" parent="InvisibleWalls"]
+position = Vector2(2549, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleWalls/InvisibleWall-r"]
+shape = SubResource("RectangleShape2D_am3fv")
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="FloatingFloor" parent="Platforms" node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
+z_index = -1
+position = Vector2(-2215.47, -172.86)
+scale = Vector2(6.31999, 0.759999)
+collision_layer = 2
+collision_mask = 2
+can_jump_through = true
+player = NodePath("../../Player")
+
+[node name="FloatingFloor2" parent="Platforms" node_paths=PackedStringArray("player") instance=ExtResource("3_bhf34")]
+z_index = -1
+position = Vector2(-2050.47, -292.86)
+scale = Vector2(6.31999, 0.759999)
+collision_layer = 2
+collision_mask = 2
+can_jump_through = true
+player = NodePath("../../Player")
+
+[node name="ClimbableIce" type="Sprite2D" parent="."]
+z_index = 5
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(-2493.47, -214.86)
+texture = ExtResource("10_u4cij")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 256)
+
+[node name="ClimbableIce" type="StaticBody2D" parent="ClimbableIce"]
+scale = Vector2(1, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbableIce/ClimbableIce"]
+position = Vector2(0, 0.000137329)
+shape = SubResource("RectangleShape2D_48w3q")
+
+[node name="ClimbColliders" type="Area2D" parent="ClimbableIce"]
+scale = Vector2(1, 8)
+collision_mask = 2
+script = ExtResource("11_8mol0")
+
+[node name="RightClimbing" type="CollisionShape2D" parent="ClimbableIce/ClimbColliders"]
+position = Vector2(32, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_1fv65")
+
+[node name="LeftClimbing" type="CollisionShape2D" parent="ClimbableIce/ClimbColliders"]
+position = Vector2(-32, 0)
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_1fv65")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_043nk")]
+position = Vector2(-1873.47, -113.86)
+collision_layer = 2
+camera = NodePath("../MainCamera")
+fixed_items = Array[int]([0, 1, 2, 4])
+isActive = true
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(-2046, 97)
+offset = Vector2(0, -170)
+zoom = Vector2(10, 10)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+script = ExtResource("2_d7h17")
+
+[node name="ice-stalactites" type="Node2D" parent="."]
+position = Vector2(-1800.47, -30.8599)
+
+[node name="RespawnBeforeJumps" type="Area2D" parent="ice-stalactites"]
+position = Vector2(-74, -72)
+collision_mask = 2
+script = ExtResource("11_qmldk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ice-stalactites/RespawnBeforeJumps"]
+shape = SubResource("RectangleShape2D_2lrxb")
+
+[node name="ice-stalactite3" type="Sprite2D" parent="ice-stalactites"]
+texture_filter = 1
+position = Vector2(62, 3.8147e-05)
+texture = ExtResource("11_82l52")
+hframes = 3
+frame = 2
+
+[node name="Area2D" type="Area2D" parent="ice-stalactites/ice-stalactite3"]
+collision_mask = 2
+script = ExtResource("12_6ebr6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ice-stalactites/ice-stalactite3/Area2D"]
+position = Vector2(1, 1)
+polygon = PackedVector2Array(-13, 11, -9, 3.99996, -3, -4.00004, 2, -15, 3, -9.00004, 5, -3.8147e-05, 10, 9.99996, 15, 15, -18, 15)
+
+[node name="ice-stalactite" type="Sprite2D" parent="ice-stalactites"]
+texture_filter = 1
+texture = ExtResource("11_82l52")
+hframes = 3
+
+[node name="Area2D" type="Area2D" parent="ice-stalactites/ice-stalactite"]
+collision_mask = 2
+script = ExtResource("12_6ebr6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ice-stalactites/ice-stalactite/Area2D"]
+polygon = PackedVector2Array(-9, 15, -1, -15, 1, -18, 2, 6, 9, 15)
+
+[node name="ice-stalactite2" type="Sprite2D" parent="ice-stalactites"]
+texture_filter = 1
+position = Vector2(28, 3.8147e-05)
+texture = ExtResource("11_82l52")
+hframes = 3
+frame = 1
+
+[node name="Area2D" type="Area2D" parent="ice-stalactites/ice-stalactite2"]
+collision_mask = 2
+script = ExtResource("12_6ebr6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ice-stalactites/ice-stalactite2/Area2D"]
+position = Vector2(1, 1)
+polygon = PackedVector2Array(-12, 15, -1, 5, 1, -16, 3, -15, 6, 10, 9, 15)
