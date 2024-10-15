@@ -4,7 +4,8 @@ extends TextureRect
 var money = 10
 
 func _process(delta):
-	$Label.text = fill_with_zeros() + str(inventario.inventory_management.money)
+	if $"..".visible:
+		$Label.text = fill_with_zeros() + str(inventario.inventory_management.money)
 
 func fill_with_zeros(): 
 	var fill = ""

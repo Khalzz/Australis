@@ -1,1 +1,7 @@
-{"inventory":[null,null,null,null,null,null,null,null,null,null,null,null],"investigated_items":[],"money":0}
+{
+	"scene_to_open": "res://Scenes/Levels/ShipRooms.tscn",
+	"dia": 0,
+	"altered_day": 0,
+	"inventory":[null,null,null,null,null,null,null,null,null,null,null,null],
+	"investigated_items":[],
+	"money":0}

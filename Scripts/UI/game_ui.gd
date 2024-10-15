@@ -80,3 +80,18 @@ func play_transition_in():
 
 func play_transition_out():
 	$Transition/AnimationPlayer.play("Transition_out")
+
+func save_load(scene, spawn_coordinates: Variant = null):
+	inventory.inventory_management["scene_to_open"] = scene
+	inventory.inventory_management["dia"] = Items.dia
+	inventory.inventory_management["altered_day"] = Items.altered_day
+	inventory.inventory_management["check_points"] = Items.check_points
+	if spawn_coordinates:
+		inventory.inventory_management["spawn_position"]["x"] = spawn_coordinates.x
+		inventory.inventory_management["spawn_position"]["y"] = spawn_coordinates.y
+
+	Items.save_inventory_management(inventory.inventory_management)
+	
+func play_load_animation():
+	print("Animated")
+	$AutoSaveLogo/AnimationPlayer.play("Saving")

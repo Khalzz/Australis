@@ -1,12 +1,19 @@
 extends Button
 
+var loaded_data = Items.load_inventory_management()
+
 func _ready():
 	pressed.connect(self._button_pressed)
+	print(loaded_data)
+	
+
+func _process(delta: float) -> void:
+	if !loaded_data.has("scene_to_open") or loaded_data["scene_to_open"] == "":
+		$".".disabled = true
 
 func _button_pressed():
-	Items.dia = 1
-	Items.altered_day = 0
-	Items.house_night_1 = false
-	Items.sold_items = []
-	Items.save_inventory_management(Items.DEFAULT_INVENTORY)
-	get_tree().change_scene_to_packed(preload("res://Scenes/Levels/FirstDay.tscn"))
+	var current_scene = get_tree().current_scene
+
+	if loaded_data.has("scene_to_open") and loaded_data["scene_to_open"] != "":
+		print(loaded_data["scene_to_open"])
+		get_tree().change_scene_to_packed(load(loaded_data["scene_to_open"]))

@@ -173,6 +173,7 @@ position = Vector2(-228, -67)
 script = ExtResource("3_r1x1p")
 interaction = 2
 move_to = "res://Scenes/Levels/Main.tscn"
+spawn_point_name = "Spawn_House"
 
 [node name="Button" parent="StaticInteractuables/ExitingHome" instance=ExtResource("4_f4rqe")]
 offset_left = 11.0

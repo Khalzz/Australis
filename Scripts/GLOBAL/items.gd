@@ -3,9 +3,18 @@ extends Node
 # path to the user json file
 const JSON_FILE = "user://item_management.json"
 const DEFAULT_INVENTORY = {
+	"max_jumps": 1,
+	"scene_to_open": "",
+	"spawn_position": {
+		"x": null,
+		"y": null
+	},
+	"dia": 0,
+	"altered_day": 0,
 	"inventory": [null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null],
 	"investigated_items": [],
-	"money": 0
+	"money": 0,
+	"check_points": []
 }
 
 const JSON_ITEMS_FILE = "res://Items/items.json"
@@ -19,7 +28,8 @@ var dia = 0
 var altered_day = 0
 var house_night_1 = false
 var can_explore = false
-
+var max_jumps = 1
+var check_points = []
 var spawn_point_name: String
 
 var isUsingController = false

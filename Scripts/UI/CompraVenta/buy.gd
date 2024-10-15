@@ -12,7 +12,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if visible:
-		
 		$Price/Label.text = str(Items.item_list[$ElementsToBuy.get_children()[selected].item_id].price)
 		$ProductName.text = str(Items.item_list[$ElementsToBuy.get_children()[selected].item_id].name)
 		

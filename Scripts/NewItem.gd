@@ -11,25 +11,26 @@ func _ready():
 	item_animation.play("NewItem")
 
 func _process(delta):
-	if $"..".new_investigated_active or $"..".new_item_active:
-		$"..".player.isActive = false
-		
-		if Input.is_action_just_released("A"):
-			if $UiMessage.done:
-				
-				if $"..".new_item_active:
-					$"..".new_item_active = false
-					if $"../Inventario".add_item($"..".item_id):
-						$"..".player.isActive = true
-						$"..".player.paused = false
-					else:
+	if scale.x != 0.0:
+		if $"..".new_investigated_active or $"..".new_item_active:
+			$"..".player.isActive = false
+			
+			if Input.is_action_just_released("A"):
+				if $UiMessage.done:
+					
+					if $"..".new_item_active:
+						$"..".new_item_active = false
+						if $"../Inventario".add_item($"..".item_id):
+							$"..".player.isActive = true
+							$"..".player.paused = false
+						else:
+							$"..".player.toggle_inventory()
+					if $"..".new_investigated_active:
+						$"..".new_investigated_active = false
 						$"..".player.toggle_inventory()
-				if $"..".new_investigated_active:
-					$"..".new_investigated_active = false
-					$"..".player.toggle_inventory()
-			else:
-				$UiMessage.string_show = $UiMessage.message
-				$UiMessage.done = true
+				else:
+					$UiMessage.string_show = $UiMessage.message
+					$UiMessage.done = true
 	
 func set_base(item_id):
 	item_img.texture = load(Items.item_list[item_id]["img"])

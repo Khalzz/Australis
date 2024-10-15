@@ -10,6 +10,9 @@ extends Control
 @export var show_count = true
 @export var with_inner_menu = true
 
+var loaded_base_texture = load(base_texture)
+var loaded_active_texture = load(active_texture)
+var loaded_replace_texture = load(replace_texture)
 
 var count = 0
 
@@ -23,33 +26,34 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	if (count <= 0 or item_id < 0 and show_count) or !with_inner_menu:
-		$Count.visible = false
-	else:
-		$Count.visible = true
-		$Count.text = str(count)
-
-	if item_id >= 0:
-		$Img.texture = load(Items.item_list[item_id]["img"])
-	else:
-		$Img.texture = null
-
-	if active:
-		$Background.texture = load(active_texture)
-	else:
-		$Background.texture = load(base_texture)
-
-	if replacing:
-		$Background.texture = load(replace_texture)
-		
-	if with_inner_menu:
-		$VBoxContainer.visible = true
-		if active_inner_menu:
-			$VBoxContainer.position.x = lerp($VBoxContainer.position.x, 170.0, delta * 20)
+	if $"../..".visible:
+		if (count <= 0 or item_id < 0 and show_count) or !with_inner_menu:
+			$Count.visible = false
 		else:
-			$VBoxContainer.position.x = lerp($VBoxContainer.position.x, 0.0, delta * 20)
-	else:
-		$VBoxContainer.visible = true
+			$Count.visible = true
+			$Count.text = str(count)
+
+		if item_id >= 0:
+			$Img.texture = load(Items.item_list[item_id]["img"])
+		else:
+			$Img.texture = null
+
+		if active:
+			$Background.texture = loaded_active_texture
+		else:
+			$Background.texture = loaded_base_texture
+
+		if replacing:
+			$Background.texture = loaded_replace_texture
+			
+		if with_inner_menu:
+			$VBoxContainer.visible = true
+			if active_inner_menu:
+				$VBoxContainer.position.x = lerp($VBoxContainer.position.x, 170.0, delta * 20)
+			else:
+				$VBoxContainer.position.x = lerp($VBoxContainer.position.x, 0.0, delta * 20)
+		else:
+			$VBoxContainer.visible = true
 
 func toggle_replace(value):
 	if value:

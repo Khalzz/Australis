@@ -5,9 +5,18 @@ var selected = 0;
 var selected_item = null
 
 var inventory_management = {
+	"max_jumps": 1,
+	"scene_to_open": "",
+	"dia": 0,
+	"spawn_position": {
+		"x": null,
+		"y": null
+	},
+	"altered_day": 0,
 	"inventory": [null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null],
 	"investigated_items": [],
-	"money": 0
+	"money": 0,
+	"check_points": []
 }
 
 var item_to_move = null

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://btnlv2vwv2vd8"]
+[gd_scene load_steps=22 format=3 uid="uid://btnlv2vwv2vd8"]
 
 [ext_resource type="Script" path="res://Scripts/Label.gd" id="1_vm8iq"]
 [ext_resource type="Texture2D" uid="uid://bjfeom0n50oat" path="res://Assets/UI/InGame/FishingArrow.svg" id="3_50q3t"]
@@ -117,6 +117,9 @@ func _process(delta):
 		dying_contact = false
 		state = Enums.PlayerStates.DYING
 	
+	if state != Enums.PlayerStates.DYING:
+		modulate.a = 1.0
+	
 	match state:
 		Enums.PlayerStates.DYING:
 			$AnimationPlayer.play(\"DYING\")
@@ -125,6 +128,7 @@ func _process(delta):
 				sprite.frame = 8
 				$AnimationPlayer.play(\"CLIMBING\")
 		Enums.PlayerStates.FISHING:
+
 			pass
 		Enums.PlayerStates.JUMPING:
 			$AnimationPlayer.play(\"JUMPING\")
@@ -138,8 +142,9 @@ func _process(delta):
 					$AnimationPlayer.play(\"WALKING\")
 	
 	if $ClimbingCheckers/ClimbingArea.touching and isActive:
-		$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.6, delta * 7.0)
-		$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.6, delta * 7.0)
+		if $TimedActions/WaitForClimbButton.is_stopped():
+			$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.6, delta * 7.0)
+			$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.6, delta * 7.0)
 			
 		if Input.is_action_just_pressed(\"B\"):
 			isActive = false
@@ -205,9 +210,10 @@ func jumpLogic(delta):
 			jump_direction = last_direction
 		else:
 			if Input.is_action_just_pressed(\"jump\"):
+				$TimedActions/WaitForClimbButton.start()
 				isActive = true
 			jump_direction = -last_direction
-		jump_count = max_jump_count
+		jump_count = Items.max_jumps
 	else:
 		velocity.y += gravity * delta
 		state = Enums.PlayerStates.FALLING
@@ -378,7 +384,8 @@ func interact(interaction, obj_position, move_to, spawn_point = null):
 					ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexVeLaMontaña/\", update_level_state)
 
 func go_to_exploration():
-	get_tree().change_scene_to_file(\"res://Scenes/Levels/Exploration.tscn\")
+	Items.dia = 4
+	move_to_place(global_position, \"res://Scenes/Levels/Exploration.tscn\")
 
 func alex_want_to_work_2():
 	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWorkAgain.txt\", null)
@@ -399,6 +406,7 @@ func move_to_tierra_firme():
 	move_to_place(obj_position, move_to)
 	
 func move_to_place(obj_position, move_to):
+	
 	camera.looking_at_place = false
 	camera_following = false
 	camera.follow(obj_position, false, null)
@@ -408,33 +416,39 @@ func move_to_place(obj_position, move_to):
 	
 	if move_to != \"\":
 		get_tree().change_scene_to_file(move_to)
+		ui.save_load(move_to)
+		get_parent().get_node(\"Player\").ui.play_load_animation()
 		
 func checkDiary():
 	ui.investigate.toggle_investigate(true)
 	ui.investigate.load_uninvestigated(true)
 
 func set_check_point(spawn_point, check_point, needs_rope, dialogue_to_open):
-	# main respawn point will be setted
-	# will take 1 of cuerda from the inventory
+	var succesfully_setted = false
+	
 	if Input.is_action_just_pressed(\"A\") and isActive and is_on_floor():
 		if needs_rope:
 			if ui.inventory.delete_unit_from_item(6):
-				ui.action_text.text = \"Has usado 1 de cuerda.\"
-				ui.action_text.activate()
-				main_respawn_point = spawn_point
-				last_spawning_position = spawn_point
-				check_point.active = true
+				active_check_point(spawn_point, check_point)
+				succesfully_setted = true
 			else:
 				ui.action_text.text = \"Necesitas cuerda para usar el punto de guardado.\"
 				ui.action_text.activate()
 		else:
-			ui.action_text.text = \"Has activado el punto de guardado.\"
-			ui.action_text.activate()
-			main_respawn_point = spawn_point
-			last_spawning_position = spawn_point
-			check_point.active = true
+			active_check_point(spawn_point, check_point)
+			succesfully_setted = true
+			
 		if dialogue_to_open:
 			ui.dialog.open_dialog(dialogue_to_open, null)
+			
+	return succesfully_setted
+
+func active_check_point(spawn_point, check_point):
+	ui.action_text.text = \"Has activado el punto de guardado.\"
+	ui.action_text.activate()
+	main_respawn_point = spawn_point
+	last_spawning_position = spawn_point
+	check_point.active = true
 
 func set_point(spawn_point):
 	if Input.is_action_just_pressed(\"A\") and isActive:
@@ -447,23 +461,22 @@ func take_life():
 func respawn():
 	if lifes <= 0:
 		true_dead(true)
-		last_spawning_position = null
 		
 	if last_spawning_position:
 		global_position = last_spawning_position
 		await get_tree().create_timer(0.1).timeout
 		isActive = true
-	modulate.a = 1.0
 
 func true_dead(should_reset_lifes):
 	if main_respawn_point:
-		print(main_respawn_point)
 		global_position = main_respawn_point
+		last_spawning_position = main_respawn_point
+		
 		if should_reset_lifes:
 			lifes = max_lifes
 		await get_tree().create_timer(0.1).timeout
 		isActive = true
-		modulate.a = 1.0
+		
 	else:
 		get_tree().reload_current_scene()
 
@@ -475,16 +488,6 @@ func play_transition():
 resource_local_to_scene = true
 radius = 15.0
 height = 54.0
-
-[sub_resource type="GDScript" id="GDScript_ma68f"]
-script/source = "extends CollisionShape2D
-
-func _ready():
-	pass # Replace with function body.
-
-func _process(delta):
-	pass
-"
 
 [sub_resource type="Animation" id="Animation_4qwqe"]
 resource_name = "CLIMBING"
@@ -528,10 +531,10 @@ tracks/1/path = NodePath(".:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 38.0546),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -540,7 +543,7 @@ tracks/2/path = NodePath("HUD")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.2, 1),
+"times": PackedFloat32Array(0.3, 1),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -630,18 +633,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_0m63x"]
 resource_name = "WALKING"
@@ -680,22 +671,20 @@ floor_snap_length = 0.0
 script = SubResource("GDScript_yv2bm")
 debugging = true
 
+[node name="Player" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("5_kwebl")
+hframes = 3
+vframes = 4
+
 [node name="HUD" parent="." instance=ExtResource("5_qe2aq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_vfkqx")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
-script = SubResource("GDScript_ma68f")
-
-[node name="Label" type="Label" parent="."]
-offset_left = -47.0
-offset_top = -62.0
-offset_right = 47.0
-offset_bottom = -36.0
-text = "Jumping"
-horizontal_alignment = 1
-script = ExtResource("1_vm8iq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -710,16 +699,6 @@ z_index = -1
 position = Vector2(55.22, 0)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_50q3t")
-
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="Player" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(-1, 0)
-scale = Vector2(2, 2)
-texture = ExtResource("5_kwebl")
-hframes = 3
-vframes = 4
 
 [node name="InteractionButton" parent="." instance=ExtResource("6_3bf7s")]
 offset_left = 0.0
@@ -796,6 +775,19 @@ one_shot = true
 [node name="JumpTimer" type="Timer" parent="TimedActions"]
 wait_time = 0.3
 one_shot = true
+
+[node name="WaitForClimbButton" type="Timer" parent="TimedActions"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -47.0
+offset_top = -62.0
+offset_right = 47.0
+offset_bottom = -36.0
+text = "Jumping"
+horizontal_alignment = 1
+script = ExtResource("1_vm8iq")
 
 [connection signal="body_shape_entered" from="ClimbingCheckers/ClimbingArea" to="ClimbingCheckers/ClimbingArea" method="_on_body_shape_entered"]
 [connection signal="body_shape_exited" from="ClimbingCheckers/ClimbingArea" to="ClimbingCheckers/ClimbingArea" method="_on_body_shape_exited"]

@@ -1,13 +1,11 @@
-[gd_scene load_steps=44 format=4 uid="uid://b5x552kb1qyya"]
+[gd_scene load_steps=42 format=4 uid="uid://b5x552kb1qyya"]
 
 [ext_resource type="Script" path="res://Scripts/UI/MainMenu/jugar.gd" id="1_3p6br"]
 [ext_resource type="Script" path="res://Scripts/UI/MainMenu/dia_1.gd" id="1_b4xpt"]
 [ext_resource type="Script" path="res://Scripts/UI/MainMenu/select_level.gd" id="1_l1dmg"]
 [ext_resource type="Script" path="res://Scripts/UI/MainMenu/inicio.gd" id="1_om3oc"]
 [ext_resource type="Script" path="res://Scripts/UI/MainMenu/salir.gd" id="2_008mq"]
-[ext_resource type="Script" path="res://Scripts/UI/MainMenu/dia_2.gd" id="2_hp253"]
 [ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="3_bfdbj"]
-[ext_resource type="Script" path="res://Scripts/UI/MainMenu/exploracion.gd" id="3_odgti"]
 [ext_resource type="Script" path="res://Scripts/UI/MainMenu/atras.gd" id="4_yx5po"]
 [ext_resource type="Texture2D" uid="uid://bg1xbdgyvmklb" path="res://Assets/Sprites/SpriteSheets/pinguino.png" id="5_ehssf"]
 [ext_resource type="Texture2D" uid="uid://k2ac5kgddb85" path="res://Assets/Sprites/SpriteSheets/Player.png" id="5_ki842"]
@@ -773,47 +771,28 @@ grow_vertical = 2
 theme_override_constants/separation = 20
 script = ExtResource("1_l1dmg")
 
-[node name="Inicio" type="Button" parent="SelectLevel"]
+[node name="NuevaPartida" type="Button" parent="SelectLevel"]
 layout_mode = 2
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../Atras")
-focus_neighbor_bottom = NodePath("../Dia1")
+focus_neighbor_bottom = NodePath("../Continuar")
 theme_override_font_sizes/font_size = 50
-text = "Empezar desde el inicio"
+text = "Nueva Partida"
 script = ExtResource("1_om3oc")
 
-[node name="Dia1" type="Button" parent="SelectLevel"]
+[node name="Continuar" type="Button" parent="SelectLevel"]
 layout_mode = 2
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../Inicio")
-focus_neighbor_bottom = NodePath("../Dia2")
+focus_neighbor_top = NodePath("../NuevaPartida")
 theme_override_font_sizes/font_size = 50
-text = "Tutorial Día 1"
+text = "Continuar
+"
 script = ExtResource("1_b4xpt")
-
-[node name="Dia2" type="Button" parent="SelectLevel"]
-layout_mode = 2
-size_flags_vertical = 4
-focus_neighbor_top = NodePath("../Dia1")
-focus_neighbor_bottom = NodePath("../Exploracion")
-theme_override_font_sizes/font_size = 50
-text = "Tutorial Día 2"
-script = ExtResource("2_hp253")
-
-[node name="Exploracion" type="Button" parent="SelectLevel"]
-layout_mode = 2
-size_flags_vertical = 4
-focus_neighbor_top = NodePath("../Dia2")
-focus_neighbor_bottom = NodePath("../Atras")
-theme_override_font_sizes/font_size = 50
-text = "Exploración"
-script = ExtResource("3_odgti")
 
 [node name="Atras" type="Button" parent="SelectLevel"]
 layout_mode = 2
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../Exploracion")
-focus_neighbor_bottom = NodePath("../Inicio")
+focus_neighbor_bottom = NodePath("../NuevaPartida")
 theme_override_font_sizes/font_size = 50
 text = "Atrás"
 script = ExtResource("4_yx5po")

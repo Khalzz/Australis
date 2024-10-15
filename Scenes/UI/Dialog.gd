@@ -18,8 +18,6 @@ func _ready():
 	visible = false
 
 func _process(delta):
-	
-	
 	if visible:
 		$"..".player.isActive = false
 		$UiMessage/ColorRect/VBoxContainer/Name.text = dialogue_dict[message_id][0]
@@ -89,6 +87,8 @@ func open_dialog(dialog_file_name, action_after_dialog):
 	$UiMessage.dialogue_reset()
 	if action_after_dialog:
 		action = action_after_dialog
+	else:
+		action = Callable()
 	message_id = 1
 	visible = true
 	set_dialog(dialog_file_name)

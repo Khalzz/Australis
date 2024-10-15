@@ -8,11 +8,17 @@ extends Control
 
 @export var inner_select_owner: Node
 
+var active_loaded_texture
+var base_loaded_texture
+
 func _ready():
 	$Label.text = text
+	active_loaded_texture = load(active_texture)
+	base_loaded_texture = load(base_texture)
 
 func _process(delta):
-	if inner_select_owner.inner_select == id_inner_button:
-		$BaseSize/TextureRect.texture = load(active_texture)
-	else:
-		$BaseSize/TextureRect.texture = load(base_texture)
+	if visible:
+		if inner_select_owner.inner_select == id_inner_button:
+			$BaseSize/TextureRect.texture = active_loaded_texture
+		else:
+			$BaseSize/TextureRect.texture = base_loaded_texture

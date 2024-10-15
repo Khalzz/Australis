@@ -3,6 +3,8 @@ extends Node2D
 var state = 0
 
 func _ready() -> void:
+	$Player.ui.play_load_animation()
+
 	state = 0
 	
 	if Items.dia == 2:

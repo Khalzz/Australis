@@ -3,6 +3,8 @@ extends Node2D
 var state = 0
 
 func _ready() -> void:
+	$Player.ui.play_load_animation()
+
 	state = 0
 	
 	if Items.dia == 2:
@@ -109,5 +111,9 @@ func _process(delta: float) -> void:
 			$Player.objective = "Interactúa con la montaña"
 		else:
 			$Player.objective = "Compra el kit de escalada del comerciante."
+		$StaticInteractuables/GoingHome.monitoring = true
+		$StaticInteractuables/InteractingWithMountain.monitoring = true
+	elif Items.dia == 4:
+		Items.can_explore = true
 		$StaticInteractuables/GoingHome.monitoring = true
 		$StaticInteractuables/InteractingWithMountain.monitoring = true
