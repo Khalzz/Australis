@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://ckolds6kabfyj"]
+[gd_scene load_steps=23 format=4 uid="uid://ckolds6kabfyj"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/AlexLLegaTierraFirme/alex_llega_tierra_firme.gd" id="1_j4y2v"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_wtk41"]
@@ -9,13 +9,35 @@
 [ext_resource type="Texture2D" uid="uid://ccpl8iwxx2v6d" path="res://Assets/Sprites/Sky/laterSky.png" id="7_0nc5y"]
 [ext_resource type="Texture2D" uid="uid://cvjoxp8hv40pn" path="res://Assets/Sprites/House.svg" id="8_0rnll"]
 [ext_resource type="Texture2D" uid="uid://on4tot75gj5s" path="res://Assets/Sprites/Store.svg" id="9_x3nqp"]
-[ext_resource type="Texture2D" uid="uid://4b20ueceymf2" path="res://Assets/Sprites/Characters/Comerciante.png" id="10_ylsav"]
+[ext_resource type="Texture2D" uid="uid://660ply8ubiq8" path="res://Assets/Sprites/SpriteSheets/StoreGuy.png" id="10_5gu2u"]
 [ext_resource type="Texture2D" uid="uid://d1n1gvg58au83" path="res://Assets/Sprites/World/Background.png" id="11_iblis"]
 [ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="12_tfkug"]
 [ext_resource type="Script" path="res://Scripts/Water.gd" id="13_uev20"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xqnm1"]
 size = Vector2(54.8, 37.2)
+
+[sub_resource type="Animation" id="Animation_3h5u4"]
+resource_name = "IDLE"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8xohp"]
+_data = {
+"IDLE": SubResource("Animation_3h5u4")
+}
 
 [sub_resource type="Gradient" id="Gradient_nxh50"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -189,10 +211,20 @@ scale = Vector2(0.255, 0.255)
 texture = ExtResource("9_x3nqp")
 
 [node name="Comerciante" type="Sprite2D" parent="WorldAssets"]
-position = Vector2(-306, -48)
+z_index = -1
+texture_filter = 1
+position = Vector2(-306, -55)
 rotation = -3.14159
-scale = Vector2(0.025, -0.025)
-texture = ExtResource("10_ylsav")
+scale = Vector2(2.3, -2.3)
+texture = ExtResource("10_5gu2u")
+flip_h = true
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WorldAssets/Comerciante"]
+libraries = {
+"": SubResource("AnimationLibrary_8xohp")
+}
+autoplay = "IDLE"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 z_index = -5

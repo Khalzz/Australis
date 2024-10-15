@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://clnghuojq023w"]
+[gd_scene load_steps=18 format=4 uid="uid://clnghuojq023w"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/LlegadaDeAlex/llegada_de_alex.gd" id="1_hbp8g"]
 [ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="2_p381y"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d2j1c6wc76tvf" path="res://Assets/UI/Arrow/X Key(pressed).svg" id="5_owjgs"]
 [ext_resource type="Texture2D" uid="uid://dqsk8q2ir2iip" path="res://Assets/UI/Arrow/X Key(red letter).svg" id="6_23ot6"]
 [ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="7_3bsm5"]
-[ext_resource type="Texture2D" uid="uid://8iuaf3po4aem" path="res://Assets/Sprites/Characters/marinero.png" id="8_8cww3"]
+[ext_resource type="Texture2D" uid="uid://bgveb6b8g53jp" path="res://Assets/Sprites/SpriteSheets/Marinero.png" id="8_8vb25"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="9_vuuep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mdbkj"]
@@ -111,6 +111,44 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 custom_data_layer_0/name = "ice"
 custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_kfqwe")
+
+[sub_resource type="Animation" id="Animation_b05gw"]
+resource_name = "Idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_0wgn3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ge4np"]
+_data = {
+"Idle": SubResource("Animation_b05gw"),
+"RESET": SubResource("Animation_0wgn3")
+}
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_hbp8g")
@@ -229,16 +267,25 @@ scale = Vector2(4.1, 4.1)
 tile_map_data = PackedByteArray("AAD3//7/AAAKAAEAAAD3////AAAKAAIAAAD9////AAAKAAIAAAD9//7/AAAKAAEAAAACAP//AAAEAAEAAAACAP7/AAAEAAEAAAACAP3/AAAEAAEAAAA=")
 tile_set = SubResource("TileSet_yyda6")
 
+[node name="Marinero" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-594, -36)
+scale = Vector2(2.3, 2.3)
+texture = ExtResource("8_8vb25")
+flip_h = true
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Marinero"]
+libraries = {
+"": SubResource("AnimationLibrary_ge4np")
+}
+autoplay = "Idle"
+
 [node name="Map" type="TileMapLayer" parent="."]
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
 tile_map_data = PackedByteArray("AAD7/wAAAAAFAAEAAAD8/wAAAAAFAAEAAAD9/wAAAAAFAAEAAAAAAAAAAAAFAAEAAAABAAAAAAAFAAEAAAACAAAAAAAFAAEAAAADAAAAAAAFAAEAAAAEAAAAAAAFAAEAAAAFAAAAAAAFAAEAAAD6/wAAAAAFAAEAAAD5/wAAAAAFAAEAAAD4/wAAAAAFAAEAAAD3/wAAAAAFAAEAAAD2/wAAAAAFAAEAAAD1/wAAAAAFAAEAAAD0/wAAAAAFAAEAAADz/wAAAAAFAAEAAADy/wAAAAAFAAEAAADx/wAAAAAFAAEAAADw//r/AAAIAAIAAADw/wAAAAAFAAEAAADx//r/AAAIAAIAAADy//r/AAAIAAIAAADz//r/AAAIAAIAAAD0//r/AAAIAAIAAAD1//r/AAAIAAIAAAD2//r/AAAIAAIAAAD3//r/AAAIAAIAAAD4//r/AAAIAAIAAAD5//r/AAAIAAIAAAD6//r/AAAIAAIAAAD7//r/AAAIAAIAAAD8//r/AAAIAAIAAAD9//r/AAAIAAIAAAD+//r/AAAIAAIAAAD///r/AAAIAAIAAAAAAPr/AAAIAAIAAAD+/wAAAAAFAAEAAAD//wAAAAAFAAEAAADv//r/AAAIAAIAAADu//r/AAAIAAIAAADt//r/AAAIAAIAAADs//r/AAAIAAIAAADr//r/AAAIAAIAAADq//r/AAAIAAIAAADp//r/AAAIAAIAAADo//r/AAAIAAIAAADn//r/AAAIAAIAAADm//r/AAAIAAIAAADl//r/AAAIAAIAAADk//r/AAAIAAIAAADv/wAAAAAFAAEAAADu/wAAAAAFAAEAAADt/wAAAAAFAAEAAADs/wAAAAAFAAEAAADr/wAAAAAFAAEAAADq/wAAAAAFAAEAAADp/wAAAAAFAAEAAADo/wAAAAAFAAEAAADn/wAAAAAFAAEAAADm/wAAAAAFAAEAAADl/wAAAAAFAAEAAADk/wAAAAAFAAEAAAAAAP//AAALAAAAAAABAP//AAAGAAEAAAACAP7/AAALAAAAAAAEAP3/AAALAAAAAAADAP7/AAAGAAEAAAAFAP3/AAAGAAEAAAADAP//AAAGAAIAAAAEAP//AAAGAAIAAAAFAP7/AAAGAAIAAAACAP//AAAGAAIAAAAFAP//AAAGAAIAAAAEAP7/AAAGAAIAAADx////AAAEAAEAAADx//7/AAAEAAEAAADx//3/AAAEAAEAAADx//z/AAAEAAEAAADx//v/AAAEAAEAAAABAPr/AAAIAAIAAAACAPr/AAAIAAIAAAADAPr/AAAIAAIAAAAEAPr/AAAIAAIAAAAFAPr/AAAIAAIAAAA=")
 tile_set = SubResource("TileSet_yyda6")
-
-[node name="Marinero" type="Sprite2D" parent="."]
-position = Vector2(-594, -42)
-scale = Vector2(0.03, 0.03)
-texture = ExtResource("8_8cww3")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("9_vuuep")]
 position = Vector2(-286, -49)
