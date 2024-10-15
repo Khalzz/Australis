@@ -213,7 +213,7 @@ func jumpLogic(delta):
 				$TimedActions/WaitForClimbButton.start()
 				isActive = true
 			jump_direction = -last_direction
-		jump_count = Items.max_jumps
+		jump_count = ui.inventory.inventory_management[\"max_jumps\"]
 	else:
 		velocity.y += gravity * delta
 		state = Enums.PlayerStates.FALLING

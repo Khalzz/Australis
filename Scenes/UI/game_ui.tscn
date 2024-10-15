@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=71 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -47,6 +47,9 @@
 [ext_resource type="Script" path="res://Scripts/UI/lifes.gd" id="45_720t1"]
 [ext_resource type="Script" path="res://Scripts/UI/objetivo.gd" id="45_plngk"]
 [ext_resource type="Texture2D" uid="uid://c8fb2jm82abhs" path="res://Assets/Sprites/SpriteSheets/AutoSave.png" id="47_e0ir5"]
+[ext_resource type="Script" path="res://Scripts/UI/new_hability.gd" id="48_4lle7"]
+[ext_resource type="VideoStream" path="res://Assets/Videos/Tutorials/DoubleJump.ogv" id="48_o6a7f"]
+[ext_resource type="Texture2D" uid="uid://7oikkl5sryw2" path="res://Assets/UI/NewHability/NewHabilityBackground.png" id="48_qd3ar"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqq5d"]
 font_size = 30
@@ -337,6 +340,9 @@ _data = {
 "Transition_out": SubResource("Animation_7ln2h")
 }
 
+[sub_resource type="Animation" id="Animation_l2osf"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_3sg25"]
 resource_name = "Saving"
 length = 2.0
@@ -365,13 +371,62 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_l2osf"]
-length = 0.001
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oti3f"]
 _data = {
 "RESET": SubResource("Animation_l2osf"),
 "Saving": SubResource("Animation_3sg25")
+}
+
+[sub_resource type="Animation" id="Animation_wrvdq"]
+resource_name = "Open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.287175, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fafbu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_isulh"]
+resource_name = "Close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.241484, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_crol2"]
+_data = {
+"Close": SubResource("Animation_isulh"),
+"Open": SubResource("Animation_wrvdq"),
+"RESET": SubResource("Animation_fafbu")
 }
 
 [node name="HUD" type="CanvasLayer"]
@@ -2045,6 +2100,7 @@ offset_right = 180.0
 offset_bottom = -235.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 30
 text = "Has usado 1 de cuerda."
 horizontal_alignment = 1
 script = ExtResource("15_4y5g0")
@@ -2156,10 +2212,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -960.0
-offset_top = 1050.0
-offset_right = 1000.0
-offset_bottom = 1210.0
+offset_left = -2960.0
+offset_top = 900.0
+offset_right = -1000.0
+offset_bottom = 1060.0
 grow_horizontal = 2
 pivot_offset = Vector2(0, 4)
 color = Color(0, 0, 0, 1)
@@ -2191,4 +2247,80 @@ hframes = 7
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AutoSaveLogo"]
 libraries = {
 "": SubResource("AnimationLibrary_oti3f")
+}
+
+[node name="NewHability" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(960, 540)
+script = ExtResource("48_4lle7")
+
+[node name="TextureRect" type="TextureRect" parent="NewHability"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -336.0
+offset_right = 448.0
+offset_bottom = 336.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(448, 336)
+texture = ExtResource("48_qd3ar")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NewHability/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -720.0
+offset_top = -603.0
+offset_right = 720.0
+offset_bottom = 604.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(720, 603)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="NewHability/TextureRect/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+stream = ExtResource("48_o6a7f")
+autoplay = true
+loop = true
+
+[node name="Titulo" type="Label" parent="NewHability/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Doble Salto"
+horizontal_alignment = 1
+
+[node name="Descripcion" type="Label" parent="NewHability/TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Presiona el boton de salto en medio del aire para realizar un doble salto."
+horizontal_alignment = 1
+
+[node name="Button" parent="NewHability" instance=ExtResource("8_xnr2x")]
+layout_mode = 1
+offset_left = 416.0
+offset_top = 298.0
+offset_right = 466.0
+offset_bottom = 348.0
+scale = Vector2(1.3, 1.3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NewHability"]
+libraries = {
+"": SubResource("AnimationLibrary_crol2")
 }

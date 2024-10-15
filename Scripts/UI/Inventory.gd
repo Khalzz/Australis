@@ -59,6 +59,7 @@ func hide_inventory_states():
 func back_to_inventory():
 	state = InventoryStates.SelectingItem
 	selected_setted = null
+	$InventoryStateMachine/SelectingItem.can_pause = true
 
 func move_selected():
 	if Input.is_action_just_pressed("left") and selected > 0:

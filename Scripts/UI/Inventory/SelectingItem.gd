@@ -11,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
-	if !can_pause and Input.is_action_just_released("pause"):
+	if !can_pause and (Input.is_action_just_released("pause")):
 		can_pause = true
 	
 	if visible and inventory.visible:
@@ -19,7 +19,7 @@ func _process(delta):
 
 		inventory.move_selected()
 
-		if Input.is_action_just_pressed("pause") and hud.player.paused and can_pause:
+		if (Input.is_action_just_pressed("pause")) and hud.player.paused and can_pause:
 			inventory.reset_data()
 			hud.player.toggle_inventory()
 

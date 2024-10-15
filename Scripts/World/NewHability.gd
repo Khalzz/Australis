@@ -22,7 +22,13 @@ func _process(delta: float) -> void:
 				double_jump(inside)
 
 func double_jump(inside):
-	if (inside or Items.max_jumps == 2) and !activated:
-		Items.max_jumps = 2
+	if inside and !activated:
 		$AnimationPlayer.play("Getted")
+		$"../Player".ui.new_hability.activate($"../Player".ui.new_hability.Hability.DoubleJump)
+		$"../Player".ui.inventory.inventory_management["max_jumps"] = 2
 		activated = true
+	if $"../Player".ui.inventory.inventory_management["max_jumps"] == 2 and !activated:
+		activated = true
+		$Collider.monitoring = false
+		$".".visible = false
+		

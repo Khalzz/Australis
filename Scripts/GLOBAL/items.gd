@@ -28,7 +28,6 @@ var dia = 0
 var altered_day = 0
 var house_night_1 = false
 var can_explore = false
-var max_jumps = 1
 var check_points = []
 var spawn_point_name: String
 

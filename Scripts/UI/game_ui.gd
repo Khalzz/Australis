@@ -10,6 +10,7 @@ extends CanvasLayer
 @onready var transition = $Transition
 @onready var new_item = $NewItem
 @onready var lifes = $Lifes
+@onready var new_hability = $NewHability
 
 
 var item_id = 0
@@ -91,7 +92,7 @@ func save_load(scene, spawn_coordinates: Variant = null):
 		inventory.inventory_management["spawn_position"]["y"] = spawn_coordinates.y
 
 	Items.save_inventory_management(inventory.inventory_management)
-	
+
 func play_load_animation():
 	print("Animated")
 	$AutoSaveLogo/AnimationPlayer.play("Saving")
