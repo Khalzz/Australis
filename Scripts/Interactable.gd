@@ -4,7 +4,7 @@ var sprite
 
 @export var interaction: Enums.InteractionStates
 @export var move_to = "" 
-@export var spawn_point_name: String
+@export var spawn_point: Vector2
 
 func _ready():
 	sprite = $Button
@@ -21,7 +21,7 @@ func _process(delta):
 						inside = true
 						sprite.scale.x = lerp(sprite.scale.x, 1.0, delta * 7.0)
 						sprite.scale.y = lerp(sprite.scale.y, 1.0, delta * 7.0)
-						element.interact(interaction, position, move_to, spawn_point_name)
+						element.interact(interaction, position, move_to, spawn_point)
 		if !inside:
 			sprite.scale.x = lerp(sprite.scale.x, 0.0, delta * 20.0)
 			sprite.scale.y = lerp(sprite.scale.y, 0.0, delta * 20.0)

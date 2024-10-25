@@ -14,11 +14,11 @@ func _process(delta):
 
 		if inside:
 			if change_camera:
-				$"../../MainCamera".offset.y = lerp($"../../MainCamera".offset.y, 0.0, delta)
+				$"../../MainCamera".offset.y = lerp($"../../MainCamera".offset.y, 0.0, delta * 2.0)
 			if hide_front_layer:
 				$"../../Front".modulate.a = lerp($"../../Front".modulate.a, 0.0, delta * 7.0)
 		else:
 			if change_camera:
-				$"../../MainCamera".offset.y = lerp($"../../MainCamera".offset.y, -170.0, delta)
+				$"../../MainCamera".offset.y = lerp($"../../MainCamera".offset.y, -170.0, delta * 2.0)
 			if hide_front_layer:
 				$"../../Front".modulate.a = lerp($"../../Front".modulate.a, 1.0, delta)

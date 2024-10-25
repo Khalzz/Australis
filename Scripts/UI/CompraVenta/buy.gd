@@ -7,6 +7,7 @@ var selected = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Save.load_data()
 	load_sellables()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -17,7 +18,7 @@ func _process(delta: float) -> void:
 		
 		if $ElementsToBuy.get_children().size() > 0: 
 			if Input.is_action_just_pressed("A"):
-				if $"../../../Inventario".inventory_management.money >= Items.item_list[$ElementsToBuy.get_children()[selected].item_id].price:
+				if Save.data.money >= Items.item_list[$ElementsToBuy.get_children()[selected].item_id].price:
 					$BoughtOne.text = "+1 " + Items.item_list[$ElementsToBuy.get_children()[selected].item_id].name
 					$BoughtOne.activate()
 					$Money.subtract_money(Items.item_list[$ElementsToBuy.get_children()[selected].item_id].price)

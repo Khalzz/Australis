@@ -61,10 +61,10 @@ func _process(delta: float) -> void:
 func load_sellables():
 	items.clear()
 	
-	for element in $"../../../Inventario".inventory_management.inventory:
+	for element in Save.data.inventory:
 		if element != null:
 			if Items.item_list[element.item_id].investigable:
-				if $"../../../Inventario".inventory_management.investigated_items.has(float(element.item_id)):
+				if Save.data.investigated_items.has(float(element.item_id)):
 					for count in element.count:
 						items.append(element.item_id)
 			else:

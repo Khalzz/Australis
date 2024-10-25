@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1owqfag5gkdr"
-path="res://.godot/imported/X Key(red letter).svg-3814abc0dd6019177bf8378794753d0b.ctex"
+uid="uid://btbbbpmlc5bkg"
+path="res://.godot/imported/C Key(pressed).svg-1021792a606a0897e82f29d966071122.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/StartButton/B/X Key(red letter).svg"
-dest_files=["res://.godot/imported/X Key(red letter).svg-3814abc0dd6019177bf8378794753d0b.ctex"]
+source_file="res://Assets/UI/Y Button/B/C Key(pressed).svg"
+dest_files=["res://.godot/imported/C Key(pressed).svg-1021792a606a0897e82f29d966071122.ctex"]
 
 [params]
 

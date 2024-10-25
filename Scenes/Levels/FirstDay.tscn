@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Scenes/AlexLLegaTierraFirme/alex_llega_tierra_firme.gd" id="1_j4y2v"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_wtk41"]
-[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="3_icho6"]
+[ext_resource type="PackedScene" uid="uid://dsulipr0hoajc" path="res://Scenes/Characters/player/main_camera.tscn" id="3_3bnxx"]
 [ext_resource type="Script" path="res://Scripts/Interactable.gd" id="4_hi2iv"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="5_fygf8"]
 [ext_resource type="Texture2D" uid="uid://br867g7fxtmnu" path="res://Assets/Sprites/World/WoodArrowBase.svg" id="6_h6bp4"]
@@ -125,6 +125,58 @@ texture = ExtResource("12_tfkug")
 7:1/0 = 0
 7:0/0 = 0
 7:2/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+5:7/0 = 0
+5:5/0 = 0
+5:4/0 = 0
+4:4/0 = 0
+3:4/0 = 0
+1:5/0 = 0
+0:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:7/0 = 0
+3:7/0 = 0
+2:7/0 = 0
+1:7/0 = 0
+0:7/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+12:5/0 = 0
+12:6/0 = 0
+12:7/0 = 0
+11:7/0 = 0
+10:7/0 = 0
+9:7/0 = 0
+8:7/0 = 0
+7:7/0 = 0
+6:7/0 = 0
+6:6/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+11:6/0 = 0
+10:6/0 = 0
+9:6/0 = 0
+8:6/0 = 0
+7:6/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_j410f"]
 physics_layer_0/collision_layer = 1
@@ -148,14 +200,7 @@ debugging = false
 can_open_inventory = false
 camera = NodePath("../MainCamera")
 
-[node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(-2077, 23)
-offset = Vector2(0, -170)
-zoom = Vector2(10, 10)
-process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 6.0
-script = ExtResource("3_icho6")
+[node name="MainCamera" parent="." instance=ExtResource("3_3bnxx")]
 
 [node name="StaticInteractuables" type="Node" parent="."]
 

@@ -32,10 +32,10 @@ func _process(delta):
 func load_uninvestigated(test):
 	items.clear()
 	
-	for element in $"../Inventario".inventory_management.inventory:
+	for element in Save.data.inventory:
 		if element != null:
 			# revisar el listado de items sin objetos duplicados
-			if !$"../Inventario".inventory_management.investigated_items.has(element.item_id) and Items.item_list[element.item_id].investigable:
+			if !Save.data.investigated_items.has(element.item_id) and Items.item_list[element.item_id].investigable:
 				if !items.has(element.item_id):
 					items.append(element.item_id)
 	

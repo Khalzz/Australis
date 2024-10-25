@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	if $"..".state == 4 and Items.dia == 2:
+	if Save.data.state == 4 and Save.data.day == 2:
 		position.x = $"../InvisibleWall-l".position.x + 200
 		$AnimationPlayer.play("Standing")
 	else:

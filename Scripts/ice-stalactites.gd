@@ -15,5 +15,5 @@ func _process(delta):
 					player = element
 					inside = true
 				
-		if player and inside:
+		if player and inside and player.isActive:
 			player.dying_contact = true

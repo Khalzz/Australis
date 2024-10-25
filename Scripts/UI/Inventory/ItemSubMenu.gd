@@ -43,7 +43,7 @@ func _process(delta):
 			elif Input.is_action_pressed("A"):
 				if inventory_menu.get_children()[inventory.selected_setted].inner_select == 2:
 					if inventory_menu.get_children()[inventory.selected_setted].load_inner_button(delta):
-						inventory.inventory_management.inventory[inventory.selected_setted] = null
+						Save.data.inventory[inventory.selected_setted] = null
 						inventory.write_inventory()
 						inventory.back_to_inventory()
 			else:

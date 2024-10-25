@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5uaap31k2de3"
-path="res://.godot/imported/X Key(black and white).svg-fdb3f616094ee5be41ab00724da11835.ctex"
+uid="uid://82bc8ue7650j"
+path="res://.godot/imported/C Key(red background).svg-d0e7b21dd27621f4408a616caa62467a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Y Button/B/X Key(black and white).svg"
-dest_files=["res://.godot/imported/X Key(black and white).svg-fdb3f616094ee5be41ab00724da11835.ctex"]
+source_file="res://Assets/UI/Y Button/B/C Key(red background).svg"
+dest_files=["res://.godot/imported/C Key(red background).svg-d0e7b21dd27621f4408a616caa62467a.ctex"]
 
 [params]
 

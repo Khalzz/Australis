@@ -6,4 +6,4 @@ func _ready():
 
 func _button_pressed():
 	get_tree().change_scene_to_packed(preload("res://Scenes/Levels/Exploration.tscn"))
-	Items.dia = 4
+	Save.data.day = 4

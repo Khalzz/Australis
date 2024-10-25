@@ -1,0 +1,849 @@
+[gd_scene load_steps=22 format=3 uid="uid://btnlv2vwv2vd8"]
+
+[ext_resource type="Script" path="res://Scripts/Label.gd" id="1_vm8iq"]
+[ext_resource type="Texture2D" uid="uid://bjfeom0n50oat" path="res://Assets/UI/InGame/FishingArrow.svg" id="3_50q3t"]
+[ext_resource type="Script" path="res://Scripts/FishingNode.gd" id="3_dyto1"]
+[ext_resource type="Texture2D" uid="uid://k2ac5kgddb85" path="res://Assets/Sprites/SpriteSheets/Player.png" id="5_kwebl"]
+[ext_resource type="PackedScene" uid="uid://c01b7svihusgt" path="res://Scenes/UI/game_ui.tscn" id="5_qe2aq"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="6_3bf7s"]
+[ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="7_qeij4"]
+[ext_resource type="Texture2D" uid="uid://bpp2dqilvxbcg" path="res://Assets/UI/B Button/B Button(red letter).svg" id="8_rcrwj"]
+[ext_resource type="Script" path="res://Scripts/Player/Climbing/climbing_area.gd" id="9_jfke2"]
+
+[sub_resource type="GDScript" id="GDScript_yv2bm"]
+script/source = "extends CharacterBody2D
+@export var debugging = false
+@export var camera_following = true # by default the camera will follow the player
+@export var can_open_inventory = true # by default the camera will follow the player
+
+@export var camera: Camera2D
+@export var fixed_items: Array[int] = []
+@export var tilemap: TileMapLayer
+
+@export var show_lifes = false
+@export var show_backpack = true
+
+var objective = \"\"
+var ui
+
+# Other data
+var gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 3
+@export var state = Enums.PlayerStates.IDLE
+
+# Movement
+var direction
+var shieldDirection = Vector2(0,0)
+var tilt
+
+const SPEED = 800.0
+var acceleration = 200
+var max_speed = 400.0
+@export var last_direction = 1
+var jump_direction = 0
+
+# Jumping
+const JUMP_VELOCITY = -400.0
+var is_jumping = false
+
+
+var jump_input
+
+@export var max_jump_count = 1
+var jump_count = 1
+var can_jump = true
+
+
+# Attacks with timer
+var isActive = true
+var isWalking = false
+
+# Controls
+var timer = 0.0
+var downed_timer = 0.0
+var axisDirection
+
+# fishing
+var fishing_position
+var hooked = false
+
+var paused = false 
+var interacting = false
+
+var fading = true
+var fading_in = false
+
+# Independent interaction:
+enum IndependentInteractions {
+	climbing
+}
+
+var can_interact = false
+var independent_interaction: Variant = null
+var climbing_pos: Vector2
+var climbing_left = false
+var climbing_rect = []
+
+var dying_contact = false
+
+@export var main_respawn_point: Vector2
+var last_spawning_position: Variant
+
+var spawn_at_changing_scene: String
+
+# lifes should have a limit
+var max_lifes = 3
+var lifes = 3
+
+@onready var animationPlayer = $AnimationPlayer
+@onready var sprite = $Player
+
+# Timers
+@onready var coyote_timer = $TimedActions/CoyoteTimer
+@onready var jump_timer = $TimedActions/JumpTimer
+
+# Fast Traveling
+var checkpoint_index = 0
+var checkpoint_name = \"\"
+var check_point_trigger: Area2D
+var checkpoint_title = \"\"
+
+func _ready():
+	ui = $HUD
+	ui.fast_travel_ui.visible = false
+	if main_respawn_point:
+		last_spawning_position = main_respawn_point
+		
+	if Items.spawn_point_name and $\"../SpawnPoints\" and $\"../SpawnPoints\".get_node(Items.spawn_point_name):
+		print(\"spawn fixed\")
+		global_position = $\"../SpawnPoints\".get_node(Items.spawn_point_name).global_position
+	
+func _process(delta):
+	if dying_contact:
+		is_jumping = false
+		isActive = false
+		dying_contact = false
+		state = Enums.PlayerStates.DYING
+	
+	if state != Enums.PlayerStates.DYING:
+		modulate.a = 1.0
+		
+	match state:
+		Enums.PlayerStates.TRAVELINGFAST:
+			ui.fast_travel_ui.visible = true
+			camera_following = false
+			isActive = false
+			if checkpoint_index == null:
+				ui.inventory.inventory_management[\"check_points\"].sort()
+				for index in ui.inventory.inventory_management[\"check_points\"].size():
+					if ui.inventory.inventory_management[\"check_points\"][index] == checkpoint_name:
+						checkpoint_index = index
+			else:
+				if Input.is_action_just_pressed(\"left\"):
+					ui.fast_travel_ui.set_title(\"Cosa\")
+					checkpoint_index -= 1
+					if checkpoint_index < 0:
+						checkpoint_index = ui.inventory.inventory_management[\"check_points\"].size() - 1
+					
+				if Input.is_action_just_pressed(\"right\"):
+					checkpoint_index += 1
+					if checkpoint_index > ui.inventory.inventory_management[\"check_points\"].size() - 1:
+						checkpoint_index = 0
+			
+				if Input.is_action_just_pressed(\"A\"):
+					global_position = $\"../CheckPoints/FirePits\".get_node(ui.inventory.inventory_management[\"check_points\"][checkpoint_index]).global_position
+					ui.fast_travel_ui.visible = false
+					isActive = true
+					camera_following = true
+					checkpoint_index = null
+					
+					if check_point_trigger:
+						check_point_trigger.monitoring = true
+						
+				if checkpoint_index != null:
+					if $\"../CheckPoints/FirePits\".get_node(ui.inventory.inventory_management[\"check_points\"][checkpoint_index]):
+						ui.fast_travel_ui.set_title($\"../CheckPoints/FirePits\".get_node(ui.inventory.inventory_management[\"check_points\"][checkpoint_index]).checkpoint_name)
+					camera.global_position = $\"../CheckPoints/FirePits\".get_node(ui.inventory.inventory_management[\"check_points\"][checkpoint_index]).global_position
+			
+			if Input.is_action_just_pressed(\"B\") or Input.is_action_just_pressed(\"pause\"):
+				ui.fast_travel_ui.visible = false
+				isActive = true
+				camera_following = true
+				checkpoint_index = null
+				
+				if check_point_trigger:
+					check_point_trigger.monitoring = true
+		Enums.PlayerStates.DYING:
+			$AnimationPlayer.play(\"DYING\")
+		Enums.PlayerStates.CLIMBING:
+			if $AnimationPlayer.current_animation != \"CLIMBING\":
+				sprite.frame = 8
+				$AnimationPlayer.play(\"CLIMBING\")
+		Enums.PlayerStates.FISHING:
+
+			pass
+		Enums.PlayerStates.JUMPING:
+			$AnimationPlayer.play(\"JUMPING\")
+		Enums.PlayerStates.FALLING:
+			$AnimationPlayer.play(\"FALLING\")
+		_:
+			if is_on_floor():
+				if direction.x == 0 and velocity.y == 0:
+					$AnimationPlayer.play(\"IDLE\")
+				elif direction.x != 0 and velocity.y == 0:
+					$AnimationPlayer.play(\"WALKING\")
+	
+	if $ClimbingCheckers/ClimbingArea.touching and isActive:
+		if $TimedActions/WaitForClimbButton.is_stopped():
+			$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.6, delta * 7.0)
+			$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.6, delta * 7.0)
+			
+		if Input.is_action_just_pressed(\"B\"):
+			isActive = false
+			is_jumping = false
+			state = Enums.PlayerStates.CLIMBING
+	else :
+		$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.0, delta * 7.0)
+		$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.0, delta * 7.0)
+	
+	if Input.is_action_just_pressed(\"reset\"):
+		get_tree().change_scene_to_file(\"res://Scenes/MainMenu.tscn\")
+	
+	if last_direction > 0:
+		$ClimbingCheckers.scale.x = -1
+		$Player.flip_h = true
+	else:
+		$ClimbingCheckers.scale.x = 1
+		$Player.flip_h = false
+		
+	if camera_following:
+		camera.follow(position, false, null)
+
+	if fading:
+		if fading_in:
+			ui.fadable.color.a = lerp(ui.fadable.color.a, 1.0, delta * 10.0)
+		else:
+			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta * 10.0)
+
+	
+	if Input.is_action_just_pressed(\"pause\") and isActive and state != Enums.PlayerStates.FISHING and can_open_inventory:
+		toggle_inventory()
+
+func toggle_inventory():
+	paused = !paused
+	ui.toggle_inventary(paused)
+	state = Enums.PlayerStates.IDLE
+	isActive = !paused
+
+func _physics_process(delta):
+	stateReseters() # reseters of data
+	fishing(delta)
+	if isActive:
+		inputMovement() # here i get the values of direction
+		jumpLogic(delta)
+		movementLogic(delta)
+	else:
+		if state == Enums.PlayerStates.CLIMBING:
+			jumpLogic(delta)
+			climbing_logic(delta)
+		else:
+			velocity = Vector2.ZERO
+	move_and_slide()
+
+func jumpLogic(delta):
+	# if the player touches the floor reset the jump count
+	if is_on_floor() or state == Enums.PlayerStates.CLIMBING:
+		if is_on_floor():
+			jump_direction = last_direction
+		else:
+			if Input.is_action_just_pressed(\"jump\"):
+				$TimedActions/WaitForClimbButton.start()
+				isActive = true
+			jump_direction = -last_direction
+		jump_count = ui.inventory.inventory_management[\"max_jumps\"]
+	else:
+		velocity.y += gravity * delta
+		state = Enums.PlayerStates.FALLING
+		
+	
+	if Input.is_action_just_pressed(\"jump\") and jump_count > 0:
+		jump_count -= 1
+		jump_timer.start()
+		is_jumping = true
+	
+	if Input.is_action_just_released(\"jump\"):
+		is_jumping = false
+		jump_timer.stop()
+		
+	if is_jumping and !jump_timer.is_stopped():
+			state = Enums.PlayerStates.JUMPING
+			velocity.y = JUMP_VELOCITY
+	else:
+		if state != Enums.PlayerStates.CLIMBING:
+			state = Enums.PlayerStates.FALLING
+			is_jumping = false
+
+	if state == Enums.PlayerStates.FALLING:
+		gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 2
+	if is_jumping:
+		gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 5
+
+func climbing_logic(delta):
+	if climbing_pos:
+		if global_position.x < climbing_pos.x:
+			climbing_left = true
+		else:
+			climbing_left = false
+	
+	if climbing_left:
+		last_direction = 1
+		global_position.x = climbing_pos.x - 30
+	else:
+		last_direction = -1
+		global_position.x = climbing_pos.x + 30
+		
+	direction = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+	velocity.y = move_toward(velocity.y, -direction.y * 120.0, ((acceleration * 2.0) * delta) * 10)
+	global_position.y += velocity.y * delta
+	print($ClimbingCheckers/ClimbingArea.top_max)
+	print($ClimbingCheckers/ClimbingArea.bottom_max)
+	global_position.y = clamp(global_position.y, $ClimbingCheckers/ClimbingArea.top_max.y, $ClimbingCheckers/ClimbingArea.bottom_max.y)
+	
+	if direction.y == 0:
+		$AnimationPlayer.pause()
+
+func inputMovement():
+	jump_input = Input.is_action_pressed(\"jump\")
+	
+	if isActive:
+		axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
+		if (axisDirection.x < 0.1 and axisDirection.x > -0.1):
+			axisDirection.x = 0
+		if (axisDirection.y < 0.1 and axisDirection.y > -0.1):
+			axisDirection.y = 0
+		if (axisDirection.x > 0.8):
+			axisDirection.x = 1
+		if (axisDirection.x < -0.8):
+			axisDirection.x = -1
+		if !isWalking:
+			direction = axisDirection
+		else:
+			direction = axisDirection / 2.1
+
+func stateReseters():
+	if isWalking and direction.x == 0:
+		isWalking = false
+
+func movementLogic(delta):
+	if direction.x != 0:
+		last_direction = direction.x
+		if (direction.x >= 0.1 or direction.x <= -0.1) and is_on_floor():
+			state = Enums.PlayerStates.WALKING
+		velocity.x = move_toward(velocity.x, direction.x * max_speed, (acceleration * delta) * 10)
+	elif direction.x == 0 and state != Enums.PlayerStates.JUMPING and is_on_floor():
+			state = Enums.PlayerStates.IDLE
+			velocity.x = move_toward(velocity.x, 0, 100)
+
+# FISHING-------------------------------------------------------------------------------------------
+func fishing(delta):
+	if state == Enums.PlayerStates.FISHING:
+		$AnimationPlayer.play(\"FISHING\")
+		$Player.flip_h = true
+		camera.offset.x = lerp(camera.offset.x, 400.0, delta * 7.0)
+		position.x = fishing_position
+		if Input.is_action_just_released(\"B\"):
+			isActive = true
+	else:
+		camera.offset.x = lerp(camera.offset.x, 0.0, delta * 10.0)
+
+# This function will let the triggers know that the player is touching it, so avoid using it in other elements
+# there is a bug that when i interact with a interactable while walking, the player moves a bit
+func interact(interaction, obj_position, move_to, spawn_point = null):
+	if Input.is_action_just_pressed(\"A\") and isActive and is_on_floor():
+		if spawn_point:
+			Items.spawn_point_name = spawn_point
+		
+		match interaction:
+			Enums.InteractionStates.FISHING:
+				hooked = false
+				ui.toggle_fishing_ui(true)
+				velocity.x = 0
+				state = Enums.PlayerStates.FISHING
+				isActive = false
+				fishing_position = obj_position.x
+			Enums.InteractionStates.MOVING_TO_PLACE:
+				move_to_place(obj_position, move_to)
+			Enums.InteractionStates.CHECKING_DIARY:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/FirstTimeReadingDiary.txt\", checkDiary)
+			Enums.InteractionStates.BUYING:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
+			Enums.InteractionStates.TALKING_TO_SAILOR:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/TalkingToSailor.txt\", null)
+			Enums.InteractionStates.TALKING_TO_CAPTAIN:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/TalkingToCaptain.txt\", move_to_tierra_firme)
+			Enums.InteractionStates.ENTERING_HOME_FIRST_TIME:
+				paused = true
+				move_to_place(position, \"res://Scenes/Levels/Home.tscn\")
+			Enums.InteractionStates.SLEEPING:
+				paused = true
+				
+				match Items.dia:
+					0:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", alex_want_to_work)
+					1:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", alex_want_to_work_2)
+					2:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", null)
+				Items.dia += 1
+			Enums.InteractionStates.TALKING_TO_SELLER_FISHING_TUTORIAL:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/FishingTutorial.txt\", update_level_state)
+			Enums.InteractionStates.ENTERING_HOME_SECOND_TIME:
+				paused = true
+				Items.house_night_1 = true
+				move_to_place(position, \"res://Scenes/Levels/Home.tscn\")
+			Enums.InteractionStates.TALKING_TO_SELLER_SECOND_DAY:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogueSecondDay.txt\", update_level_state)
+			Enums.InteractionStates.TALKING_TO_SELLER_DONT_KNOW_FISH:
+				paused = true
+				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDontKnowFish.txt\", update_level_state)
+			Enums.InteractionStates.ENTERING_HOME_INVESTIGATION_TUTORIAL:
+				paused = true
+				Items.altered_day = 1
+				move_to_place(position, \"res://Scenes/Levels/Home.tscn\")
+			Enums.InteractionStates.INTERACTING_WITH_MOUNTAIN:
+				if Items.dia == 3 or Items.can_explore:
+					var contains_elements = false
+					
+					for element in ui.inventory.inventory_management.inventory:
+						if element != null:
+							if element.item_id == 7:
+								contains_elements = true
+								break
+					if contains_elements or Items.can_explore:
+						if ui.inventory.inventory_management[\"should_show_tutorial\"]:
+							move_to_place(null, )
+						else:
+							ui.cinematic.open_cinematic(\"res://Assets/Cinematics/GettingInMountain/\", go_to_exploration)
+					else:
+						ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexCantGoToMountain.txt\", null)
+				else:
+					ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexVeLaMontaña/\", update_level_state)
+
+func go_to_exploration():
+	Items.dia = 4
+	move_to_place(global_position, \"res://Scenes/Levels/Exploration.tscn\")
+
+func alex_want_to_work_2():
+	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWorkAgain.txt\", null)
+	update_level_state()
+	
+func alex_want_to_work():
+	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWork.txt\", null)
+	update_level_state()
+
+func update_level_state():
+	isActive = true
+	paused = false
+	$\"..\".state += 1
+
+func move_to_tierra_firme():
+	var obj_position = position
+	var move_to = \"res://Scenes/Levels/FirstDay.tscn\"
+	move_to_place(obj_position, move_to)
+	
+func move_to_place(obj_position, move_to):
+	ui.play_transition_in()
+	
+	await get_tree().create_timer(1).timeout
+	
+	if move_to != \"\":
+		ui.save_load(move_to)
+		# get_parent().get_node(\"Player\").ui.play_load_animation()
+		get_tree().change_scene_to_file(move_to)
+
+func checkDiary():
+	ui.investigate.toggle_investigate(true)
+	ui.investigate.load_uninvestigated(true)
+
+func set_check_point(spawn_point, check_point, needs_rope, dialogue_to_open):
+	var succesfully_setted = false
+	
+	if Input.is_action_just_pressed(\"A\") and isActive and is_on_floor():
+		if needs_rope:
+			if ui.inventory.delete_unit_from_item(6):
+				active_check_point(spawn_point, check_point)
+				succesfully_setted = true
+			else:
+				ui.action_text.text = \"Necesitas cuerda para usar el punto de guardado.\"
+				ui.action_text.activate()
+		else:
+			active_check_point(spawn_point, check_point)
+			succesfully_setted = true
+			
+		if dialogue_to_open:
+			ui.dialog.open_dialog(dialogue_to_open, null)
+			
+	return succesfully_setted
+
+func active_check_point(spawn_point, check_point):
+	ui.action_text.text = \"Has activado el punto de guardado.\"
+	ui.action_text.activate()
+	main_respawn_point = spawn_point
+	last_spawning_position = spawn_point
+	check_point.active = true
+
+func set_point(spawn_point):
+	if Input.is_action_just_pressed(\"A\") and isActive:
+		last_spawning_position = spawn_point
+		main_respawn_point = spawn_point
+
+func take_life():
+	lifes -= 1
+
+func respawn():
+	if lifes <= 0:
+		true_dead(true)
+		
+	if last_spawning_position:
+		global_position = last_spawning_position
+		await get_tree().create_timer(0.1).timeout
+		isActive = true
+
+func true_dead(should_reset_lifes):
+	if main_respawn_point:
+		global_position = main_respawn_point
+		last_spawning_position = main_respawn_point
+		
+		if should_reset_lifes:
+			lifes = max_lifes
+		await get_tree().create_timer(0.1).timeout
+		isActive = true
+		
+	else:
+		get_tree().reload_current_scene()
+
+func play_transition():
+	ui.transition.play_transition()
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vfkqx"]
+resource_local_to_scene = true
+radius = 15.0
+height = 54.0
+
+[sub_resource type="Animation" id="Animation_4qwqe"]
+resource_name = "CLIMBING"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_4ovd8"]
+resource_name = "DYING"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"take_life"
+}, {
+"args": [],
+"method": &"respawn"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 38.0546),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HUD")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_transition_in"
+}, {
+"args": [],
+"method": &"play_transition_out"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ueg88"]
+resource_name = "FALLING"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_8b3yu"]
+resource_name = "FISHING"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_a0gm1"]
+resource_name = "IDLE"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_g8852"]
+resource_name = "JUMPING"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_fwes0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0m63x"]
+resource_name = "WALKING"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lq6qo"]
+_data = {
+"CLIMBING": SubResource("Animation_4qwqe"),
+"DYING": SubResource("Animation_4ovd8"),
+"FALLING": SubResource("Animation_ueg88"),
+"FISHING": SubResource("Animation_8b3yu"),
+"IDLE": SubResource("Animation_a0gm1"),
+"JUMPING": SubResource("Animation_g8852"),
+"RESET": SubResource("Animation_fwes0"),
+"WALKING": SubResource("Animation_0m63x")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mirm6"]
+radius = 14.1421
+
+[node name="Player" type="CharacterBody2D"]
+floor_snap_length = 0.0
+script = SubResource("GDScript_yv2bm")
+debugging = true
+camera_following = null
+can_open_inventory = null
+fixed_items = null
+show_lifes = null
+show_backpack = null
+state = null
+last_direction = null
+max_jump_count = null
+main_respawn_point = null
+
+[node name="Player" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("5_kwebl")
+hframes = 3
+vframes = 4
+
+[node name="HUD" parent="." instance=ExtResource("5_qe2aq")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_vfkqx")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lq6qo")
+}
+
+[node name="FishingNode" type="Node2D" parent="."]
+script = ExtResource("3_dyto1")
+
+[node name="FishingArrow" type="Sprite2D" parent="FishingNode"]
+z_index = -1
+position = Vector2(55.22, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_50q3t")
+
+[node name="InteractionButton" parent="." instance=ExtResource("6_3bf7s")]
+offset_left = 0.0
+offset_top = -66.0
+offset_right = 50.0
+offset_bottom = -16.0
+scale = Vector2(0.6, 0.6)
+pressed = ExtResource("7_qeij4")
+unpressed = ExtResource("8_rcrwj")
+action = "B"
+
+[node name="ClimbingCheckers" type="Node2D" parent="."]
+
+[node name="Bottom" type="ColorRect" parent="ClimbingCheckers"]
+z_index = 999
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.999999, 0.453269, 0.912163, 1)
+
+[node name="ClimbingPos" type="ColorRect" parent="ClimbingCheckers"]
+z_index = 1000
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.631373, 0.184314, 1)
+
+[node name="Top" type="ColorRect" parent="ClimbingCheckers"]
+z_index = 999
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+color = Color(1, 0.117647, 0.184314, 1)
+
+[node name="ClimbingArea" type="Area2D" parent="ClimbingCheckers"]
+collision_mask = 8
+script = ExtResource("9_jfke2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbingCheckers/ClimbingArea"]
+position = Vector2(-25, 0)
+shape = SubResource("CircleShape2D_mirm6")
+
+[node name="TimedActions" type="Node" parent="."]
+
+[node name="CoyoteTimer" type="Timer" parent="TimedActions"]
+wait_time = 0.15
+one_shot = true
+
+[node name="JumpTimer" type="Timer" parent="TimedActions"]
+wait_time = 0.3
+one_shot = true
+
+[node name="WaitForClimbButton" type="Timer" parent="TimedActions"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -47.0
+offset_top = -62.0
+offset_right = 47.0
+offset_bottom = -36.0
+text = "Jumping"
+horizontal_alignment = 1
+script = ExtResource("1_vm8iq")
+
+[connection signal="body_shape_entered" from="ClimbingCheckers/ClimbingArea" to="ClimbingCheckers/ClimbingArea" method="_on_body_shape_entered"]
+[connection signal="body_shape_exited" from="ClimbingCheckers/ClimbingArea" to="ClimbingCheckers/ClimbingArea" method="_on_body_shape_exited"]

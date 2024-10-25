@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var id_item_to_pick: int
+var active = true
 var player: CharacterBody2D
 
 # Called when the node enters the scene tree for the first time.
@@ -10,7 +11,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if id_item_to_pick == 0:
+	if !active:
 		visible = false
 	
 	if visible:
@@ -27,8 +28,8 @@ func _process(delta: float) -> void:
 		
 		if inside:
 			if Input.is_action_just_pressed("A"):
-				player.ui.newItemInteraction(id_item_to_pick, false)
-				id_item_to_pick = 0
+				player.ui.item_notification.activate_and_add_item(id_item_to_pick, player.ui.item_notification.NotificationType.PICKING)
+				active = false
 			
 			$Button.scale.x = lerp($Button.scale.x, 0.7, delta * 7.0)
 			$Button.scale.y = lerp($Button.scale.y, 0.7, delta * 7.0)

@@ -4,7 +4,7 @@ func _ready():
 	pressed.connect(self._button_pressed)
 
 func _button_pressed():
-	Items.dia = 2
+	Save.data.day = 2
 	Items.altered_day = 0
 	Items.house_night_1 = false
 	Items.sold_items = []

@@ -32,13 +32,13 @@ emitting = false
 amount = 100
 lifetime = 3.0
 one_shot = true
-direction = Vector2(1000, 0)
+direction = Vector2(1000, 300)
 spread = 60.0
 gravity = Vector2(10, 300)
 initial_velocity_min = 10.1
 initial_velocity_max = 80.81
 scale_amount_min = 2.0
-scale_amount_max = 2.0
+scale_amount_max = 5.0
 color = Color(0, 0.823529, 0.960784, 0.933333)
 
 [node name="SelectableBar" type="Sprite2D" parent="."]
@@ -107,3 +107,10 @@ offset_left = -83.0
 offset_top = -57.0
 offset_right = -83.0
 offset_bottom = -57.0
+
+[node name="ButtonForParticles" parent="." instance=ExtResource("7_jtsku")]
+offset_left = 11.0
+offset_top = -64.0
+offset_right = 61.0
+offset_bottom = -14.0
+scale = Vector2(1e-05, 1e-05)

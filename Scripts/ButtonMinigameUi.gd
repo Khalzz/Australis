@@ -4,6 +4,29 @@ extends Control
 @export var unpressed: CompressedTexture2D
 @export var action = "A"
 
+var buttons = {
+	"z": {
+		"unpressed": load("res://Assets/UI/A Button/A/Z Key.svg"),
+		"pressed": load("res://Assets/UI/A Button/A/Z Key(pressed).svg")
+	},
+	"x": {
+		"unpressed": load("res://Assets/UI/B Button/B/X Key(red letter).svg"),
+		"pressed": load("res://Assets/UI/B Button/B/X Key(pressed).svg")
+	},
+	"c": {
+		"unpressed": load("res://Assets/UI/Y Button/C.svg"),
+		"pressed": load("res://Assets/UI/Y Button/C pressed.svg")
+	},
+	"esc": {
+		"unpressed": load("res://Assets/UI/StartButton/alt/esc.svg"),
+		"pressed": load("res://Assets/UI/StartButton/alt/esc pressed.svg")
+	},
+	"space": {
+		"unpressed": load("res://Assets/UI/SpaceButton/space-unpressed.svg"),
+		"pressed": load("res://Assets/UI/SpaceButton/space-pressed.svg")
+	}
+}
+
 func _ready():
 	$Pressed.texture = pressed
 	$Unpressed.texture = unpressed
@@ -18,17 +41,20 @@ func _process(delta):
 	if !Items.isUsingController:
 		match action:
 			"A":
-				$Pressed.texture = load("res://Assets/UI/A Button/A/Z Key(pressed).svg")
-				$Unpressed.texture = load("res://Assets/UI/A Button/A/Z Key.svg")
+				$Pressed.texture = buttons["z"]["pressed"]
+				$Unpressed.texture = buttons["z"]["unpressed"]
 			"B":
-				$Pressed.texture = load("res://Assets/UI/B Button/B/X Key(pressed).svg")
-				$Unpressed.texture = load("res://Assets/UI/B Button/B/X Key(red letter).svg")
+				$Pressed.texture = buttons["x"]["pressed"]
+				$Unpressed.texture = buttons["x"]["unpressed"]
 			"Y":
-				$Pressed.texture = load("res://Assets/UI/Y Button/B/X Key(pressed).svg")
-				$Unpressed.texture = load("res://Assets/UI/Y Button/B/X Key(red letter).svg")
+				$Pressed.texture = buttons["c"]["pressed"]
+				$Unpressed.texture = buttons["c"]["unpressed"]
 			"pause":
-				$Pressed.texture = load("res://Assets/UI/StartButton/B/X Key(pressed).svg")
-				$Unpressed.texture = load("res://Assets/UI/StartButton/B/X Key(red letter).svg")
+				$Pressed.texture = buttons["esc"]["pressed"]
+				$Unpressed.texture = buttons["esc"]["unpressed"]
+			"jump":
+				$Pressed.texture = buttons["space"]["pressed"]
+				$Unpressed.texture = buttons["space"]["unpressed"]
 	else:
 		$Pressed.texture = pressed
 		$Unpressed.texture = unpressed

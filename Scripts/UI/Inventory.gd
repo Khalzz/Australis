@@ -1,33 +1,16 @@
 extends Control
 
+var item_to_move = null
+var replace_item = null
 var selected_setted = null
-var selected = 0;
 var selected_item = null
 
-var inventory_management = {
-	"max_jumps": 1,
-	"scene_to_open": "",
-	"dia": 0,
-	"spawn_position": {
-		"x": null,
-		"y": null
-	},
-	"altered_day": 0,
-	"inventory": [null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null],
-	"investigated_items": [],
-	"money": 0,
-	"check_points": []
-}
-
-var item_to_move = null
+var selected = 0;
 
 enum InventoryStates { SelectingItem, ItemSubMenu, ItemDescription, ReplacingExisting }
 var state = InventoryStates.SelectingItem
 
-var replace_item = null
-
 func _ready():
-	inventory_management = Items.load_inventory_management()
 	reset_data()
 
 func reset_data():
@@ -76,28 +59,28 @@ func add_item(item_id):
 	var first_null = null
 	var returnable
 	
-	for i in inventory_management["inventory"].size():
-		if inventory_management["inventory"][i] != null:
-			if inventory_management["inventory"][i].item_id == item_id:
+	for i in Save.data["inventory"].size():
+		if Save.data["inventory"][i] != null:
+			if Save.data["inventory"][i].item_id == item_id:
 				add_on = i
-		elif inventory_management["inventory"][i] == null and first_null == null:
+		elif Save.data["inventory"][i] == null and first_null == null:
 			first_null = i
 
 	# add to a item count
 	if add_on != null:
-		if inventory_management["inventory"][add_on].count < Items.item_list[item_id]["stackable_to"]:
-			inventory_management["inventory"][add_on].count += 1
+		if Save.data["inventory"][add_on].count < Items.item_list[item_id]["stackable_to"]:
+			Save.data["inventory"][add_on].count += 1
 			returnable = true
 		else:
 			if first_null != null:
-				inventory_management["inventory"][first_null] = new_inventory_node(item_id, 1)
+				Save.data["inventory"][first_null] = new_inventory_node(item_id, 1)
 				returnable = true
 			else:
 				returnable = false
 	# add to empty space
 	else:
 		if first_null != null:
-			inventory_management["inventory"][first_null] = new_inventory_node(item_id, 1)
+			Save.data["inventory"][first_null] = new_inventory_node(item_id, 1)
 			returnable = true
 		else:
 			returnable = false
@@ -113,15 +96,15 @@ func add_item(item_id):
 func delete_unit_from_item(item_id):
 	var item_exists = false
 	
-	for item in inventory_management.inventory.size():
-		if inventory_management.inventory[item] != null:
-			if inventory_management.inventory[item].item_id == item_id: 
+	for item in Save.data.inventory.size():
+		if Save.data.inventory[item] != null:
+			if Save.data.inventory[item].item_id == item_id: 
 				item_exists = true
-				if inventory_management.inventory[item].count - 1 > 0:
-					inventory_management.inventory[item].count -= 1
+				if Save.data.inventory[item].count - 1 > 0:
+					Save.data.inventory[item].count -= 1
 					break
-				elif inventory_management.inventory[item].count - 1 <= 0:
-					inventory_management.inventory[item] = null
+				elif Save.data.inventory[item].count - 1 <= 0:
+					Save.data.inventory[item] = null
 					break
 	
 	if item_exists:
@@ -134,4 +117,5 @@ func new_inventory_node(item_id, count):
 	return { "item_id": item_id, "count": count }
 	
 func write_inventory():
-	Items.save_inventory_management(inventory_management)
+	print("se guardo el valor en el inventario")
+	Save.save_data()

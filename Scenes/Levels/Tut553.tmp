@@ -1,0 +1,156 @@
+[gd_scene load_steps=10 format=3 uid="uid://bhoke0u8p671x"]
+
+[ext_resource type="Texture2D" uid="uid://7oikkl5sryw2" path="res://Assets/UI/NewHability/NewHabilityBackground.png" id="1_632vq"]
+[ext_resource type="Script" path="res://Scripts/Scenes/tutorial_message.gd" id="1_eryqf"]
+[ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="2_4w5qr"]
+[ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_jxpb3"]
+[ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_kkm8v"]
+[ext_resource type="Texture2D" uid="uid://bpp2dqilvxbcg" path="res://Assets/UI/B Button/B Button(red letter).svg" id="4_dntdt"]
+
+[sub_resource type="Animation" id="Animation_k5bll"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.233258, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yojea"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_23l25"]
+_data = {
+"RESET": SubResource("Animation_yojea"),
+"open": SubResource("Animation_k5bll")
+}
+
+[node name="TutorialMessage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eryqf")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_jxpb3")]
+position = Vector2(928.53, -73.8599)
+collision_layer = 2
+fixed_items = Array[int]([0, 1, 2, 4])
+show_lifes = true
+show_backpack = false
+state = 1
+last_direction = -1
+max_jump_count = 2
+main_respawn_point = Vector2(2685, -76)
+camera = NodePath("")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_23l25")
+}
+autoplay = "open"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -522.0
+offset_top = -326.5
+offset_right = 522.0
+offset_bottom = 326.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(522, 326)
+texture = ExtResource("1_632vq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -382.0
+offset_top = -187.5
+offset_right = 382.0
+offset_bottom = 187.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
+bbcode_enabled = true
+text = "[center]Estás a punto de entrar en el modo de \"Exploración\".
+
+Este modo posee mecánicas específicas al mismo, 
+por lo que sí es tu primera vez experimentando 
+te recomendamos que pases por el tutorial.[center]
+"
+fit_content = true
+
+[node name="EntrarTutorial" type="HBoxContainer" parent="TextureRect/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="InteractionButton" parent="TextureRect/VBoxContainer/EntrarTutorial" instance=ExtResource("2_4w5qr")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+pressed = ExtResource("3_kkm8v")
+unpressed = ExtResource("4_dntdt")
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer/EntrarTutorial"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Entrar en el tutorial"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaltarTutorial" type="HBoxContainer" parent="TextureRect/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="InteractionButton" parent="TextureRect/VBoxContainer/SaltarTutorial" instance=ExtResource("2_4w5qr")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+pressed = ExtResource("3_kkm8v")
+unpressed = ExtResource("4_dntdt")
+action = "B"
+
+[node name="Label" type="Label" parent="TextureRect/VBoxContainer/SaltarTutorial"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Saltar tutorial"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -44,9 +44,9 @@ func _process(delta):
 
 		if Input.is_action_just_pressed("A") and inventory.item_to_move != null:
 			inventory_menu.get_children()[inventory.item_to_move].toggle_replace(false)
-			var temp = inventory.inventory_management["inventory"][inventory.item_to_move]
-			inventory.inventory_management["inventory"][inventory.item_to_move] = inventory.inventory_management["inventory"][inventory.selected]
-			inventory.inventory_management["inventory"][inventory.selected] = temp
+			var temp = Save.data.inventory[inventory.item_to_move]
+			Save.data.inventory[inventory.item_to_move] = Save.data.inventory[inventory.selected]
+			Save.data.inventory[inventory.selected] = temp
 			inventory.item_to_move = null
 
 		for i in inventory_menu.get_children().size():
@@ -58,13 +58,13 @@ func _process(delta):
 			if inventory.item_to_move == null:
 				inventory_menu.get_children()[i].toggle_replace(false)
 			
-			if inventory.inventory_management["inventory"][i] != null:
-				if inventory.inventory_management["inventory"][i].count == 0:
-					inventory.inventory_management["inventory"][i] = null
+			if Save.data.inventory[i] != null:
+				if Save.data.inventory[i].count == 0:
+					Save.data.inventory[i] = null
 					continue
 
-				inventory_menu.get_children()[i].count = inventory.inventory_management["inventory"][i].count
-				inventory_menu.get_children()[i].item_id = inventory.inventory_management["inventory"][i].item_id
+				inventory_menu.get_children()[i].count = Save.data.inventory[i].count
+				inventory_menu.get_children()[i].item_id = Save.data.inventory[i].item_id
 			else:
 				inventory_menu.get_children()[i].item_id = -1
 				

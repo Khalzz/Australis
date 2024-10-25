@@ -1,35 +1,11 @@
 extends Node
 
-# path to the user json file
-const JSON_FILE = "user://item_management.json"
-const DEFAULT_INVENTORY = {
-	"max_jumps": 1,
-	"scene_to_open": "",
-	"spawn_position": {
-		"x": null,
-		"y": null
-	},
-	"dia": 0,
-	"altered_day": 0,
-	"inventory": [null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null ,null],
-	"investigated_items": [],
-	"money": 0,
-	"check_points": []
-}
-
 const JSON_ITEMS_FILE = "res://Items/items.json"
 
 var item_list
 var fishable_list = []
 
 var sold_items = []
-
-var dia = 0
-var altered_day = 0
-var house_night_1 = false
-var can_explore = false
-var check_points = []
-var spawn_point_name: String
 
 var isUsingController = false
 
@@ -42,20 +18,3 @@ func _ready():
 		for item in item_list:
 			if item["fishable"]:
 				fishable_list.append(item)
-
-func load_inventory_management():
-	if !FileAccess.file_exists(JSON_FILE):
-		save_inventory_management(DEFAULT_INVENTORY)
-		
-	var file = FileAccess.open(JSON_FILE, FileAccess.READ)
-	var json_data = file.get_as_text()
-	
-	# Parse the JSON data
-	var inventory_management = JSON.parse_string(json_data)
-	
-	return inventory_management
-
-func save_inventory_management(data):
-	# Save the inventory management data to the user JSON file
-	var file = FileAccess.open(JSON_FILE, FileAccess.WRITE)
-	file.store_string(JSON.stringify(data))

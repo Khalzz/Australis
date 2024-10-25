@@ -1,8 +1,8 @@
-[gd_scene load_steps=25 format=4 uid="uid://cepefi5x0cc02"]
+[gd_scene load_steps=29 format=4 uid="uid://cepefi5x0cc02"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/PrimerDia/primer_dia.gd" id="1_35744"]
+[ext_resource type="PackedScene" uid="uid://dsulipr0hoajc" path="res://Scenes/Characters/player/main_camera.tscn" id="2_guooi"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_mtayg"]
-[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="3_o8fku"]
 [ext_resource type="Script" path="res://Scripts/Interactable.gd" id="4_e2f3k"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="5_hsul0"]
 [ext_resource type="Texture2D" uid="uid://br867g7fxtmnu" path="res://Assets/Sprites/World/WoodArrowBase.svg" id="6_55us8"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="14_b6kmx"]
 [ext_resource type="Script" path="res://Scripts/Water.gd" id="15_d4c8o"]
 [ext_resource type="Texture2D" uid="uid://d1n1gvg58au83" path="res://Assets/Sprites/World/Background.png" id="16_441p7"]
+[ext_resource type="Texture2D" uid="uid://660ply8ubiq8" path="res://Assets/Sprites/SpriteSheets/StoreGuy.png" id="17_6mym1"]
+[ext_resource type="Script" path="res://Scripts/FollowWithView.gd" id="18_8pkha"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6avw"]
 size = Vector2(54.5, 37)
@@ -31,7 +33,7 @@ size = Vector2(43.8, 29.2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_esntl"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itp4s"]
 texture = ExtResource("14_b6kmx")
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -104,29 +106,56 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 custom_data_layer_0/name = "ice"
 custom_data_layer_0/type = 2
-sources/0 = SubResource("TileSetAtlasSource_esntl")
+sources/0 = SubResource("TileSetAtlasSource_itp4s")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ficav"]
 size = Vector2(7.17118, 20)
 
+[sub_resource type="Animation" id="Animation_3h5u4"]
+resource_name = "IDLE"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8xohp"]
+_data = {
+"IDLE": SubResource("Animation_3h5u4")
+}
+
 [node name="World" type="Node2D"]
+position = Vector2(3, 0)
 script = ExtResource("1_35744")
+day = 3
+state = 2
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_mtayg")]
 position = Vector2(-2043, -47)
 collision_layer = 2
 debugging = false
+camera_following = true
+can_open_inventory = true
 camera = NodePath("../MainCamera")
 fixed_items = Array[int]([0, 1, 2, 4])
+show_lifes = false
+show_backpack = true
+state = 0
+last_direction = 1
+max_jump_count = 1
+main_respawn_point = Vector2(0, 0)
 
-[node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(-2046, 97)
-offset = Vector2(0, -170)
-zoom = Vector2(10, 10)
-process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 6.0
-script = ExtResource("3_o8fku")
+[node name="MainCamera" parent="." instance=ExtResource("2_guooi")]
+position = Vector2(-2451, 60)
 
 [node name="StaticInteractuables" type="Node" parent="."]
 
@@ -135,8 +164,9 @@ position = Vector2(-2016, -195)
 collision_mask = 2
 monitoring = false
 script = ExtResource("4_e2f3k")
-interaction = 12
+interaction = 8
 move_to = "res://Scenes/Levels/home.tscn"
+spawn_point = Vector2(-228, -67)
 
 [node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("5_hsul0")]
 offset_left = 131.0
@@ -186,9 +216,9 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-2954, -195)
 collision_mask = 2
 script = ExtResource("4_e2f3k")
-interaction = 15
+interaction = 10
 move_to = "res://Scenes/Levels/home.tscn"
-spawn_point_name = "StartFirepit"
+spawn_point = Vector2(2941, -200)
 
 [node name="Button" parent="StaticInteractuables/InteractingWithMountain" instance=ExtResource("5_hsul0")]
 offset_left = 87.0
@@ -363,3 +393,21 @@ position = Vector2(-2982, -66)
 
 [node name="Spawn_House" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(-2043, -66)
+
+[node name="Comerciante" type="Sprite2D" parent="." node_paths=PackedStringArray("player")]
+z_index = -1
+texture_filter = 1
+position = Vector2(-1066, -55)
+rotation = -3.14159
+scale = Vector2(2.3, -2.3)
+texture = ExtResource("17_6mym1")
+flip_h = true
+hframes = 6
+script = ExtResource("18_8pkha")
+player = NodePath("../Player")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Comerciante"]
+libraries = {
+"": SubResource("AnimationLibrary_8xohp")
+}
+autoplay = "IDLE"

@@ -29,6 +29,8 @@ func check_top_and_bottom(base_tile_coords: Vector2, tilemap: TileMapLayer):
 		var tile_data = tilemap.get_cell_tile_data(moded_tile)
 
 		if tile_data == null or tile_data.get_custom_data("ice") != 1:
+			moded_tile.y += 1
+			bottom_pos = tilemap.to_global(tilemap.map_to_local(moded_tile))
 			break
 
 		top_pos = tilemap.to_global(tilemap.map_to_local(moded_tile))
@@ -40,6 +42,8 @@ func check_top_and_bottom(base_tile_coords: Vector2, tilemap: TileMapLayer):
 		var tile_data = tilemap.get_cell_tile_data(moded_tile)
 
 		if tile_data == null or tile_data.get_custom_data("ice") != 1:
+			moded_tile.y -= 1
+			bottom_pos = tilemap.to_global(tilemap.map_to_local(moded_tile))
 			break
 
 		bottom_pos = tilemap.to_global(tilemap.map_to_local(moded_tile))

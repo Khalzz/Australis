@@ -45,7 +45,6 @@ var jump_direction = 0
 const JUMP_VELOCITY = -400.0
 var is_jumping = false
 
-
 var jump_input
 
 @export var max_jump_count = 1
@@ -101,14 +100,17 @@ var lifes = 3
 @onready var coyote_timer = $TimedActions/CoyoteTimer
 @onready var jump_timer = $TimedActions/JumpTimer
 
+# Fast Traveling
+var checkpoint_index = 0
+var checkpoint_name = \"\"
+var check_point_trigger: Area2D
+var checkpoint_title = \"\"
+
 func _ready():
 	ui = $HUD
+	ui.fast_travel_ui.visible = false
 	if main_respawn_point:
 		last_spawning_position = main_respawn_point
-		
-	if Items.spawn_point_name and $\"../SpawnPoints\":
-		print(Items.spawn_point_name)
-		global_position = $\"../SpawnPoints\".get_node(Items.spawn_point_name).global_position
 	
 func _process(delta):
 	if dying_contact:
@@ -119,16 +121,64 @@ func _process(delta):
 	
 	if state != Enums.PlayerStates.DYING:
 		modulate.a = 1.0
-	
+		
 	match state:
+		Enums.PlayerStates.TRAVELINGFAST:
+			ui.fast_travel_ui.visible = true
+			camera_following = false
+			isActive = false
+			if checkpoint_index == null:
+				Save.data.check_points.sort()
+				for index in Save.data.check_points.size():
+					if Save.data.check_points[index] == checkpoint_name:
+						checkpoint_index = index
+			else:
+				if Input.is_action_just_pressed(\"left\"):
+					ui.fast_travel_ui.set_title(\"Cosa\")
+					checkpoint_index -= 1
+					if checkpoint_index < 0:
+						checkpoint_index = Save.data.check_points.size() - 1
+					
+				if Input.is_action_just_pressed(\"right\"):
+					checkpoint_index += 1
+					if checkpoint_index > Save.data.check_points.size() - 1:
+						checkpoint_index = 0
+			
+				if Input.is_action_just_pressed(\"A\"):
+					global_position = $\"../CheckPoints/FirePits\".get_node(Save.data.check_points[checkpoint_index]).global_position
+					ui.fast_travel_ui.visible = false
+					isActive = true
+					set_point($\"../CheckPoints/FirePits\".get_node(Save.data.check_points[checkpoint_index]).global_position)
+					camera_following = true
+					checkpoint_index = null
+					state = Enums.PlayerStates.IDLE
+					
+					if check_point_trigger:
+						check_point_trigger.monitoring = true
+						
+				if checkpoint_index != null:
+					if $\"../CheckPoints/FirePits\".get_node(Save.data.check_points[checkpoint_index]):
+						ui.fast_travel_ui.set_title($\"../CheckPoints/FirePits\".get_node(Save.data.check_points[checkpoint_index]).checkpoint_name)
+					camera.global_position = $\"../CheckPoints/FirePits\".get_node(Save.data.check_points[checkpoint_index]).global_position
+			
+			if Input.is_action_just_pressed(\"B\") or Input.is_action_just_pressed(\"pause\"):
+				ui.fast_travel_ui.visible = false
+				isActive = true
+				camera_following = true
+				checkpoint_index = null
+				state = Enums.PlayerStates.IDLE
+				
+				if check_point_trigger:
+					check_point_trigger.monitoring = true
+		
 		Enums.PlayerStates.DYING:
-			$AnimationPlayer.play(\"DYING\")
+			if !$AnimationPlayer.is_playing():
+				$AnimationPlayer.play(\"DYING\")
 		Enums.PlayerStates.CLIMBING:
 			if $AnimationPlayer.current_animation != \"CLIMBING\":
 				sprite.frame = 8
 				$AnimationPlayer.play(\"CLIMBING\")
 		Enums.PlayerStates.FISHING:
-
 			pass
 		Enums.PlayerStates.JUMPING:
 			$AnimationPlayer.play(\"JUMPING\")
@@ -164,22 +214,17 @@ func _process(delta):
 		$ClimbingCheckers.scale.x = 1
 		$Player.flip_h = false
 		
-	if camera_following:
+	if camera_following and camera:
 		camera.follow(position, false, null)
 
 	if fading:
 		if fading_in:
-			camera.zoom.x = lerp(camera.zoom.x, 10.0, delta)
-			camera.zoom.y = lerp(camera.zoom.y, 10.0, delta)
 			ui.fadable.color.a = lerp(ui.fadable.color.a, 1.0, delta * 10.0)
-			camera.offset.y = lerp(camera.offset.y, 0.0, delta * 2.0)
 		else:
-			camera.zoom.x = lerp(camera.zoom.x, 1.4, delta * 2.0)
-			camera.zoom.y = lerp(camera.zoom.y, 1.4, delta * 2.0)
 			ui.fadable.color.a = lerp(ui.fadable.color.a, 0.0, delta * 10.0)
 
 	
-	if Input.is_action_just_pressed(\"pause\") and isActive and state != Enums.PlayerStates.FISHING and !ui.new_item_active and can_open_inventory:
+	if Input.is_action_just_pressed(\"pause\") and isActive and state != Enums.PlayerStates.FISHING and can_open_inventory:
 		toggle_inventory()
 
 func toggle_inventory():
@@ -213,7 +258,7 @@ func jumpLogic(delta):
 				$TimedActions/WaitForClimbButton.start()
 				isActive = true
 			jump_direction = -last_direction
-		jump_count = ui.inventory.inventory_management[\"max_jumps\"]
+		jump_count = Save.data.max_jumps
 	else:
 		velocity.y += gravity * delta
 		state = Enums.PlayerStates.FALLING
@@ -258,6 +303,8 @@ func climbing_logic(delta):
 	direction = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
 	velocity.y = move_toward(velocity.y, -direction.y * 120.0, ((acceleration * 2.0) * delta) * 10)
 	global_position.y += velocity.y * delta
+	print($ClimbingCheckers/ClimbingArea.top_max)
+	print($ClimbingCheckers/ClimbingArea.bottom_max)
 	global_position.y = clamp(global_position.y, $ClimbingCheckers/ClimbingArea.top_max.y, $ClimbingCheckers/ClimbingArea.bottom_max.y)
 	
 	if direction.y == 0:
@@ -305,14 +352,16 @@ func fishing(delta):
 		if Input.is_action_just_released(\"B\"):
 			isActive = true
 	else:
-		camera.offset.x = lerp(camera.offset.x, 0.0, delta * 10.0)
+		if camera:
+			camera.offset.x = lerp(camera.offset.x, 0.0, delta * 10.0)
 
 # This function will let the triggers know that the player is touching it, so avoid using it in other elements
 # there is a bug that when i interact with a interactable while walking, the player moves a bit
-func interact(interaction, obj_position, move_to, spawn_point = null):
+func interact(interaction, obj_position, move_to, spawn_point: Variant = null):
 	if Input.is_action_just_pressed(\"A\") and isActive and is_on_floor():
 		if spawn_point:
-			Items.spawn_point_name = spawn_point
+			Save.data.spawn_point.x = spawn_point.x
+			Save.data.spawn_point.y = spawn_point.y
 		
 		match interaction:
 			Enums.InteractionStates.FISHING:
@@ -327,78 +376,90 @@ func interact(interaction, obj_position, move_to, spawn_point = null):
 			Enums.InteractionStates.CHECKING_DIARY:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/FirstTimeReadingDiary.txt\", checkDiary)
-			Enums.InteractionStates.BUYING:
-				paused = true
-				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
 			Enums.InteractionStates.TALKING_TO_SAILOR:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/TalkingToSailor.txt\", null)
 			Enums.InteractionStates.TALKING_TO_CAPTAIN:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/TalkingToCaptain.txt\", move_to_tierra_firme)
-			Enums.InteractionStates.ENTERING_HOME_FIRST_TIME:
-				paused = true
-				move_to_place(position, \"res://Scenes/Levels/Home.tscn\")
 			Enums.InteractionStates.SLEEPING:
 				paused = true
 				
-				match Items.dia:
+				match int(Save.data.day):
 					0:
 						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", alex_want_to_work)
 					1:
 						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", alex_want_to_work_2)
 					2:
 						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexSeAcuesta/\", null)
-				Items.dia += 1
-			Enums.InteractionStates.TALKING_TO_SELLER_FISHING_TUTORIAL:
+				update_level_day()
+			Enums.InteractionStates.BUYING:
 				paused = true
-				ui.dialog.open_dialog(\"res://Assets/Dialogue/FishingTutorial.txt\", update_level_state)
-			Enums.InteractionStates.ENTERING_HOME_SECOND_TIME:
+				match int(Save.data.day):
+					1: 
+						match int(Save.data.state):
+							0:
+								ui.dialog.open_dialog(\"res://Assets/Dialogue/FishingTutorial.txt\", update_level_state)
+							_:
+								ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
+					2:
+						match int(Save.data.state):
+							0:
+								ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogueSecondDay.txt\", update_level_state)
+							2:
+								ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDontKnowFish.txt\", update_level_state)
+							_:
+								ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
+					_:
+						print(\"opening merchant\")
+						ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
+			Enums.InteractionStates.ENTERING_HOME:
 				paused = true
-				Items.house_night_1 = true
-				move_to_place(position, \"res://Scenes/Levels/Home.tscn\")
-			Enums.InteractionStates.TALKING_TO_SELLER_SECOND_DAY:
-				paused = true
-				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogueSecondDay.txt\", update_level_state)
-			Enums.InteractionStates.TALKING_TO_SELLER_DONT_KNOW_FISH:
-				paused = true
-				ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDontKnowFish.txt\", update_level_state)
-			Enums.InteractionStates.ENTERING_HOME_INVESTIGATION_TUTORIAL:
-				paused = true
-				Items.altered_day = 1
 				move_to_place(position, \"res://Scenes/Levels/Home.tscn\")
 			Enums.InteractionStates.INTERACTING_WITH_MOUNTAIN:
-				if Items.dia == 3 or Items.can_explore:
-					var contains_elements = false
+				match int(Save.data.day):
+					2:
+						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexVeLaMontaña/\", update_level_state)
+						update_level_state()
+					3:
+						var contains_elements = false
 					
-					for element in ui.inventory.inventory_management.inventory:
-						if element != null:
-							if element.item_id == 7:
-								contains_elements = true
-								break
-					if contains_elements or Items.can_explore:
+						for element in Save.data.inventory:
+							if element != null:
+								if element.item_id == 7:
+									contains_elements = true
+									break
+						if contains_elements:
+							ui.cinematic.open_cinematic(\"res://Assets/Cinematics/GettingInMountain/\", go_to_tutorial_message)
+						else:
+							ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexCantGoToMountain.txt\", null)
+					4:
 						ui.cinematic.open_cinematic(\"res://Assets/Cinematics/GettingInMountain/\", go_to_exploration)
-					else:
-						ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexCantGoToMountain.txt\", null)
-				else:
-					ui.cinematic.open_cinematic(\"res://Assets/Cinematics/AlexVeLaMontaña/\", update_level_state)
+						
+func go_to_tutorial_message():
+	Save.data.day = 4
+	move_to_place(global_position, \"res://Scenes/Levels/TutorialMessage.tscn\")
 
 func go_to_exploration():
-	Items.dia = 4
-	move_to_place(global_position, \"res://Scenes/Levels/Exploration.tscn\")
+	Save.data.day = 4
+	move_to_place(global_position, \"res://Scenes/Levzels/Exploration.tscn\")
 
 func alex_want_to_work_2():
 	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWorkAgain.txt\", null)
-	update_level_state()
 	
 func alex_want_to_work():
 	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWork.txt\", null)
-	update_level_state()
 
 func update_level_state():
 	isActive = true
 	paused = false
-	$\"..\".state += 1
+	Save.data.state += 1
+
+func update_level_day():
+	isActive = true
+	paused = false
+	Save.data.day += 1
+	Save.data.state = 0
 
 func move_to_tierra_firme():
 	var obj_position = position
@@ -406,19 +467,15 @@ func move_to_tierra_firme():
 	move_to_place(obj_position, move_to)
 	
 func move_to_place(obj_position, move_to):
+	ui.play_transition_in()
 	
-	camera.looking_at_place = false
-	camera_following = false
-	camera.follow(obj_position, false, null)
-	fading = true
-	fading_in = true
 	await get_tree().create_timer(1).timeout
 	
 	if move_to != \"\":
+		Save.data.scene_to_open = move_to
+		Save.save_data()
 		get_tree().change_scene_to_file(move_to)
-		ui.save_load(move_to)
-		get_parent().get_node(\"Player\").ui.play_load_animation()
-		
+
 func checkDiary():
 	ui.investigate.toggle_investigate(true)
 	ui.investigate.load_uninvestigated(true)
@@ -451,11 +508,12 @@ func active_check_point(spawn_point, check_point):
 	check_point.active = true
 
 func set_point(spawn_point):
-	if Input.is_action_just_pressed(\"A\") and isActive:
+	if isActive:
 		last_spawning_position = spawn_point
 		main_respawn_point = spawn_point
 
 func take_life():
+	print(\"cosa\")
 	lifes -= 1
 
 func respawn():
@@ -514,7 +572,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 1),
+"times": PackedFloat32Array(0.8, 1),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],

@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=4 uid="uid://da2jrniviifbx"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/AlexLLegaTierraFirme/alex_llega_casa.gd" id="1_uyy14"]
-[ext_resource type="Script" path="res://Scripts/Camera/MainCamera.gd" id="2_mefcr"]
 [ext_resource type="Script" path="res://Scripts/Interactable.gd" id="3_r1x1p"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="4_f4rqe"]
 [ext_resource type="Script" path="res://Scripts/Camera/CameraTransitions.gd" id="5_gu47m"]
 [ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="6_bptys"]
 [ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="7_ndl48"]
+[ext_resource type="PackedScene" uid="uid://dsulipr0hoajc" path="res://Scenes/Characters/player/main_camera.tscn" id="8_1d05m"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="8_jf8tr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f4faq"]
@@ -117,35 +117,12 @@ sources/0 = SubResource("TileSetAtlasSource_ruioy")
 [node name="World" type="Node2D"]
 script = ExtResource("1_uyy14")
 
-[node name="Backrgound" type="ColorRect" parent="."]
-z_index = -100
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1500.0
-offset_top = -1000.0
-offset_right = 1500.0
-offset_bottom = 1000.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2(-175, -79)
-zoom = Vector2(10, 10)
-process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 6.0
-script = ExtResource("2_mefcr")
-
 [node name="StaticInteractuables" type="Node" parent="."]
 
 [node name="Sleeping" type="Area2D" parent="StaticInteractuables"]
 position = Vector2(249, -66)
 script = ExtResource("3_r1x1p")
-interaction = 14
+interaction = 9
 move_to = "res://Scenes/Levels/main.tscn"
 
 [node name="Button" parent="StaticInteractuables/Sleeping" instance=ExtResource("4_f4rqe")]
@@ -169,11 +146,11 @@ text = "
 metadata/_edit_use_anchors_ = true
 
 [node name="ExitingHome" type="Area2D" parent="StaticInteractuables"]
-position = Vector2(-228, -67)
+position = Vector2(-229, -67)
 script = ExtResource("3_r1x1p")
 interaction = 2
 move_to = "res://Scenes/Levels/Main.tscn"
-spawn_point_name = "Spawn_House"
+spawn_point = Vector2(-2043, -66)
 
 [node name="Button" parent="StaticInteractuables/ExitingHome" instance=ExtResource("4_f4rqe")]
 offset_left = 11.0
@@ -224,29 +201,26 @@ metadata/_edit_use_anchors_ = true
 [node name="CameraTriggers" type="Node" parent="."]
 
 [node name="BedroomCamera" type="Area2D" parent="CameraTriggers"]
-position = Vector2(393, -159)
+position = Vector2(138, -100)
 script = ExtResource("5_gu47m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTriggers/BedroomCamera"]
-position = Vector2(-251, 59)
 shape = SubResource("RectangleShape2D_dbr2k")
 
 [node name="Camera" type="Camera2D" parent="CameraTriggers/BedroomCamera"]
-position = Vector2(-254, 3)
+position = Vector2(0, 53)
 enabled = false
 zoom = Vector2(2.9, 2.9)
 
 [node name="LivingCamera" type="Area2D" parent="CameraTriggers"]
-position = Vector2(-213, -157)
+position = Vector2(-313, -100)
 script = ExtResource("5_gu47m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraTriggers/LivingCamera"]
-position = Vector2(-104, 56.5)
 shape = SubResource("RectangleShape2D_uwrsc")
 
 [node name="Camera" type="Camera2D" parent="CameraTriggers/LivingCamera"]
-position = Vector2(-117, 72)
-offset = Vector2(0, -81.9)
+position = Vector2(0, 53)
 enabled = false
 zoom = Vector2(2.74, 2.74)
 
@@ -282,3 +256,7 @@ debugging = false
 camera_following = false
 can_open_inventory = false
 camera = NodePath("../MainCamera")
+
+[node name="MainCamera" parent="." instance=ExtResource("8_1d05m")]
+position = Vector2(-115, 0)
+should_follow_player = false

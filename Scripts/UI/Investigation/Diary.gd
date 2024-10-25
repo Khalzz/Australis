@@ -17,18 +17,16 @@ func _process(delta):
 		if Input.is_action_just_pressed("A"):
 			if get_children()[selected].item_id == item_id:
 				#actualizar inventario y objetos investigados
-				$"../../Inventario".inventory_management.investigated_items.append(float(item_id))
-				$"../../Inventario".write_inventory()
+				Save.data.investigated_items.append(float(item_id))
+				Save.save_data()
 				
 				# cerrar modo investigacion
-				$"../../NewItem".set_base_investigated(item_id)
+				$"../../ItemNotification".activate_and_add_item(item_id, $"../../ItemNotification".NotificationType.INVESTIGATED)
 				get_parent().investigation_state = get_parent().InvestigationStates.SelectingItem
 				$"..".toggle_investigate(false)
 				# $"../SelectItem".close_investigation(true)
 				
 				# mostrar alerta de investigado
-				$"../..".new_investigated_active = true
-				# $"../..".toggle_investigation()
 				item_id = null
 			else:
 				get_children()[selected].vibrating = true
