@@ -12,6 +12,7 @@ var power_up = true
 
 # flags
 var starting = true
+var active = false
 
 enum FishingStates { SettingAngle, SettingPower, HookMode }
 var state = FishingStates.SettingAngle
@@ -20,10 +21,13 @@ func _ready():
 	player = $".."
 
 func _process(delta):
+	if Input.is_action_just_released("A") and !active:
+		active = true
+	
 	if Input.is_action_just_released("B"):
 		reset_data(delta)
 	
-	if player.state == Enums.PlayerStates.FISHING:
+	if player.state == Enums.PlayerStates.FISHING and active:
 		match state:
 			FishingStates.SettingAngle:
 				player.ui.toggle_fishing_ui(true)

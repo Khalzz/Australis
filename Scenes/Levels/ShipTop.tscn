@@ -255,7 +255,7 @@ sources/2 = SubResource("TileSetAtlasSource_bh42b")
 position = Vector2(-826, 15)
 script = ExtResource("3_jjlcg")
 interaction = 7
-move_to = "res://Scenes/Levels/main.tscn"
+move_to = 2
 
 [node name="Button" parent="StaticInteractuables/TalkingToCaptain" instance=ExtResource("4_1octb")]
 offset_left = 11.0

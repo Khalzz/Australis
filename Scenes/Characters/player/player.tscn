@@ -357,7 +357,7 @@ func fishing(delta):
 
 # This function will let the triggers know that the player is touching it, so avoid using it in other elements
 # there is a bug that when i interact with a interactable while walking, the player moves a bit
-func interact(interaction, obj_position, move_to, spawn_point: Variant = null):
+func interact(interaction, obj_position, move_to: SceneManagement.Scenes, spawn_point: Variant = null):
 	if Input.is_action_just_pressed(\"A\") and isActive and is_on_floor():
 		if spawn_point:
 			Save.data.spawn_point.x = spawn_point.x
@@ -371,8 +371,9 @@ func interact(interaction, obj_position, move_to, spawn_point: Variant = null):
 				state = Enums.PlayerStates.FISHING
 				isActive = false
 				fishing_position = obj_position.x
+				$FishingNode.active = false
 			Enums.InteractionStates.MOVING_TO_PLACE:
-				move_to_place(obj_position, move_to)
+				move_to_place(move_to)
 			Enums.InteractionStates.CHECKING_DIARY:
 				paused = true
 				ui.dialog.open_dialog(\"res://Assets/Dialogue/FirstTimeReadingDiary.txt\", checkDiary)
@@ -415,7 +416,7 @@ func interact(interaction, obj_position, move_to, spawn_point: Variant = null):
 						ui.dialog.open_dialog(\"res://Assets/Dialogue/MerchantDialogue.txt\", ui.activate_merchant)
 			Enums.InteractionStates.ENTERING_HOME:
 				paused = true
-				move_to_place(position, \"res://Scenes/Levels/Home.tscn\")
+				move_to_place(SceneManagement.Scenes.Home)
 			Enums.InteractionStates.INTERACTING_WITH_MOUNTAIN:
 				match int(Save.data.day):
 					2:
@@ -438,11 +439,11 @@ func interact(interaction, obj_position, move_to, spawn_point: Variant = null):
 						
 func go_to_tutorial_message():
 	Save.data.day = 4
-	move_to_place(global_position, \"res://Scenes/Levels/TutorialMessage.tscn\")
+	move_to_place(SceneManagement.Scenes.TutorialMessage)
 
 func go_to_exploration():
 	Save.data.day = 4
-	move_to_place(global_position, \"res://Scenes/Levzels/Exploration.tscn\")
+	move_to_place(SceneManagement.Scenes.Exploration)
 
 func alex_want_to_work_2():
 	ui.dialog.open_dialog(\"res://Assets/Dialogue/AlexNeedsToWorkAgain.txt\", null)
@@ -463,18 +464,16 @@ func update_level_day():
 
 func move_to_tierra_firme():
 	var obj_position = position
-	var move_to = \"res://Scenes/Levels/FirstDay.tscn\"
-	move_to_place(obj_position, move_to)
+	move_to_place(SceneManagement.Scenes.FirstDay)
 	
-func move_to_place(obj_position, move_to):
+func move_to_place(move_to: SceneManagement.Scenes):
 	ui.play_transition_in()
 	
 	await get_tree().create_timer(1).timeout
 	
-	if move_to != \"\":
-		Save.data.scene_to_open = move_to
-		Save.save_data()
-		get_tree().change_scene_to_file(move_to)
+	Save.data.scene_to_open = SceneManagement.packed_scenes[move_to].path
+	Save.save_data()
+	get_tree().change_scene_to_packed(SceneManagement.packed_scenes[move_to].scene)
 
 func checkDiary():
 	ui.investigate.toggle_investigate(true)

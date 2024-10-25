@@ -123,7 +123,6 @@ script = ExtResource("1_uyy14")
 position = Vector2(249, -66)
 script = ExtResource("3_r1x1p")
 interaction = 9
-move_to = "res://Scenes/Levels/main.tscn"
 
 [node name="Button" parent="StaticInteractuables/Sleeping" instance=ExtResource("4_f4rqe")]
 offset_left = -144.0
@@ -149,7 +148,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-229, -67)
 script = ExtResource("3_r1x1p")
 interaction = 2
-move_to = "res://Scenes/Levels/Main.tscn"
+move_to = 3
 spawn_point = Vector2(-2043, -66)
 
 [node name="Button" parent="StaticInteractuables/ExitingHome" instance=ExtResource("4_f4rqe")]
@@ -176,7 +175,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-547, -75)
 script = ExtResource("3_r1x1p")
 interaction = 4
-move_to = "res://Scenes/Levels/main.tscn"
 
 [node name="Button" parent="StaticInteractuables/OpeningDiary" instance=ExtResource("4_f4rqe")]
 offset_left = 55.0

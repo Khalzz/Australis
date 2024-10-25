@@ -9,9 +9,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("A"):
-		$Player.move_to_place(null, "res://Scenes/Levels/ShipRooms.tscn")
+		$Player.move_to_place(SceneManagement.Scenes.ShipRooms)
 		# goto tutorial
 	if Input.is_action_just_pressed("B"):
-		Save.data.dia = 4
-		$Player.move_to_place(null, "res://Scenes/Levels/Main.tscn")
+		Save.data.day = 4
+		$Player.move_to_place(SceneManagement.Scenes.Main)
 		

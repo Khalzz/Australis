@@ -3,7 +3,7 @@ extends Area2D
 var sprite
 
 @export var interaction: Enums.InteractionStates
-@export var move_to = "" 
+@export var move_to: SceneManagement.Scenes
 @export var spawn_point: Vector2
 
 func _ready():

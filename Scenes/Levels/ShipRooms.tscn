@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://clnghuojq023w"]
+[gd_scene load_steps=20 format=4 uid="uid://clnghuojq023w"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/LlegadaDeAlex/llegada_de_alex.gd" id="1_hbp8g"]
 [ext_resource type="PackedScene" uid="uid://dsulipr0hoajc" path="res://Scenes/Characters/player/main_camera.tscn" id="2_7hax8"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="4_h677s"]
 [ext_resource type="Texture2D" uid="uid://d2j1c6wc76tvf" path="res://Assets/UI/Arrow/X Key(pressed).svg" id="5_owjgs"]
 [ext_resource type="Texture2D" uid="uid://dqsk8q2ir2iip" path="res://Assets/UI/Arrow/X Key(red letter).svg" id="6_23ot6"]
+[ext_resource type="Texture2D" uid="uid://c5oramprktvxd" path="res://Assets/UI/Arrow/ArrowRight_pressed.svg" id="6_u4nir"]
 [ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="7_3bsm5"]
+[ext_resource type="Texture2D" uid="uid://bojsg7e18xqqn" path="res://Assets/UI/Arrow/ArrowRight_unpressed.svg" id="7_kyo8o"]
 [ext_resource type="Texture2D" uid="uid://bgveb6b8g53jp" path="res://Assets/Sprites/SpriteSheets/Marinero.png" id="8_8vb25"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="9_vuuep"]
 
@@ -184,7 +186,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-27, -85)
 script = ExtResource("3_qhglu")
 interaction = 2
-move_to = "res://Scenes/Levels/ShipTop.tscn"
+move_to = 1
 
 [node name="Button" parent="StaticInteractuables/GoUpstairs" instance=ExtResource("4_h677s")]
 offset_left = 0.0
@@ -204,33 +206,30 @@ offset_right = 38.0
 offset_bottom = -77.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="."]
-offset_left = -398.0
-offset_top = -258.0
-offset_right = -289.0
-offset_bottom = -235.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = -386.0
+offset_top = -265.0
+offset_right = -189.0
+offset_bottom = -225.0
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
 text = "Muévete con: "
 label_settings = SubResource("LabelSettings_4ep38")
 
-[node name="Left" parent="Label" instance=ExtResource("4_h677s")]
-layout_mode = 1
-offset_left = 56.5
-offset_top = -24.5
-offset_right = 106.5
-offset_bottom = 25.5
+[node name="Left" parent="HBoxContainer" instance=ExtResource("4_h677s")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
 pressed = ExtResource("5_owjgs")
 unpressed = ExtResource("6_23ot6")
 action = "left"
 
-[node name="Right" parent="Label" instance=ExtResource("4_h677s")]
-layout_mode = 1
-offset_left = 111.5
-offset_top = -24.5
-offset_right = 161.5
-offset_bottom = 25.5
-scale = Vector2(-1, 1)
-pressed = ExtResource("5_owjgs")
-unpressed = ExtResource("6_23ot6")
+[node name="Right" parent="HBoxContainer" instance=ExtResource("4_h677s")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+pressed = ExtResource("6_u4nir")
+unpressed = ExtResource("7_kyo8o")
 action = "right"
 
 [node name="Wallpaper" type="TileMapLayer" parent="."]
@@ -261,18 +260,18 @@ libraries = {
 }
 autoplay = "Idle"
 
-[node name="Map" type="TileMapLayer" parent="."]
-texture_filter = 1
-scale = Vector2(2.5, 2.5)
-tile_map_data = PackedByteArray("AAD7/wAAAAAFAAEAAAD8/wAAAAAFAAEAAAD9/wAAAAAFAAEAAAAAAAAAAAAFAAEAAAABAAAAAAAFAAEAAAACAAAAAAAFAAEAAAADAAAAAAAFAAEAAAAEAAAAAAAFAAEAAAAFAAAAAAAFAAEAAAD6/wAAAAAFAAEAAAD5/wAAAAAFAAEAAAD4/wAAAAAFAAEAAAD3/wAAAAAFAAEAAAD2/wAAAAAFAAEAAAD1/wAAAAAFAAEAAAD0/wAAAAAFAAEAAADz/wAAAAAFAAEAAADy/wAAAAAFAAEAAADx/wAAAAAFAAEAAADw//r/AAAIAAIAAADw/wAAAAAFAAEAAADx//r/AAAIAAIAAADy//r/AAAIAAIAAADz//r/AAAIAAIAAAD0//r/AAAIAAIAAAD1//r/AAAIAAIAAAD2//r/AAAIAAIAAAD3//r/AAAIAAIAAAD4//r/AAAIAAIAAAD5//r/AAAIAAIAAAD6//r/AAAIAAIAAAD7//r/AAAIAAIAAAD8//r/AAAIAAIAAAD9//r/AAAIAAIAAAD+//r/AAAIAAIAAAD///r/AAAIAAIAAAAAAPr/AAAIAAIAAAD+/wAAAAAFAAEAAAD//wAAAAAFAAEAAADv//r/AAAIAAIAAADu//r/AAAIAAIAAADt//r/AAAIAAIAAADs//r/AAAIAAIAAADr//r/AAAIAAIAAADq//r/AAAIAAIAAADp//r/AAAIAAIAAADo//r/AAAIAAIAAADn//r/AAAIAAIAAADm//r/AAAIAAIAAADl//r/AAAIAAIAAADk//r/AAAIAAIAAADv/wAAAAAFAAEAAADu/wAAAAAFAAEAAADt/wAAAAAFAAEAAADs/wAAAAAFAAEAAADr/wAAAAAFAAEAAADq/wAAAAAFAAEAAADp/wAAAAAFAAEAAADo/wAAAAAFAAEAAADn/wAAAAAFAAEAAADm/wAAAAAFAAEAAADl/wAAAAAFAAEAAADk/wAAAAAFAAEAAAAAAP//AAALAAAAAAABAP//AAAGAAEAAAACAP7/AAALAAAAAAAEAP3/AAALAAAAAAADAP7/AAAGAAEAAAAFAP3/AAAGAAEAAAADAP//AAAGAAIAAAAEAP//AAAGAAIAAAAFAP7/AAAGAAIAAAACAP//AAAGAAIAAAAFAP//AAAGAAIAAAAEAP7/AAAGAAIAAADx////AAAEAAEAAADx//7/AAAEAAEAAADx//3/AAAEAAEAAADx//z/AAAEAAEAAADx//v/AAAEAAEAAAABAPr/AAAIAAIAAAACAPr/AAAIAAIAAAADAPr/AAAIAAIAAAAEAPr/AAAIAAIAAAAFAPr/AAAIAAIAAAA=")
-tile_set = SubResource("TileSet_yyda6")
-
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("9_vuuep")]
 position = Vector2(-286, -49)
 debugging = false
 camera_following = false
 can_open_inventory = false
 camera = NodePath("../MainCamera")
+
+[node name="Map" type="TileMapLayer" parent="."]
+texture_filter = 1
+scale = Vector2(2.5, 2.5)
+tile_map_data = PackedByteArray("AAD7/wAAAAAFAAEAAAD8/wAAAAAFAAEAAAD9/wAAAAAFAAEAAAAAAAAAAAAFAAEAAAABAAAAAAAFAAEAAAACAAAAAAAFAAEAAAADAAAAAAAFAAEAAAAEAAAAAAAFAAEAAAAFAAAAAAAFAAEAAAD6/wAAAAAFAAEAAAD5/wAAAAAFAAEAAAD4/wAAAAAFAAEAAAD3/wAAAAAFAAEAAAD2/wAAAAAFAAEAAAD1/wAAAAAFAAEAAAD0/wAAAAAFAAEAAADz/wAAAAAFAAEAAADy/wAAAAAFAAEAAADx/wAAAAAFAAEAAADw//r/AAAIAAIAAADw/wAAAAAFAAEAAADx//r/AAAIAAIAAADy//r/AAAIAAIAAADz//r/AAAIAAIAAAD0//r/AAAIAAIAAAD1//r/AAAIAAIAAAD2//r/AAAIAAIAAAD3//r/AAAIAAIAAAD4//r/AAAIAAIAAAD5//r/AAAIAAIAAAD6//r/AAAIAAIAAAD7//r/AAAIAAIAAAD8//r/AAAIAAIAAAD9//r/AAAIAAIAAAD+//r/AAAIAAIAAAD///r/AAAIAAIAAAAAAPr/AAAIAAIAAAD+/wAAAAAFAAEAAAD//wAAAAAFAAEAAADv//r/AAAIAAIAAADu//r/AAAIAAIAAADt//r/AAAIAAIAAADs//r/AAAIAAIAAADr//r/AAAIAAIAAADq//r/AAAIAAIAAADp//r/AAAIAAIAAADo//r/AAAIAAIAAADn//r/AAAIAAIAAADm//r/AAAIAAIAAADl//r/AAAIAAIAAADk//r/AAAIAAIAAADv/wAAAAAFAAEAAADu/wAAAAAFAAEAAADt/wAAAAAFAAEAAADs/wAAAAAFAAEAAADr/wAAAAAFAAEAAADq/wAAAAAFAAEAAADp/wAAAAAFAAEAAADo/wAAAAAFAAEAAADn/wAAAAAFAAEAAADm/wAAAAAFAAEAAADl/wAAAAAFAAEAAADk/wAAAAAFAAEAAAAAAP//AAALAAAAAAABAP//AAAGAAEAAAACAP7/AAALAAAAAAAEAP3/AAALAAAAAAADAP7/AAAGAAEAAAAFAP3/AAAGAAEAAAADAP//AAAGAAIAAAAEAP//AAAGAAIAAAAFAP7/AAAGAAIAAAACAP//AAAGAAIAAAAFAP//AAAGAAIAAAAEAP7/AAAGAAIAAADx////AAAEAAEAAADx//7/AAAEAAEAAADx//3/AAAEAAEAAADx//z/AAAEAAEAAADx//v/AAAEAAEAAAABAPr/AAAIAAIAAAACAPr/AAAIAAIAAAADAPr/AAAIAAIAAAAEAPr/AAAIAAIAAAAFAPr/AAAIAAIAAAA=")
+tile_set = SubResource("TileSet_yyda6")
 
 [node name="MainCamera" parent="." instance=ExtResource("2_7hax8")]
 position = Vector2(-291, -79)

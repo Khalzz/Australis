@@ -10,6 +10,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("debug"):
 		visible = !visible
+		$"..".player.debugging = visible
 	
 	if visible:
 		$VBoxContainer/Day.text = "Day: " + str(Save.data.day)

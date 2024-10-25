@@ -207,8 +207,8 @@ camera = NodePath("../MainCamera")
 [node name="GoingHome" type="Area2D" parent="StaticInteractuables"]
 position = Vector2(-2080, -195)
 script = ExtResource("4_hi2iv")
-interaction = 11
-move_to = "res://Scenes/Levels/home.tscn"
+interaction = 8
+move_to = 4
 
 [node name="Button" parent="StaticInteractuables/GoingHome" instance=ExtResource("5_fygf8")]
 offset_left = 199.0

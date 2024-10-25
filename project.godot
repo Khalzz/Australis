@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 Enums="*res://Scripts/GLOBAL/enums.gd"
 Items="*res://Scripts/GLOBAL/items.gd"
 Save="*res://Scripts/GLOBAL/save.gd"
+SceneManagement="*res://Scripts/GLOBAL/scene_management.gd"
 
 [display]
 

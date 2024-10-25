@@ -132,7 +132,7 @@ func _process(delta: float) -> void:
 			$StaticInteractuables/GoingHome.monitoring = true
 			$StaticInteractuables/InteractingWithMountain.monitoring = true
 		4:
-			$StaticInteractuables/GoingHome.move_to = "res://Scenes/Levels/home.tscn"
+			$StaticInteractuables/GoingHome.move_to = SceneManagement.Scenes.Home
 			$StaticInteractuables/GoingHome.interaction = Enums.InteractionStates.MOVING_TO_PLACE
 			var array_items: Array[int] = []
 			$Player.fixed_items = array_items

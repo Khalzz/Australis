@@ -545,7 +545,6 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="UI" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -580,7 +579,7 @@ anchor_left = 0.0
 anchor_right = 0.0
 offset_left = 0.0
 offset_top = -17.5
-offset_right = 50.0
+offset_right = 35.0
 offset_bottom = 17.5
 grow_horizontal = 1
 
@@ -609,7 +608,7 @@ anchor_left = 0.0
 anchor_right = 0.0
 offset_left = 0.0
 offset_top = -17.5
-offset_right = 50.0
+offset_right = 35.0
 offset_bottom = 17.5
 grow_horizontal = 1
 pressed = ExtResource("3_0ic2g")
@@ -2588,7 +2587,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.764706)
+color = Color(0, 0, 0, 0.341176)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugData"]
 z_index = 10

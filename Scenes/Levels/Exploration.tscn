@@ -230,6 +230,7 @@ texture = ExtResource("22_80x28")
 4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:2/0 = 0
 4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -0.9375, 8, -1, 8, 8, -8, 8)
+13:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_mghjc"]
 physics_layer_0/collision_layer = 1
@@ -493,7 +494,7 @@ position = Vector2(2941, -200)
 collision_mask = 2
 script = ExtResource("17_jpeve")
 interaction = 2
-move_to = "res://Scenes/Levels/Main.tscn"
+move_to = 3
 spawn_point = Vector2(-2982, -66)
 
 [node name="Button" parent="StaticInteractuables/BackToMain" instance=ExtResource("17_b2vlt")]
@@ -532,7 +533,7 @@ position = Vector2(2684, -76)
 
 [node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
 z_index = -100
-position = Vector2(3063, -2478)
+position = Vector2(3064, -2478)
 scale = Vector2(2.909, 3.724)
 texture = ExtResource("5_rugld")
 

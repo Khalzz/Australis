@@ -1171,20 +1171,20 @@ shape = SubResource("RectangleShape2D_ggi8o")
 
 [node name="StaticInteractuables" type="Node" parent="."]
 
-[node name="BackToMain" type="Area2D" parent="StaticInteractuables"]
+[node name="GoToExploration" type="Area2D" parent="StaticInteractuables"]
 position = Vector2(15, -834)
 collision_mask = 2
 script = ExtResource("7_6gc4c")
 interaction = 2
-move_to = "res://Scenes/Levels/Exploration.tscn"
+move_to = 5
 
-[node name="Button" parent="StaticInteractuables/BackToMain" instance=ExtResource("6_2sph7")]
+[node name="Button" parent="StaticInteractuables/GoToExploration" instance=ExtResource("6_2sph7")]
 offset_left = -95.0
 offset_top = -69.0
 offset_right = -60.0
 offset_bottom = -34.0
 
-[node name="Arrow" type="Sprite2D" parent="StaticInteractuables/BackToMain/Button"]
+[node name="Arrow" type="Sprite2D" parent="StaticInteractuables/GoToExploration/Button"]
 z_index = -1
 texture_filter = 1
 position = Vector2(-23.5, 16.5)
@@ -1192,12 +1192,12 @@ rotation = 3.14159
 scale = Vector2(0.223529, 0.232)
 texture = ExtResource("8_7i884")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/BackToMain"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/GoToExploration"]
 position = Vector2(-13, -0.5)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_8wecf")
 
-[node name="Label" type="Label" parent="StaticInteractuables/BackToMain"]
+[node name="Label" type="Label" parent="StaticInteractuables/GoToExploration"]
 visible = false
 offset_left = -42.0
 offset_top = -100.0
