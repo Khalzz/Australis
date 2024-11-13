@@ -37,16 +37,10 @@ func _process(delta):
 					visible = false
 					reset_positions()
 					if action:
-						# fix this
-						await get_tree().create_timer(0.2).timeout
-						# fix this
-						action.call()
-						turn = 0
-						message_id = 1
+						$TimedActions.play("CallAction")
 					else:
-						await get_tree().create_timer(0.2).timeout
+						$TimedActions.play("ActivatePlayer")
 						$"..".player.isActive = true
-					
 				else:
 					message_id += 1
 					$UiMessage.message = dialogue_dict[message_id][1]
@@ -94,3 +88,12 @@ func open_dialog(dialog_file_name, action_after_dialog):
 	set_dialog(dialog_file_name)
 	$UiMessage.message = dialogue_dict[message_id][1]
 	set_talkable()
+
+# FOR TIMED METHOD PURPOSES
+func set_player_active():
+	$"..".player.isActive = true
+
+func call_action():
+	action.call()
+	turn = 0
+	message_id = 1

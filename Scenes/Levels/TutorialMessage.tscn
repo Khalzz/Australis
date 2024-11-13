@@ -114,7 +114,7 @@ theme_override_font_sizes/bold_font_size = 30
 bbcode_enabled = true
 text = "[center]Estás a punto de entrar en el modo de \"Exploración\".
 
-Este modo posee mecánicas específicas al mismo, 
+Este modo posee algunas mecánicas distintas a las ya usadas, 
 por lo que sí es tu primera vez experimentando 
 te recomendamos que pases por el tutorial.[center]
 "

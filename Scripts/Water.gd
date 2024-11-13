@@ -5,11 +5,6 @@ extends Area2D
 var moving_up = true
 @onready var base_y = position.y
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	print("called")
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if moving == true:

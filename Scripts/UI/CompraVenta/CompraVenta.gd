@@ -11,10 +11,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if $"../Dialog".visible:
-		$UiControllerGuide.visible = false
+		$MarginContainer.visible = false
 	
 	if visible and !$"../Dialog".visible:
-		$UiControllerGuide.visible = true
+		$MarginContainer.visible = true
 		match state:
 			MerchantStates.selectingAction:
 				hide_merchant_states()

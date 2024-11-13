@@ -6,10 +6,6 @@ extends StaticBody2D
 var base_collision_layer = collision_layer
 var base_collision_mask = collision_mask
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	print(base_collision_layer)
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if can_jump_through:

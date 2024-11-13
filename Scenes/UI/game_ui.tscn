@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://c01b7svihusgt"]
+[gd_scene load_steps=88 format=3 uid="uid://c01b7svihusgt"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_ui.gd" id="1_mqav7"]
 [ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="3_0ic2g"]
@@ -202,11 +202,94 @@ font_size = 30
 [sub_resource type="LabelSettings" id="LabelSettings_d0t0y"]
 font_size = 50
 
+[sub_resource type="Animation" id="Animation_snnug"]
+resource_name = "ActivatePlayer"
+length = 0.2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"set_player_active"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_i5r0c"]
+resource_name = "CallAction"
+length = 0.2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"call_action"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_odt06"]
+_data = {
+"ActivatePlayer": SubResource("Animation_snnug"),
+"CallAction": SubResource("Animation_i5r0c")
+}
+
 [sub_resource type="LabelSettings" id="LabelSettings_clwoy"]
 font_size = 35
 
 [sub_resource type="LabelSettings" id="LabelSettings_uqq5d"]
 font_size = 30
+
+[sub_resource type="Animation" id="Animation_j8xr3"]
+resource_name = "ActivatePlayer"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"set_player_active"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ahfwh"]
+resource_name = "CallAction"
+length = 1.5
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"call_action"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lgg23"]
+_data = {
+"ActivatePlayer": SubResource("Animation_j8xr3"),
+"CallAction": SubResource("Animation_ahfwh")
+}
 
 [sub_resource type="Animation" id="Animation_8tsnh"]
 length = 0.001
@@ -220,7 +303,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(-2000, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -229,6 +312,78 @@ tracks/1/path = NodePath("7:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2000, 900)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("1:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2000, 150)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2000, 300)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("3:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2000, 450)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("4:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2000, 600)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("5:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2000, 750)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("6:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -554,77 +709,63 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="FishingUi" type="HBoxContainer" parent="UI"]
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -480.0
-offset_top = -100.0
+offset_left = -275.0
+offset_top = -55.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="FishingUi" type="HBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
 alignment = 2
 
-[node name="AButton(greenLetter)" type="Control" parent="UI/FishingUi"]
-custom_minimum_size = Vector2(200, 0)
+[node name="ElegirAngulo" type="HBoxContainer" parent="UI/MarginContainer/FishingUi"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="UI/FishingUi/AButton(greenLetter)" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 35.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="UI/MarginContainer/FishingUi/ElegirAngulo" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 
-[node name="Label" type="Label" parent="UI/FishingUi/AButton(greenLetter)"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
-text = "Lanzar"
+[node name="Label" type="Label" parent="UI/MarginContainer/FishingUi/ElegirAngulo"]
+layout_mode = 2
+text = "(Mantener) Seleccionar direccion"
 vertical_alignment = 1
 
-[node name="BButton(redLetter)" type="Control" parent="UI/FishingUi"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Lanzar" type="HBoxContainer" parent="UI/MarginContainer/FishingUi"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="UI/FishingUi/BButton(redLetter)" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 35.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="UI/MarginContainer/FishingUi/Lanzar" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/MarginContainer/FishingUi/Lanzar"]
+layout_mode = 2
+text = "(Soltar) Lanzar"
+vertical_alignment = 1
+
+[node name="BButton(redLetter)" type="HBoxContainer" parent="UI/MarginContainer/FishingUi"]
+layout_mode = 2
+
+[node name="Button" parent="UI/MarginContainer/FishingUi/BButton(redLetter)" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
 action = "B"
 
-[node name="Label" type="Label" parent="UI/FishingUi/BButton(redLetter)"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="UI/MarginContainer/FishingUi/BButton(redLetter)"]
+layout_mode = 2
 text = "Dejar de pescar"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -944,171 +1085,94 @@ layout_mode = 2
 [node name="11" parent="Inventario/Inventory" instance=ExtResource("11_iu0t8")]
 layout_mode = 2
 
-[node name="UiControllerGuide" type="HBoxContainer" parent="Inventario"]
+[node name="MarginContainer" type="MarginContainer" parent="Inventario"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -480.0
-offset_top = -100.0
+offset_left = -603.0
+offset_top = -55.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="UiControllerGuide" type="HBoxContainer" parent="Inventario/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
 alignment = 2
 script = ExtResource("13_ck72d")
 
-[node name="SetPosition" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="SetPosition" type="HBoxContainer" parent="Inventario/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="Inventario/UiControllerGuide/SetPosition" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="Inventario/MarginContainer/UiControllerGuide/SetPosition" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/SetPosition"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="Inventario/MarginContainer/UiControllerGuide/SetPosition"]
+layout_mode = 2
 text = "Dejar aqui"
 vertical_alignment = 1
 
-[node name="Select" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Select" type="HBoxContainer" parent="Inventario/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="Inventario/UiControllerGuide/Select" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="Inventario/MarginContainer/UiControllerGuide/Select" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/Select"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="Inventario/MarginContainer/UiControllerGuide/Select"]
+layout_mode = 2
 text = "Seleccionar"
 vertical_alignment = 1
 
-[node name="MoveItem" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="MoveItem" type="HBoxContainer" parent="Inventario/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="Inventario/UiControllerGuide/MoveItem" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="Inventario/MarginContainer/UiControllerGuide/MoveItem" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 pressed = ExtResource("13_ew1mb")
 unpressed = ExtResource("14_qqg0b")
 action = "Y"
 
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/MoveItem"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="Inventario/MarginContainer/UiControllerGuide/MoveItem"]
+layout_mode = 2
 text = "Mover"
 vertical_alignment = 1
 
-[node name="Cancel" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Cancel" type="HBoxContainer" parent="Inventario/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="Inventario/UiControllerGuide/Cancel" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="Inventario/MarginContainer/UiControllerGuide/Cancel" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
 action = "B"
 
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/Cancel"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="Inventario/MarginContainer/UiControllerGuide/Cancel"]
+layout_mode = 2
 text = "Cancelar"
 vertical_alignment = 1
 
-[node name="Back" type="Control" parent="Inventario/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Back" type="HBoxContainer" parent="Inventario/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="Inventario/UiControllerGuide/Back" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="Inventario/MarginContainer/UiControllerGuide/Back" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
 action = "B"
 
-[node name="Label" type="Label" parent="Inventario/UiControllerGuide/Back"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="Inventario/MarginContainer/UiControllerGuide/Back"]
+layout_mode = 2
 text = "Atras"
 vertical_alignment = 1
 
@@ -1136,7 +1200,7 @@ visible = false
 script = ExtResource("16_beagi")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")
-ui_controller_guide = NodePath("../../UiControllerGuide")
+ui_controller_guide = NodePath("../../MarginContainer/UiControllerGuide")
 hud = NodePath("../../..")
 
 [node name="ItemSubMenu" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
@@ -1144,21 +1208,21 @@ visible = false
 script = ExtResource("17_u2cth")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")
-ui_controller_guide = NodePath("../../UiControllerGuide")
+ui_controller_guide = NodePath("../../MarginContainer/UiControllerGuide")
 
 [node name="ItemDescription" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
 visible = false
 script = ExtResource("18_1rark")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")
-ui_controller_guide = NodePath("../../UiControllerGuide")
+ui_controller_guide = NodePath("../../MarginContainer/UiControllerGuide")
 
 [node name="ReplacingExisting" type="Node2D" parent="Inventario/InventoryStateMachine" node_paths=PackedStringArray("inventory", "inventory_menu", "ui_controller_guide")]
 visible = false
 script = ExtResource("19_hrtbk")
 inventory = NodePath("../..")
 inventory_menu = NodePath("../../Inventory")
-ui_controller_guide = NodePath("../../UiControllerGuide")
+ui_controller_guide = NodePath("../../MarginContainer/UiControllerGuide")
 
 [node name="Investigate" type="Control" parent="."]
 visible = false
@@ -1170,80 +1234,52 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_qi4ke")
 
-[node name="FishingUi" type="HBoxContainer" parent="Investigate"]
+[node name="MarginContainer" type="MarginContainer" parent="Investigate"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -480.0
-offset_top = -100.0
+offset_left = -628.0
+offset_top = -60.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="UiControllerGuide" type="HBoxContainer" parent="Investigate/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
 alignment = 2
 
-[node name="AButton(greenLetter)" type="Control" parent="Investigate/FishingUi"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Select" type="HBoxContainer" parent="Investigate/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="Investigate/FishingUi/AButton(greenLetter)" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="Investigate/MarginContainer/UiControllerGuide/Select" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 
-[node name="Label" type="Label" parent="Investigate/FishingUi/AButton(greenLetter)"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="Investigate/MarginContainer/UiControllerGuide/Select"]
+layout_mode = 2
 text = "Seleccionar"
-horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="BButton(redLetter)" type="Control" parent="Investigate/FishingUi"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Back" type="HBoxContainer" parent="Investigate/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="Investigate/FishingUi/BButton(redLetter)" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="Investigate/MarginContainer/UiControllerGuide/Back" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
 action = "B"
 
-[node name="Label" type="Label" parent="Investigate/FishingUi/BButton(redLetter)"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="Investigate/MarginContainer/UiControllerGuide/Back"]
+layout_mode = 2
 text = "Atras"
-horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Background" type="ColorRect" parent="Investigate"]
@@ -1376,6 +1412,56 @@ texture = ExtResource("21_vkbsa")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Page_2" type="Control" parent="Investigate/InvestigatingItem"]
+custom_minimum_size = Vector2(800, 900)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("20_cqad7")
+item_id = 8
+
+[node name="InnerPage" type="Control" parent="Investigate/InvestigatingItem/Page_2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(400, 455)
+
+[node name="Background" type="ColorRect" parent="Investigate/InvestigatingItem/Page_2/InnerPage"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -450.0
+offset_right = 300.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.976471, 0.94902, 0.870588, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Investigate/InvestigatingItem/Page_2/InnerPage"]
+z_index = 15
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -446.0
+offset_right = 293.0
+offset_bottom = 443.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_vkbsa")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Label" type="Label" parent="Investigate"]
 visible = false
 layout_mode = 1
@@ -1439,110 +1525,67 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.843137)
 
-[node name="UiControllerGuide" type="HBoxContainer" parent="CompraVenta"]
+[node name="MarginContainer" type="MarginContainer" parent="CompraVenta"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1016.0
-offset_top = -100.0
+offset_left = -628.0
+offset_top = -60.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="UiControllerGuide" type="HBoxContainer" parent="CompraVenta/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
 alignment = 2
 script = ExtResource("36_esdeu")
 
-[node name="Select" type="Control" parent="CompraVenta/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Select" type="HBoxContainer" parent="CompraVenta/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="CompraVenta/UiControllerGuide/Select" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="CompraVenta/MarginContainer/UiControllerGuide/Select" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 
-[node name="Label" type="Label" parent="CompraVenta/UiControllerGuide/Select"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="CompraVenta/MarginContainer/UiControllerGuide/Select"]
+layout_mode = 2
 text = "Seleccionar"
 vertical_alignment = 1
 
-[node name="Cancel" type="Control" parent="CompraVenta/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Cancel" type="HBoxContainer" parent="CompraVenta/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="CompraVenta/UiControllerGuide/Cancel" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="CompraVenta/MarginContainer/UiControllerGuide/Cancel" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
 action = "B"
 
-[node name="Label" type="Label" parent="CompraVenta/UiControllerGuide/Cancel"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="CompraVenta/MarginContainer/UiControllerGuide/Cancel"]
+layout_mode = 2
 text = "Cancelar"
 vertical_alignment = 1
 
-[node name="Back" type="Control" parent="CompraVenta/UiControllerGuide"]
-custom_minimum_size = Vector2(200, 0)
+[node name="Back" type="HBoxContainer" parent="CompraVenta/MarginContainer/UiControllerGuide"]
 layout_mode = 2
-size_flags_horizontal = 4
 
-[node name="Button" parent="CompraVenta/UiControllerGuide/Back" instance=ExtResource("8_xnr2x")]
-layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = -17.5
-offset_right = 50.0
-offset_bottom = 17.5
-grow_horizontal = 1
+[node name="Button" parent="CompraVenta/MarginContainer/UiControllerGuide/Back" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
 action = "B"
 
-[node name="Label" type="Label" parent="CompraVenta/UiControllerGuide/Back"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 63.0
-offset_top = -11.0
-offset_right = 157.0
-offset_bottom = 12.0
-grow_vertical = 2
+[node name="Label" type="Label" parent="CompraVenta/MarginContainer/UiControllerGuide/Back"]
+layout_mode = 2
 text = "Atras"
 vertical_alignment = 1
 
@@ -1965,6 +2008,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("27_6yx5f")
 
+[node name="TimedActions" type="AnimationPlayer" parent="Dialog"]
+libraries = {
+"": SubResource("AnimationLibrary_odt06")
+}
+
 [node name="Background" type="ColorRect" parent="Dialog"]
 layout_mode = 1
 anchors_preset = 15
@@ -2077,6 +2125,11 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("43_wcq4m")
+
+[node name="TimedActions" type="AnimationPlayer" parent="Cinematic"]
+libraries = {
+"": SubResource("AnimationLibrary_lgg23")
+}
 
 [node name="Image" type="TextureRect" parent="Cinematic"]
 layout_mode = 1
@@ -2265,8 +2318,8 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -960.0
-offset_right = 1000.0
+offset_left = -2960.0
+offset_right = -1000.0
 offset_bottom = 160.0
 grow_horizontal = 2
 pivot_offset = Vector2(0, 4)
@@ -2469,6 +2522,7 @@ libraries = {
 }
 
 [node name="FastTravelingUi" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2502,6 +2556,7 @@ alignment = 2
 layout_mode = 2
 
 [node name="Left" parent="FastTravelingUi/MarginContainer/FastTravelingUi/Last" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 0
 pressed = ExtResource("51_4j30b")
@@ -2518,6 +2573,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="Right" parent="FastTravelingUi/MarginContainer/FastTravelingUi/Next" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 pressed = ExtResource("53_qntou")
 unpressed = ExtResource("54_04382")
@@ -2533,6 +2589,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="Button" parent="FastTravelingUi/MarginContainer/FastTravelingUi/Travel" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="FastTravelingUi/MarginContainer/FastTravelingUi/Travel"]
@@ -2544,6 +2601,7 @@ vertical_alignment = 1
 layout_mode = 2
 
 [node name="Button" parent="FastTravelingUi/MarginContainer/FastTravelingUi/Cancel" instance=ExtResource("8_xnr2x")]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 pressed = ExtResource("3_0ic2g")
 unpressed = ExtResource("4_q1bps")
@@ -2571,7 +2629,7 @@ fit_content = true
 
 [node name="DebugData" type="Control" parent="."]
 visible = false
-z_index = 100
+z_index = 4096
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2597,6 +2655,9 @@ offset_top = 10.0
 offset_right = 30.0
 offset_bottom = 114.0
 
+[node name="ScenePlaying" type="Label" parent="DebugData/VBoxContainer"]
+layout_mode = 2
+
 [node name="Day" type="Label" parent="DebugData/VBoxContainer"]
 layout_mode = 2
 
@@ -2610,4 +2671,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="FixedFishingList" type="Label" parent="DebugData/VBoxContainer"]
+layout_mode = 2
+
+[node name="PickedItems" type="Label" parent="DebugData/VBoxContainer"]
 layout_mode = 2

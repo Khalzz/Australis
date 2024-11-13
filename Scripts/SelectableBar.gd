@@ -32,14 +32,8 @@ func _process(delta):
 		elif inner_bar.position.x <= -75:
 			going_right = true
 	
-	if debugging:
-		$Correct.visible = true
-		$Correct.text = "Correct: " + str(correct_count) 
-		$Incorrect.visible = true
-		$Incorrect.text = "Inorrect: " + str(error_count)
-	else:
-		$Correct.visible = false
-		$Incorrect.visible = false
+	set_counted_element($Counters/CorrectStars, correct_count)
+	set_counted_element($Counters/Failed, error_count)
 	
 	if error_count == 3:
 		get_parent().get_random_minigame()
@@ -51,3 +45,15 @@ func _process(delta):
 		error_count = 0
 		var force_origin = Vector2(0.0, 0.0)
 		get_parent().apply_impulse(Vector2(-1, -1) * 500, force_origin)
+
+func set_counted_element(object, count):
+	for child in object.get_children():
+		child.visible = false
+	
+	var flag_count = 0
+	
+	for child in object.get_children():
+		if flag_count < count:
+			child.visible = true
+			flag_count += 1
+	

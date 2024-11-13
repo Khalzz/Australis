@@ -1,7 +1,7 @@
 extends HBoxContainer
 
-@onready var parent_state = $"..".state
-@onready var parent_enum = $"..".MerchantStates
+@onready var parent_state = $"../..".state
+@onready var parent_enum = $"../..".MerchantStates
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

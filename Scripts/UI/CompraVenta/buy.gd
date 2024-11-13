@@ -48,7 +48,6 @@ func _process(delta: float) -> void:
 			$"../..".state = $"../..".MerchantStates.selectingAction
 
 func load_sellables():
-	print("en pantalla")
 	for child in $ElementsToBuy.get_children():
 		$ElementsToBuy.remove_child(child)
 		child.queue_free()

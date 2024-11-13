@@ -11,6 +11,9 @@ enum Scenes {
 	ExplorationTutorial,
 	StartMessage,
 	TutorialMessage,
+	EndingMessage,
+	MainMenu,
+	EndScene
 }
 
 var packed_scenes = {
@@ -49,5 +52,13 @@ var packed_scenes = {
 	Scenes.TutorialMessage:{
 		"scene": load("res://Scenes/Levels/TutorialMessage.tscn"),
 		"path": "res://Scenes/Levels/TutorialMessage.tscn"
-	}, 
+	},
+	Scenes.EndingMessage:{
+		"scene": load("res://Scenes/Levels/EndingMessage.tscn"),
+		"path": "res://Scenes/Levels/EndingMessage.tscn"
+	},
+	Scenes.EndScene:{
+		"scene": load("res://Scenes/Levels/AlexFindingRock.tscn"),
+		"path": "res://Scenes/Levels/AlexFindingRock.tscn"
+	}
 }

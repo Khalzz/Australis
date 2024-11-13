@@ -111,6 +111,8 @@
 				"fished_message": "Has conseguido obsidiana.",
 			"stackable_to": 5,
 			"investigable": true,
+			"investigated_message": "Has aprendido sobre la Obsidiana.",
+			"investigable_texture": "res://Assets/UI/ItemManagement/Investigation/DiaryPages/Obsidiana.png"
 		},
 	],
 }

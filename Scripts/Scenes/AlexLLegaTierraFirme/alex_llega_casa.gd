@@ -76,6 +76,9 @@ func _process(delta: float) -> void:
 			$StaticInteractuables/ExitingHome.monitoring = true
 			$StaticInteractuables/OpeningDiary.monitoring = true
 			$StaticInteractuables/Sleeping.monitoring = false
+		4:
+			$StaticInteractuables/Sleeping.monitoring = false
+	
 
 func starting_dialog():
 	$Player.ui.dialog.open_dialog("res://Assets/Dialogue/SleepyAlex.txt", null)

@@ -8,7 +8,7 @@ var sprite
 
 func _ready():
 	sprite = $Button
-	sprite.scale.x = 1.0
+	sprite.scale.x = 1.0 
 	sprite.scale.y = 1.0
 
 func _process(delta):

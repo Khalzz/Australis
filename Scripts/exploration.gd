@@ -1,9 +1,10 @@
 extends Node2D
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Save.data.should_show_tutorial = false
+
+	if $Player.ui.inventory.delete_unit_from_item(7):
+		print("Se ha eliminad el kit de escalada del inventario")
 	
 	if Save.data.scene_to_open != get_tree().current_scene.scene_file_path:
 		Save.data.spawn_point.x = null

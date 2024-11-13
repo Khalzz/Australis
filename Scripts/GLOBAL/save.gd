@@ -29,6 +29,7 @@ func empty_data():
 		"money": 0,
 		# exploration
 		"check_points": [],
+		"picked_items": [],
 		"should_show_tutorial": true 
 	}
 

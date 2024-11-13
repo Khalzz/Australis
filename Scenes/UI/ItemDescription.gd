@@ -32,7 +32,8 @@ func show_item_description(delta):
 		$Background/VBoxContainer/ItemImg.texture = load(Items.item_list[$"..".selected_item]["img"])
 		
 		if Items.item_list[$"..".selected_item]["investigable"]:
-			show_information($"..".inventory_management.investigated_items.has(float($"..".selected_item)))
+			
+			show_information(Save.data.investigated_items.has(float($"..".selected_item)))
 		else:
 			show_information(true)
 		data_setted = true

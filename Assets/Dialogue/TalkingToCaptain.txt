@@ -4,6 +4,6 @@ Alex, Yo ya estoy cansado.
 Capitán, "Hehehe, créeme chico, los jóvenes de tu familia siempre llegan con la misma falta de emoción."
 Capitán, "Pero una vez se van de aquí, solo desean volver."
 Alex, "¿Cómo conoce a mi familia?"
-Capitán, "Desde hace años mi familia se ha encargado de llevarlos de ida y vuelta hacia esta zona, así conocí a tu padre y mi padre fue un gran amigo de tu abuelo."
+Capitán, "Desde hace años mi familia se ha encargado de llevarlos de ida y vuelta hacia esta zona. Así conocí a tu padre, y mi padre fue un gran amigo de tu abuelo."
 Capitán, "Solo te deseo suerte, chico, tu padre está orgulloso de verte dar un paso tan importante para tu familia."
 Alex, "Hmmm, si usted lo dice."

@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 						if add_item:
 							print("se agrego efectivamente un objeto al inventario")
 						else:
-							print("El inventario esta lleno mano locom")
+							print("El inventario esta lleno")
 							$"..".player.toggle_inventory()
 						
 					NotificationType.INVESTIGATED:
@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 ## Activate is the function that will show the element itself in the screen
 func activate_and_add_item(item_id, type: NotificationType):
 	$TimeToActiveButton.start()
-	print(item_id)
+	print("se ha agregado al inventario el item con id: " + str(item_id))
 	notif_type = type
 	active = true
 	match type:
@@ -72,13 +72,13 @@ func set_base(item_id):
 		if Save.data.investigated_items.has(float(item_id)):
 			set_text(Items.item_list[item_id].fished_message)
 		else:
-			set_text("Has encontrado un ???, investigalo para saber que es")
+			set_text("Has encontrado un “???”. Investígalo para saber que es.")
 	else:
 		set_text(Items.item_list[item_id].fished_message)
 
 func set_investigated_base(item_id):
-	item_image.texture = load(Items.fishable_list[item_id].img)
-	set_text(Items.fishable_list[item_id].investigated_message)
+	item_image.texture = load(Items.item_list[item_id].img)
+	set_text(Items.item_list[item_id].investigated_message)
 
 func set_text(text_to_set):
 	text_label.text = "[center]" + str(text_to_set) + "[/center]"

@@ -4,12 +4,13 @@ image,message
 2, "Pasando por mi bisabuelo con mi abuelo."
 3, "Mi abuelo con mi padre."
 4, "Y a mi padre conmigo, aunque nunca fui fan de la pesca realmente."
-5, "Cada uno de ellos en su cumpleaños número 18 tuvo que venir solo a convivir con esta parte del mundo, este desolado lugar a demostrar que pueden ser un pescador nato."
+5, "Cada uno de ellos, al cumplir 18 años, tuvo que venir solo a este desolado lugar para convivir con esta parte del mundo y demostrar que puede ser un pescador nato."
 5, "Capaz de continuar con el legado de la familia."
 6, "Cuando yo los cumplí, al día siguiente mis maletas estaban listas para que partiera."
 6, "Nunca había visto a mi padre tan emocionado, tampoco quise negarme, sé que es algo especial para él, pero no creo que vaya a encontrar algo especial en ese lugar."
 7,
 8,
 9,
-10, "-Marinero: Hey chico, ya estamos llegando a tierra firme, ve a la cubierta, el capitán quiere hablar contigo."
+10, "- Marinero: 
+    Hey chico, ya estamos llegando a tierra firme, ve a la cubierta, el capitán quiere hablar contigo."
 11, "Una parte de mí esperaba que fuera un mal sueño."

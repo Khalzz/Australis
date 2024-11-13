@@ -30,15 +30,20 @@ func _process(delta):
 	if player.state == Enums.PlayerStates.FISHING and active:
 		match state:
 			FishingStates.SettingAngle:
+				$"../HUD/UI/MarginContainer/FishingUi/ElegirAngulo".visible = true
+				$"../HUD/UI/MarginContainer/FishingUi/Lanzar".visible = false
 				player.ui.toggle_fishing_ui(true)
 				scale.x = lerp(scale.x, 1.0, delta * 7.0)
 				scale.y = lerp(scale.x, 1.0, delta * 7.0)
 				setting_angle(delta)
 			FishingStates.SettingPower:
+				$"../HUD/UI/MarginContainer/FishingUi/Lanzar".visible = true
+				$"../HUD/UI/MarginContainer/FishingUi/ElegirAngulo".visible = false
 				setting_power(delta)
 			FishingStates.HookMode:
 				player.camera.global_position = hook_instance.global_transform.origin
-				$"../HUD/UI/FishingUi/AButton(greenLetter)".visible = false
+				$"../HUD/UI/MarginContainer/FishingUi/Lanzar".visible = false
+				$"../HUD/UI/MarginContainer/FishingUi/ElegirAngulo".visible = false
 	else:
 		player.ui.toggle_fishing_ui(false)
 		reset_data(delta)

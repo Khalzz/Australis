@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cepefi5x0cc02"]
+[gd_scene load_steps=26 format=4 uid="uid://cepefi5x0cc02"]
 
 [ext_resource type="Script" path="res://Scripts/Scenes/PrimerDia/primer_dia.gd" id="1_35744"]
 [ext_resource type="PackedScene" uid="uid://dsulipr0hoajc" path="res://Scenes/Characters/player/main_camera.tscn" id="2_guooi"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://3v3e72odgtoe" path="res://Assets/Sprites/Sky/DaySky2.png" id="8_5qkgx"]
 [ext_resource type="Texture2D" uid="uid://c537oy166ws7i" path="res://Assets/Sprites/Chair.svg" id="9_1d607"]
 [ext_resource type="Texture2D" uid="uid://c4kvaadq5ivsf" path="res://Assets/Sprites/FishingRod.svg" id="10_r2dg0"]
-[ext_resource type="Texture2D" uid="uid://on4tot75gj5s" path="res://Assets/Sprites/Store.svg" id="11_exqkj"]
 [ext_resource type="PackedScene" uid="uid://dg1epy58w8otu" path="res://Scenes/Prefabs/snow.tscn" id="12_lckep"]
 [ext_resource type="PackedScene" uid="uid://dom1pl43r05ny" path="res://Scenes/Characters/pinguin.tscn" id="13_t20pt"]
 [ext_resource type="Texture2D" uid="uid://c3qc1c35cmam4" path="res://Assets/Sprites/tilemaps/snow-tilemap.png" id="14_b6kmx"]
@@ -27,11 +26,11 @@ size = Vector2(45.8, 52)
 size = Vector2(53.9, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_104e0"]
-size = Vector2(43.8, 29.2)
+size = Vector2(58.2, 33.6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr5qe"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_itp4s"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_avbd5"]
 texture = ExtResource("14_b6kmx")
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -158,6 +157,52 @@ texture = ExtResource("14_b6kmx")
 10:7/0 = 0
 0:6/0 = 0
 0:7/0 = 0
+10:3/0 = 0
+10:4/0 = 0
+10:5/0 = 0
+10:6/0 = 0
+11:6/0 = 0
+11:7/0 = 0
+11:8/0 = 0
+12:6/0 = 0
+12:7/0 = 0
+12:8/0 = 0
+13:7/0 = 0
+13:8/0 = 0
+14:7/0 = 0
+14:8/0 = 0
+15:7/0 = 0
+15:8/0 = 0
+16:7/0 = 0
+16:8/0 = 0
+11:3/0 = 0
+11:4/0 = 0
+11:5/0 = 0
+12:3/0 = 0
+12:4/0 = 0
+12:5/0 = 0
+13:3/0 = 0
+13:4/0 = 0
+13:5/0 = 0
+13:6/0 = 0
+14:3/0 = 0
+14:4/0 = 0
+14:5/0 = 0
+14:6/0 = 0
+15:3/0 = 0
+15:4/0 = 0
+15:5/0 = 0
+15:6/0 = 0
+16:3/0 = 0
+16:4/0 = 0
+16:5/0 = 0
+16:6/0 = 0
+17:3/0 = 0
+17:4/0 = 0
+17:5/0 = 0
+17:6/0 = 0
+17:7/0 = 0
+17:8/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_qymna"]
 physics_layer_0/collision_layer = 1
@@ -167,7 +212,7 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 custom_data_layer_0/name = "ice"
 custom_data_layer_0/type = 2
-sources/0 = SubResource("TileSetAtlasSource_itp4s")
+sources/0 = SubResource("TileSetAtlasSource_avbd5")
 
 [sub_resource type="Animation" id="Animation_3h5u4"]
 resource_name = "IDLE"
@@ -194,7 +239,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ficav"]
 size = Vector2(7.17118, 20)
 
-[node name="World" type="Node2D"]
+[node name="Main" type="Node2D"]
 position = Vector2(3, 0)
 script = ExtResource("1_35744")
 
@@ -291,13 +336,13 @@ script = ExtResource("4_e2f3k")
 interaction = 5
 
 [node name="Button" parent="StaticInteractuables/Buy" instance=ExtResource("5_hsul0")]
-offset_left = 75.0
-offset_top = -43.0
-offset_right = 125.0
-offset_bottom = 7.0
+offset_left = 129.0
+offset_top = -84.0
+offset_right = 179.0
+offset_bottom = -34.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticInteractuables/Buy"]
-position = Vector2(-5.5, 57)
+position = Vector2(10.5, 35)
 scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_104e0")
 
@@ -337,20 +382,14 @@ position = Vector2(-282, -65)
 scale = Vector2(0.07, 0.07)
 texture = ExtResource("10_r2dg0")
 
-[node name="Store" type="Sprite2D" parent="WorldAssets"]
-z_index = -20
-position = Vector2(-1138, -110)
-scale = Vector2(0.255, 0.255)
-texture = ExtResource("11_exqkj")
-
 [node name="Snow" parent="." instance=ExtResource("12_lckep")]
 preprocess = 20.0
 
 [node name="BackgroundScaled" type="TileMapLayer" parent="."]
 texture_filter = 1
-position = Vector2(-2226, -20)
+position = Vector2(-2225, -20)
 scale = Vector2(3, 3)
-tile_map_data = PackedByteArray("AAD/////AAANAAAAAAABAPr/AAAAAAMAAAABAPv/AAAAAAQAAAABAPz/AAAAAAUAAAABAP3/AAAAAAYAAAABAP7/AAAAAAcAAAABAP//AAAAAAgAAAACAPr/AAABAAMAAAACAPv/AAABAAQAAAACAPz/AAABAAUAAAACAP3/AAABAAYAAAACAP7/AAABAAcAAAACAP//AAABAAgAAAADAPr/AAACAAMAAAADAPv/AAACAAQAAAADAPz/AAACAAUAAAADAP3/AAACAAYAAAADAP7/AAACAAcAAAADAP//AAACAAgAAAAEAPr/AAADAAMAAAAEAPv/AAADAAQAAAAEAPz/AAADAAUAAAAEAP3/AAADAAYAAAAEAP7/AAADAAcAAAAEAP//AAADAAgAAAAFAPr/AAAEAAMAAAAFAPv/AAAEAAQAAAAFAPz/AAAEAAUAAAAFAP3/AAAEAAYAAAAFAP7/AAAEAAcAAAAFAP//AAAEAAgAAAAGAPr/AAAFAAMAAAAGAPv/AAAFAAQAAAAGAPz/AAAFAAUAAAAGAP3/AAAFAAYAAAAGAP7/AAAFAAcAAAAGAP//AAAFAAgAAAAHAPr/AAAGAAMAAAAHAPv/AAAGAAQAAAAHAPz/AAAGAAUAAAAHAP3/AAAGAAYAAAAHAP7/AAAGAAcAAAAHAP//AAAGAAgAAAAIAPr/AAAHAAMAAAAIAPv/AAAHAAQAAAAIAPz/AAAHAAUAAAAIAP3/AAAHAAYAAAAIAP7/AAAHAAcAAAAIAP//AAAHAAgAAAAJAPr/AAAIAAMAAAAJAPv/AAAIAAQAAAAJAPz/AAAIAAUAAAAJAP3/AAAIAAYAAAAJAP7/AAAIAAcAAAAJAP//AAAIAAgAAAAKAPr/AAAJAAMAAAAKAPv/AAAJAAQAAAAKAPz/AAAJAAUAAAAKAP3/AAAJAAYAAAAKAP7/AAAJAAcAAAAKAP//AAAJAAgAAAALAP7/AAAKAAcAAAALAP//AAAKAAgAAAA=")
+tile_map_data = PackedByteArray("AAD/////AAANAAAAAAABAPr/AAAAAAMAAAABAPv/AAAAAAQAAAABAPz/AAAAAAUAAAABAP3/AAAAAAYAAAABAP7/AAAAAAcAAAABAP//AAAAAAgAAAACAPr/AAABAAMAAAACAPv/AAABAAQAAAACAPz/AAABAAUAAAACAP3/AAABAAYAAAACAP7/AAABAAcAAAACAP//AAABAAgAAAADAPr/AAACAAMAAAADAPv/AAACAAQAAAADAPz/AAACAAUAAAADAP3/AAACAAYAAAADAP7/AAACAAcAAAADAP//AAACAAgAAAAEAPr/AAADAAMAAAAEAPv/AAADAAQAAAAEAPz/AAADAAUAAAAEAP3/AAADAAYAAAAEAP7/AAADAAcAAAAEAP//AAADAAgAAAAFAPr/AAAEAAMAAAAFAPv/AAAEAAQAAAAFAPz/AAAEAAUAAAAFAP3/AAAEAAYAAAAFAP7/AAAEAAcAAAAFAP//AAAEAAgAAAAGAPr/AAAFAAMAAAAGAPv/AAAFAAQAAAAGAPz/AAAFAAUAAAAGAP3/AAAFAAYAAAAGAP7/AAAFAAcAAAAGAP//AAAFAAgAAAAHAPr/AAAGAAMAAAAHAPv/AAAGAAQAAAAHAPz/AAAGAAUAAAAHAP3/AAAGAAYAAAAHAP7/AAAGAAcAAAAHAP//AAAGAAgAAAAIAPr/AAAHAAMAAAAIAPv/AAAHAAQAAAAIAPz/AAAHAAUAAAAIAP3/AAAHAAYAAAAIAP7/AAAHAAcAAAAIAP//AAAHAAgAAAAJAPr/AAAIAAMAAAAJAPv/AAAIAAQAAAAJAPz/AAAIAAUAAAAJAP3/AAAIAAYAAAAJAP7/AAAIAAcAAAAJAP//AAAIAAgAAAAKAPr/AAAJAAMAAAAKAPv/AAAJAAQAAAAKAPz/AAAJAAUAAAAKAP3/AAAJAAYAAAAKAP7/AAAJAAcAAAAKAP//AAAJAAgAAAALAP7/AAAKAAcAAAALAP//AAAKAAgAAAATAPr/AAAKAAMAAAATAPv/AAAKAAQAAAATAPz/AAAKAAUAAAATAP3/AAAKAAYAAAAUAPr/AAALAAMAAAAUAPv/AAALAAQAAAAUAPz/AAALAAUAAAAUAP3/AAALAAYAAAAUAP7/AAALAAcAAAAUAP//AAALAAgAAAAVAPr/AAAMAAMAAAAVAPv/AAAMAAQAAAAVAPz/AAAMAAUAAAAVAP3/AAAMAAYAAAAVAP7/AAAMAAcAAAAVAP//AAAMAAgAAAAWAPr/AAANAAMAAAAWAPv/AAANAAQAAAAWAPz/AAANAAUAAAAWAP3/AAANAAYAAAAWAP7/AAANAAcAAAAWAP//AAANAAgAAAAXAPr/AAAOAAMAAAAXAPv/AAAOAAQAAAAXAPz/AAAOAAUAAAAXAP3/AAAOAAYAAAAXAP7/AAAOAAcAAAAXAP//AAAOAAgAAAAYAPr/AAAPAAMAAAAYAPv/AAAPAAQAAAAYAPz/AAAPAAUAAAAYAP3/AAAPAAYAAAAYAP7/AAAPAAcAAAAYAP//AAAPAAgAAAAZAPr/AAAQAAMAAAAZAPv/AAAQAAQAAAAZAPz/AAAQAAUAAAAZAP3/AAAQAAYAAAAZAP7/AAAQAAcAAAAZAP//AAAQAAgAAAAaAPr/AAARAAMAAAAaAPv/AAARAAQAAAAaAPz/AAARAAUAAAAaAP3/AAARAAYAAAA=")
 tile_set = SubResource("TileSet_qymna")
 
 [node name="BackgroundLayer" type="TileMapLayer" parent="."]
@@ -360,19 +399,7 @@ scale = Vector2(2.5, 2.5)
 tile_map_data = PackedByteArray("AAAfAP//AAAEAAAAAQAgAP//AAADAAEAAQAgAAAAAAAEAAAAAQAhAAAAAAACAAIAAQAhAAEAAAAEAAAAAQAiAAEAAAACAAEAAQAiAAIAAAAEAAAAAQAjAAIAAAADAAEAAQAjAAMAAAAEAAAAAQAkAAMAAAACAAIAAQAkAAQAAAAEAAAAAQAkAAUAAAAFAAIAAAAlAAQAAAACAAEAAQAlAAUAAAAEAAAAAQAmAAUAAAACAAEAAQAmAAYAAAAEAAAAAQA=")
 tile_set = SubResource("TileSet_qymna")
 
-[node name="Pinguin" parent="." node_paths=PackedStringArray("player") instance=ExtResource("13_t20pt")]
-scale = Vector2(0.8, 0.743)
-player = NodePath("../Player")
-
-[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_mtayg")]
-position = Vector2(-2043, -47)
-collision_layer = 2
-debugging = false
-camera = NodePath("../MainCamera")
-fixed_items = Array[int]([0, 1, 2, 4])
-
 [node name="Comerciante" type="Sprite2D" parent="." node_paths=PackedStringArray("player")]
-z_index = -1
 texture_filter = 1
 position = Vector2(-1066, -55)
 rotation = -3.14159
@@ -388,6 +415,17 @@ libraries = {
 "": SubResource("AnimationLibrary_8xohp")
 }
 autoplay = "IDLE"
+
+[node name="Pinguin" parent="." node_paths=PackedStringArray("player") instance=ExtResource("13_t20pt")]
+scale = Vector2(0.8, 0.743)
+player = NodePath("../Player")
+
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_mtayg")]
+position = Vector2(-2043, -47)
+collision_layer = 2
+debugging = false
+camera = NodePath("../MainCamera")
+fixed_items = Array[int]([0, 1, 2, 4])
 
 [node name="BottomLayer" type="TileMapLayer" parent="."]
 texture_filter = 1

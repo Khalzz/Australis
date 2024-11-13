@@ -1,0 +1,13 @@
+talking,message
+"Mamá", "Alex, hijo mío, cuanto has crecido."
+"Alex", "¿Madre?"
+"Mamá", "Tranquilo hijo, te traje aquí con una misión importante."
+"Mamá", "El destino de la Antártica está en juego, y el futuro no se ve muy prometedor."
+"Alex", "¿Qué podría hacer yo madre?"
+"Mamá", "La piedra que encontraste te permitirá tener visiones del futuro, úsala para guiar tu camino en pos de que lo que ahí verás, no llegue a ocurrir."
+"Mamá", "Hay otra como está en la siguiente montaña, llega a esta y podre darte un objetivo más concreto sobre que tienes que hacer."
+"Mama", "El destino de este lugar está en tus manos, y algunos como tu pequeño amigo allá abajo se verán felices si logras concretar esta tarea."
+"Alex", "¿Volveré a verte pronto?"
+"Mamá", "No puedo hacer promesas, hijo, solo sé que una vez la Antártica este a salvo, podremos hablar con más tranquilidad, quizá pueda darte un abrazo."
+"Alex", "Si eso es lo que se necesita, lo daré todo por lograrlo madre."
+"Mamá", "Mi Alex, estoy orgullosa del hombre en el que te convertirás."

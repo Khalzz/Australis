@@ -7,12 +7,18 @@ image,message
 5,
 6,
 7,
-8, "-Alex: Con permiso."
-9, "-Comerciante: ¡Hey!, eso era mío."
-10, "-Alex: Hey pequeñín, ten esto."
+8, "- Alex: 
+    Con permiso."
+9, "- Comerciante: 
+    ¡Hey! Eso era mío."
+10, "- Alex: 
+    Hey pequeñín, ten esto."
 11,
 12,
 13,
-14, "-Comerciante: Es bueno saber que tienes alma, chico. Los pingüinos a veces dejan uno de sus huevos, y esas crías deben sobrevivir como puedan."
-15, "-Comerciante: Eso no te exime del pez que me quitaste para alimentarlo, tendrás que traerme otro similar."
-15, "-Alex: Lo haré enseguida."
+14, "- Comerciante: 
+    Es bueno saber que tienes alma, chico. Los pingüinos a veces dejan uno de sus huevos, y esas crías deben sobrevivir como puedan."
+15, "- Comerciante: 
+    Eso no te exime del pez que me quitaste para alimentarlo, tendrás que traerme otro similar."
+15, "- Alex: 
+    Lo haré enseguida."

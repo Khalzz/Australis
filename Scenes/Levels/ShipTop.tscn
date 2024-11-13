@@ -247,7 +247,7 @@ custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_7orvf")
 sources/2 = SubResource("TileSetAtlasSource_bh42b")
 
-[node name="World" type="Node2D"]
+[node name="ShipTop" type="Node2D"]
 
 [node name="StaticInteractuables" type="Node" parent="."]
 

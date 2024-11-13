@@ -24,7 +24,6 @@ func _physics_process(delta):
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		# Accelerate in the direction of input
-		print(delta)
 		velocity.x = move_toward(velocity.x, direction * max_speed, (acceleration * delta) * 2)
 	else:
 		# Decelerate when there's no input

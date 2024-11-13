@@ -16,4 +16,5 @@ func _process(delta):
 					inside = true
 				
 		if player and inside and player.isActive:
+			print("should recieve damage")
 			player.dying_contact = true

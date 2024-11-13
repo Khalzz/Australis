@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var cinematic = $Cinematic
 @onready var action_text = $ActionText
 @onready var transition = $Transition
+@onready var transition_animation = $Transition/AnimationPlayer
 @onready var item_notification = $ItemNotification
 @onready var lifes = $Lifes
 @onready var new_hability = $NewHability
@@ -26,8 +27,6 @@ func _process(delta):
 
 func toggle_fishing_ui(active):
 	$UI.visible = active
-	$"UI/FishingUi/AButton(greenLetter)".visible = active
-	$"UI/FishingUi/BButton(redLetter)".visible = active
 
 func toggle_inventary(active):
 	$Inventario.visible = active

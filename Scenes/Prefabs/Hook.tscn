@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://cw53o5ijjsqt8"]
+[gd_scene load_steps=11 format=3 uid="uid://cw53o5ijjsqt8"]
 
 [ext_resource type="Script" path="res://Scripts/Hook.gd" id="1_2vnkj"]
 [ext_resource type="Texture2D" uid="uid://tn43rj08c5wf" path="res://Assets/Sprites/Hook.svg" id="1_vrhcb"]
 [ext_resource type="Texture2D" uid="uid://6301m13t702n" path="res://Assets/UI/InGame/SelectableBar.svg" id="3_02ba7"]
 [ext_resource type="Texture2D" uid="uid://dhtdfu34ho6ac" path="res://Assets/UI/InGame/SelectableBarMarker.svg" id="4_888vp"]
 [ext_resource type="Script" path="res://Scripts/SelectableBar.gd" id="4_sp8ol"]
+[ext_resource type="Texture2D" uid="uid://cridr6yocsmcr" path="res://Assets/UI/phishing/Star 1.svg" id="6_a42ds"]
 [ext_resource type="Script" path="res://Scripts/SmashButton.gd" id="6_fijq6"]
+[ext_resource type="Texture2D" uid="uid://bqmbkmdopd5ng" path="res://Assets/UI/phishing/Group 106.svg" id="7_8vvir"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="7_jtsku"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uj0cm"]
@@ -52,21 +54,62 @@ debugging = true
 position = Vector2(-75, 0)
 texture = ExtResource("4_888vp")
 
-[node name="Correct" type="Label" parent="SelectableBar"]
-offset_left = -78.0
-offset_top = -78.0
-offset_right = -38.0
-offset_bottom = -55.0
-text = "Correct: 0"
+[node name="Counters" type="VBoxContainer" parent="SelectableBar"]
+offset_left = -41.0
+offset_top = -72.0
+offset_right = 42.0
+offset_bottom = -18.0
 
-[node name="Incorrect" type="Label" parent="SelectableBar"]
-offset_left = -78.0
-offset_top = -53.0
-offset_right = -38.0
-offset_bottom = -30.0
-text = "Incorrect: 0"
+[node name="CorrectStars" type="HBoxContainer" parent="SelectableBar/Counters"]
+layout_mode = 2
+
+[node name="0" type="TextureRect" parent="SelectableBar/Counters/CorrectStars"]
+texture_filter = 1
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("6_a42ds")
+expand_mode = 1
+
+[node name="1" type="TextureRect" parent="SelectableBar/Counters/CorrectStars"]
+texture_filter = 1
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("6_a42ds")
+expand_mode = 1
+
+[node name="2" type="TextureRect" parent="SelectableBar/Counters/CorrectStars"]
+texture_filter = 1
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("6_a42ds")
+expand_mode = 1
+
+[node name="Failed" type="HBoxContainer" parent="SelectableBar/Counters"]
+layout_mode = 2
+
+[node name="0" type="TextureRect" parent="SelectableBar/Counters/Failed"]
+texture_filter = 1
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("7_8vvir")
+expand_mode = 1
+
+[node name="1" type="TextureRect" parent="SelectableBar/Counters/Failed"]
+texture_filter = 1
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("7_8vvir")
+expand_mode = 1
+
+[node name="2" type="TextureRect" parent="SelectableBar/Counters/Failed"]
+texture_filter = 1
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+texture = ExtResource("7_8vvir")
+expand_mode = 1
 
 [node name="SmashButton" type="Node2D" parent="."]
+visible = false
 z_index = 20
 position = Vector2(0, -57.05)
 script = ExtResource("6_fijq6")

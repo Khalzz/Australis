@@ -117,5 +117,4 @@ func new_inventory_node(item_id, count):
 	return { "item_id": item_id, "count": count }
 	
 func write_inventory():
-	print("se guardo el valor en el inventario")
 	Save.save_data()

@@ -154,7 +154,7 @@ _data = {
 "RESET": SubResource("Animation_0wgn3")
 }
 
-[node name="World" type="Node2D"]
+[node name="ShipRooms" type="Node2D"]
 script = ExtResource("1_hbp8g")
 
 [node name="StaticInteractuables" type="Node" parent="."]

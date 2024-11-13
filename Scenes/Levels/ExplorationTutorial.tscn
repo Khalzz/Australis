@@ -205,7 +205,7 @@ size = Vector2(243, 185)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8wecf"]
 size = Vector2(25.6, 64.6)
 
-[node name="Exploration" type="Node2D"]
+[node name="ExplorationTutorial" type="Node2D"]
 position = Vector2(1762.47, -0.140137)
 script = ExtResource("1_7odel")
 
@@ -231,6 +231,7 @@ position = Vector2(917.53, 6.14014)
 position = Vector2(1752, -75)
 script = ExtResource("4_x7wdx")
 id_item_to_pick = 6
+is_tutorial = true
 
 [node name="PickItemCollision" type="Area2D" parent="PickableItems/PickableItem"]
 collision_mask = 2
@@ -1005,7 +1006,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Hay puntos como este donde 
-Podrás guardar partida, 
+Podrás:
+
+1. Descansar: Guardar partida
+2. Viaje Rápido: moverte a 
+puntos anteriormente activados
+
 estos requieren cuerda."
 horizontal_alignment = 1
 

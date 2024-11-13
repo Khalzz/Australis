@@ -54,6 +54,7 @@ func _process(delta: float) -> void:
 		$ButtonGuides.scale.y = lerp($ButtonGuides.scale.y, 0.0, delta * 20.0)
 
 func save_or_set_check_point(should_set_point, element):
+	$"../../../Player".lifes = $"../../../Player".max_lifes
 	Save.data.spawn_point.x = global_position.x
 	Save.data.spawn_point.y = global_position.y
 	set_active_check_points()

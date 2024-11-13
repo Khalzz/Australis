@@ -1,13 +1,13 @@
 extends Node2D
 
 @export var id_item_to_pick: int
+@export var is_tutorial = false
 var active = true
 var player: CharacterBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -28,6 +28,8 @@ func _process(delta: float) -> void:
 		
 		if inside:
 			if Input.is_action_just_pressed("A"):
+				if !is_tutorial:
+					Save.data.picked_items.append(str(name))
 				player.ui.item_notification.activate_and_add_item(id_item_to_pick, player.ui.item_notification.NotificationType.PICKING)
 				active = false
 			

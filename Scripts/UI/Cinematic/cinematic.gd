@@ -36,17 +36,11 @@ func _process(delta):
 					# visible = false
 					if action:
 						fading_out = true
-						await get_tree().create_timer(1.5).timeout
-						visible = false
-						if action_flag == false:
-							action.call()
-							action_flag = true
-						message_id = 1
+						$TimedActions.play("CallAction")
 					else:
 						fading_out = true
-						await get_tree().create_timer(1.0).timeout
-						visible = false
-						$"..".player.isActive = true
+						$TimedActions.play("ActivatePlayer")
+
 				else:
 					message_id += 1
 					$UiMessage.message = cinematic_dict[message_id][1]
@@ -111,3 +105,15 @@ func open_cinematic(dialog_folder_name, action_after_dialog):
 	$Image.texture = load(assets_folder + "/" + cinematic_dict[message_id][0] + ".png")
 	$UiMessage.message = cinematic_dict[message_id][1]
 	$UiMessage.dialogue_reset()
+
+# FOR TIMED METHOD PURPOSES
+func set_player_active():
+	visible = false
+	$"..".player.isActive = true
+
+func call_action():
+	visible = false
+	if action_flag == false:
+		action.call()
+		action_flag = true
+	message_id = 1

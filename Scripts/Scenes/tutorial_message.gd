@@ -9,9 +9,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("A"):
-		$Player.move_to_place(null, "res://Scenes/Levels/ExplorationTutorial.tscn")
-		# goto tutorial
+		$Player.move_to_place(SceneManagement.Scenes.ExplorationTutorial)
 	if Input.is_action_just_pressed("B"):
-		$Player.move_to_place(null, "res://Scenes/Levels/Exploration.tscn")
+		$Pzlayer.move_to_place(SceneManagement.Scenes.Exploration)
 		
 		# goto mountain and deactivate should show tutorial

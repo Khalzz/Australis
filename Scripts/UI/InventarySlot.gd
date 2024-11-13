@@ -25,7 +25,6 @@ func _button_pressed():
 	selected = !selected
 
 func selected_item(delta):
-	print("en efecto se ha ejecutado")
 	$ButtonsList.visible = true
 	$ButtonsList.position.x = lerp($ButtonsList.position.x, 185.0, delta * 20)
 	$ButtonsList.scale.x = lerp($ButtonsList.scale.x, 1.0, delta * 20)
