@@ -71,7 +71,6 @@ func _process(delta: float) -> void:
 					$WorldAssets/LaterSky.texture = late_sky_texture
 					
 					if count_of_merluzas >= 1:
-						$Player.isActive = false
 						$Player.ui.dialog.open_dialog("res://Assets/Dialogue/SellingTheLastFish.txt", null)
 						Save.data.state = 3
 				3:

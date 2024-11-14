@@ -366,7 +366,7 @@ shape = SubResource("RectangleShape2D_gr5qe")
 
 [node name="LaterSky" type="Sprite2D" parent="WorldAssets"]
 z_index = -100
-position = Vector2(2823, -1492)
+position = Vector2(2791, -1052)
 scale = Vector2(5.14889, 2.16882)
 texture = ExtResource("8_5qkgx")
 

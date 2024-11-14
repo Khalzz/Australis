@@ -733,7 +733,7 @@ polygon = PackedVector2Array(-3675, 1175, -3676, 1443, -4085, 1439, -4088, 1175)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CameraMapTriggers/Hide_front_map"]
 position = Vector2(-1, 0)
-polygon = PackedVector2Array(-647, -1108, 43, -1114, 67, -796, -395, -790, -383, 217, 1211, 211, 1205, -1677, -635, -1773)
+polygon = PackedVector2Array(-647, -1108, -343, -1108, -340, -1072, -269, -1077, -231, -1001, 88, -998, 85, -822, -390, -817, -383, 217, 1211, 211, 1205, -1677, -635, -1773)
 
 [node name="Center_camera_offset" type="Area2D" parent="CameraMapTriggers"]
 position = Vector2(3257, -2749)
