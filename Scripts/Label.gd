@@ -14,6 +14,10 @@ func _process(delta):
 			$"../ClimbingCheckers/Top".visible = false
 			text = str("")
 			return
+		else:
+			$"../ClimbingCheckers/Bottom".visible = true
+			$"../ClimbingCheckers/ClimbingPos".visible = true
+			$"../ClimbingCheckers/Top".visible = true
 		
 		match state:
 			Enums.PlayerStates.IDLE:

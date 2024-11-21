@@ -127,8 +127,6 @@ alignment = 1
 [node name="InteractionButton" parent="TextureRect/VBoxContainer/EntrarTutorial" instance=ExtResource("2_4w5qr")]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-pressed = ExtResource("3_kkm8v")
-unpressed = ExtResource("4_dntdt")
 
 [node name="Label" type="Label" parent="TextureRect/VBoxContainer/EntrarTutorial"]
 layout_mode = 2

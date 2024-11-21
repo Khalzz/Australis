@@ -6,8 +6,8 @@ var active = true
 var player: CharacterBody2D
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _ready():
+	$PickItemCollision.body_exited.connect(player_exited)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -24,6 +24,7 @@ func _process(delta: float) -> void:
 			for element in $PickItemCollision.get_overlapping_bodies(): 
 				if (element.has_method("set_check_point")):
 					player = element
+					player.can_jump = false
 					inside = true
 		
 		if inside:
@@ -38,3 +39,7 @@ func _process(delta: float) -> void:
 		else:
 			$Button.scale.x = lerp($Button.scale.x, 0.0, delta * 20.0)
 			$Button.scale.y = lerp($Button.scale.y, 0.0, delta * 20.0)
+
+func player_exited(body):
+	if body.has_method("interact"):
+		body.can_jump = true

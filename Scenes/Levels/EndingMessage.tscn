@@ -1,11 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2dsk6ewxprjq"]
+[gd_scene load_steps=8 format=3 uid="uid://b2dsk6ewxprjq"]
 
 [ext_resource type="Script" path="res://Scripts/UI/ending_message.gd" id="1_jodub"]
 [ext_resource type="PackedScene" uid="uid://btnlv2vwv2vd8" path="res://Scenes/Characters/player/player.tscn" id="2_i2254"]
 [ext_resource type="Texture2D" uid="uid://7oikkl5sryw2" path="res://Assets/UI/NewHability/NewHabilityBackground.png" id="3_eyyon"]
 [ext_resource type="PackedScene" uid="uid://berwh4wig5kda" path="res://Scenes/UI/PressableButton.tscn" id="4_dn1bm"]
-[ext_resource type="Texture2D" uid="uid://ct7m1osqkhr7v" path="res://Assets/UI/B Button/B Button(pressed).svg" id="5_l2vtt"]
-[ext_resource type="Texture2D" uid="uid://bpp2dqilvxbcg" path="res://Assets/UI/B Button/B Button(red letter).svg" id="6_ddaq2"]
 
 [sub_resource type="Animation" id="Animation_yojea"]
 length = 0.001
@@ -105,8 +103,6 @@ alignment = 1
 [node name="InteractionButton" parent="GameStartSettings/VBoxContainer/VolverACasa" instance=ExtResource("4_dn1bm")]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-pressed = ExtResource("5_l2vtt")
-unpressed = ExtResource("6_ddaq2")
 
 [node name="Label" type="Label" parent="GameStartSettings/VBoxContainer/VolverACasa"]
 layout_mode = 2

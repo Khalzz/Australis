@@ -18,6 +18,9 @@ func _process(delta: float) -> void:
 			$"../Top".global_position = top_max
 		if bottom_max:
 			$"../Bottom".global_position = bottom_max
+	else:
+		top_max = null
+		bottom_max = null
 
 func check_top_and_bottom(base_tile_coords: Vector2, tilemap: TileMapLayer):
 	var top_pos: Vector2
@@ -25,7 +28,7 @@ func check_top_and_bottom(base_tile_coords: Vector2, tilemap: TileMapLayer):
 	var moded_tile = base_tile_coords
 
 	while true:
-		moded_tile.y -= 1  
+		
 		var tile_data = tilemap.get_cell_tile_data(moded_tile)
 
 		if tile_data == null or tile_data.get_custom_data("ice") != 1:
@@ -34,11 +37,10 @@ func check_top_and_bottom(base_tile_coords: Vector2, tilemap: TileMapLayer):
 			break
 
 		top_pos = tilemap.to_global(tilemap.map_to_local(moded_tile))
-		
+		moded_tile.y -= 1  
 	moded_tile = base_tile_coords
 
 	while true:
-		moded_tile.y += 1  
 		var tile_data = tilemap.get_cell_tile_data(moded_tile)
 
 		if tile_data == null or tile_data.get_custom_data("ice") != 1:
@@ -46,6 +48,7 @@ func check_top_and_bottom(base_tile_coords: Vector2, tilemap: TileMapLayer):
 			bottom_pos = tilemap.to_global(tilemap.map_to_local(moded_tile))
 			break
 
+		moded_tile.y += 1  
 		bottom_pos = tilemap.to_global(tilemap.map_to_local(moded_tile))
 
 	if top_pos:

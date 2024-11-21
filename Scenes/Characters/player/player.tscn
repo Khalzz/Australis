@@ -194,7 +194,7 @@ func _process(delta):
 					elif direction.x != 0 and velocity.y == 0:
 						$AnimationPlayer.play(\"WALKING\")
 	
-	if $ClimbingCheckers/ClimbingArea.touching and isActive:
+	if $ClimbingCheckers/ClimbingArea.touching and isActive and $ClimbingCheckers/ClimbingArea.top_max != null and $ClimbingCheckers/ClimbingArea.bottom_max != null:
 		if $TimedActions/WaitForClimbButton.is_stopped():
 			$InteractionButton.scale.x = lerp($InteractionButton.scale.x, 0.6, delta * 7.0)
 			$InteractionButton.scale.y = lerp($InteractionButton.scale.y, 0.6, delta * 7.0)
@@ -253,41 +253,41 @@ func _physics_process(delta):
 
 func jumpLogic(delta):
 	# if the player touches the floor reset the jump count
-	if is_on_floor() or state == Enums.PlayerStates.CLIMBING:
-		if is_on_floor():
-			jump_direction = last_direction
+		if is_on_floor() or state == Enums.PlayerStates.CLIMBING:
+			if is_on_floor():
+				jump_direction = last_direction
+			else:
+				if Input.is_action_just_pressed(\"jump\") and can_jump:
+					$TimedActions/WaitForClimbButton.start()
+					isActive = true
+				jump_direction = -last_direction
+			jump_count = Save.data.max_jumps
 		else:
-			if Input.is_action_just_pressed(\"jump\"):
-				$TimedActions/WaitForClimbButton.start()
-				isActive = true
-			jump_direction = -last_direction
-		jump_count = Save.data.max_jumps
-	else:
-		velocity.y += gravity * delta
-		state = Enums.PlayerStates.FALLING
-		
-	
-	if Input.is_action_just_pressed(\"jump\") and jump_count > 0:
-		jump_count -= 1
-		jump_timer.start()
-		is_jumping = true
-	
-	if Input.is_action_just_released(\"jump\"):
-		is_jumping = false
-		jump_timer.stop()
-		
-	if is_jumping and !jump_timer.is_stopped():
-			state = Enums.PlayerStates.JUMPING
-			velocity.y = JUMP_VELOCITY
-	else:
-		if state != Enums.PlayerStates.CLIMBING:
+			velocity.y += gravity * delta
 			state = Enums.PlayerStates.FALLING
+			
+		
+		if Input.is_action_just_pressed(\"jump\") and jump_count > 0 and can_jump:
+			jump_count -= 1
+			jump_timer.start()
+			is_jumping = true
+		
+		if Input.is_action_just_released(\"jump\") and can_jump:
 			is_jumping = false
+			jump_timer.stop()
+			
+		if is_jumping and !jump_timer.is_stopped():
+				state = Enums.PlayerStates.JUMPING
+				velocity.y = JUMP_VELOCITY
+		else:
+			if state != Enums.PlayerStates.CLIMBING:
+				state = Enums.PlayerStates.FALLING
+				is_jumping = false
 
-	if state == Enums.PlayerStates.FALLING:
-		gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 2
-	if is_jumping:
-		gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 5
+		if state == Enums.PlayerStates.FALLING:
+			gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 2
+		if is_jumping:
+			gravity = ProjectSettings.get_setting(\"physics/2d/default_gravity\") * 5
 
 func climbing_logic(delta):
 	if climbing_pos:
@@ -312,7 +312,7 @@ func climbing_logic(delta):
 		$AnimationPlayer.pause()
 
 func inputMovement():
-	jump_input = Input.is_action_pressed(\"jump\")
+	jump_input = Input.is_action_pressed(\"jump\") and can_jump
 	
 	if isActive:
 		axisDirection = Input.get_vector(\"left\", \"right\", \"down\", \"up\")
@@ -504,7 +504,6 @@ func set_check_point(spawn_point, check_point, needs_rope, dialogue_to_open):
 			
 		if dialogue_to_open:
 			ui.dialog.open_dialog(dialogue_to_open, null)
-			
 	return succesfully_setted
 
 func active_check_point(spawn_point, check_point):
@@ -520,7 +519,7 @@ func set_point(spawn_point):
 		main_respawn_point = spawn_point
 
 func take_life():
-	print(\"cosa\")
+	print(\"El jugador ha perdido una vida\")
 	lifes -= 1
 
 func respawn():
@@ -832,7 +831,7 @@ action = "B"
 [node name="ClimbingCheckers" type="Node2D" parent="."]
 
 [node name="Bottom" type="ColorRect" parent="ClimbingCheckers"]
-z_index = 999
+z_index = 4096
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -847,7 +846,7 @@ grow_vertical = 2
 color = Color(0.999999, 0.453269, 0.912163, 1)
 
 [node name="ClimbingPos" type="ColorRect" parent="ClimbingCheckers"]
-z_index = 1000
+z_index = 4096
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -862,7 +861,7 @@ grow_vertical = 2
 color = Color(1, 0.631373, 0.184314, 1)
 
 [node name="Top" type="ColorRect" parent="ClimbingCheckers"]
-z_index = 999
+z_index = 4096
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

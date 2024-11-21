@@ -8,6 +8,9 @@ extends Node2D
 
 var player: CharacterBody2D
 
+func _ready():
+	$CheckPointCollision.body_exited.connect(player_exited)
+
 func _process(delta: float) -> void:
 	if active:
 		$FirePit/Fire.visible = true
@@ -22,6 +25,7 @@ func _process(delta: float) -> void:
 				player = element
 				player.check_point_trigger = $CheckPointCollision
 				inside = true
+				player.can_jump = false
 				if Input.is_action_just_pressed("A") and element.isActive:
 					if !active:
 						# turn on firepit
@@ -73,3 +77,7 @@ func set_active_check_points():
 			checkpoint_list.append(checkpoint_name)
 	
 	Save.data.check_points = checkpoint_list
+
+func player_exited(body):
+	if body.has_method("interact"):
+		body.can_jump = true
