@@ -1,5 +1,7 @@
 # Australis
 
+![image](https://github.com/user-attachments/assets/44a2390f-541c-4ac5-a01b-986cfae9db6d)
+
 Australis is my first game development work as freelancer, get into an adventure with Alex where you could learn about the antartic, find new friends, get fish, explore and learn about why the Antartic is more important than you might think.
 
 The main focus of this project is to get founds for the development of a complete game, although, this is a pretty pulished experience on what you might find in that final version, maybe with better art and more mechanics, but his core might remain similar.
@@ -12,7 +14,7 @@ Australis es un proyecto de parte de estudiantes del colegio villa nonguén de c
 
 Este proyecto está ideado como una demo a usar para la postulación a fondos y concretar posteriormente una versión completa del mismo, por ello se puede tomar como un prototipo, ya que hay ciertos elementos que pueden cambiar drásticamente con base en elementos como las actualizaciones posteriores, peticiones del cliente o modificaciones en mecánicas más tarde.
 
-- Contexto -
+### Contexto
 
 Interpreta a Alex en su llegada a la antártica.
 
